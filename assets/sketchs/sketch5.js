@@ -7,9 +7,9 @@
 
 //definindo caracteristicas do personagem
 var personagem = {
-  posicaoX:0,
+  posicaoX:100,
   posicaoY:100,
-  diametro:60
+  diametro:90
 };
 
 function setup() {
@@ -27,7 +27,9 @@ function draw() {
   // usando as variaveis definidas previamente
   ellipse(199, 100, 50, 50);
 
+  ellipse(personagem.posicaoX, personagem.posicaoY, personagem.diametro, personagem.diametro);
   // incrementando a direcao de posicaoX para o deslocamento do personagem
   // posicaoX = posicaoX + 1;
   //posicaoX += 1;
+  personagem.posicaoX +=1;
 }

@@ -1,13 +1,13 @@
 function setup() {
   // funcao setup eh iniciada apenas uma vez
   createCanvas(480, 270);
-  // background(100, 100, 100);
+  // background(255, 255, 255);
 }
 
 function draw() {
   // funcao draw eh repetida em loop infinito
 
-  // background(100, 100, 100);
+  // background(255, 255, 255);
 
   // ellipse
   noStroke();
@@ -17,4 +17,9 @@ function draw() {
   // ellipse
   fill(80, 80, 80);
   rect(150, 150, 25, 25);
+}
+
+function mousePressed() {
+  // limpa tela
+  background(255, 255, 255);
 }

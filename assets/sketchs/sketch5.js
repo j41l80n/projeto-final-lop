@@ -4,7 +4,7 @@
 // var posicaoX = 0;
 // var posicaoY = 100;
 // var diametro = 50;
-
+var cor = 0;
 //definindo caracteristicas do personagem
 var personagem = {
   posicaoX:100,
@@ -14,15 +14,16 @@ var personagem = {
 
 function setup() {
   // funcao setup eh iniciada apenas uma vez
-  createCanvas(720, 480);
-  background(205, 155, 55);
+  createCanvas(600, 400);
+  background(0);
 }
 
 function draw() {
 // funcao draw eh repetida em loop infinito
 
+  cor = mouseX;
   //definindo cor de fundo
-  background(205, 155, 55);
+  background(cor);
 
   // usando as variaveis definidas previamente
   ellipse(199, 100, 50, 50);

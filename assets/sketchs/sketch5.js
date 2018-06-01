@@ -4,6 +4,7 @@
 // var posicaoX = 0;
 // var posicaoY = 100;
 // var diametro = 50;
+var randomico = random(0, 50);
 var cor = 0;
 var canvasX = 600;
 var canvasY = 400;
@@ -30,7 +31,7 @@ function draw() {
   background(cor);
 
   // usando as variaveis definidas previamente
-  ellipse(199, 100, 50, 50);
+    ellipse(199, 100, 50, 50);
 
   ellipse(mouseX, personagem.posicaoY, personagem.diametro, personagem.diametro);
   // incrementando a direcao de posicaoX para o deslocamento do personagem

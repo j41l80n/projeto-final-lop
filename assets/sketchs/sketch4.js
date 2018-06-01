@@ -1,7 +1,7 @@
 function setup() {
   // funcao setup eh iniciada apenas uma vez
-  createCanvas(480, 270);
-  // background(255, 255, 255);
+  createCanvas(720, 480);
+  background(205, 155, 55);
 }
 
 function draw() {

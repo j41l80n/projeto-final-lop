@@ -1,4 +1,6 @@
 // variaveis
+var canvasX = 600;
+var canvasY = 400;
 
 function setup() {
   // funcao setup eh iniciada apenas uma vez

@@ -13,6 +13,6 @@ function setup() {
 function draw() {
   // funcao draw eh repetida em loop infinito
 
-  //usando a variavel definida inicialmente
-  ellipse(circleX, 100, 50, 50);
+  // usando a variavel definida inicialmente
+  ellipse(circleX, 100, 50, 50); 
 }

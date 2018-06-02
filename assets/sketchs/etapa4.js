@@ -4,9 +4,14 @@ var canvasY = 400;
 
 var personagem;
 var obstaculo;
-var bulletImage
+var bala = false;
 
 var circle, explode, sleep, glitch;
+
+var x = 0;
+var y = 0;
+
+var taVivo;
 
 //definindo caracteristicas do personagem
 function Personagem() {
@@ -32,27 +37,41 @@ function Obstaculo() {
   }
 };
 
+//definindo caracteristicas do obstaculo
+function Bala() {
+  this.posicaoX = 450;
+  this.posicaoY = 200;
+  this.tamanhoX = 10;
+  this.tamanhoY = 10;
+
+  this.criar = function() {
+    // rectMode(CENTER);
+    ellipse(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
+  }
+};
+
 function setup() {
   // funcao setup eh iniciada apenas uma vez
   createCanvas(canvasX, canvasY);
-  createSprite(400, 200, 50, 50);
+  // createSprite(400, 200, 50, 50);
   // remove a seta do mouse
   //noCursor();
   personagem = new Personagem();
   obstaculo = new Obstaculo();
+  bala = new Bala();
 }
 
 function draw() {
   background(0);
-  drawSprites();
+
   // faz personagem andar para esquerda quando seta do teclado pessionada
   if (keyIsDown(LEFT_ARROW)) {
-    personagem.posicaoX -= 5;
+    personagem.posicaoX -= 4;
   }
 
   // faz personagem andar para direita quando seta do teclado pessionada
   if (keyIsDown(RIGHT_ARROW)) {
-    personagem.posicaoX += 5;
+    personagem.posicaoX += 4;
   }
 
   // personagem
@@ -67,5 +86,16 @@ function draw() {
   if (obstaculo.posicaoX < -120) {
     obstaculo.posicaoX = width;
     obstaculo.posicaoy = 200;
+  }
+
+  if (taVivo == true) {
+    bala.criar();
+
+    bala.posicaoX += 6;
+  }
+
+  if (mouseIsPressed) {
+    taVivo = true;
+    bala.posicaoX = personagem.posicaoX
   }
 }

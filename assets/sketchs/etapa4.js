@@ -94,8 +94,13 @@ function draw() {
     bala.posicaoX += 6;
   }
 
-  if (mouseIsPressed) {
-    taVivo = true;
-    bala.posicaoX = personagem.posicaoX
-  }
+  // if (mouseIsPressed) {
+  //   taVivo = true;
+  //   bala.posicaoX = personagem.posicaoX
+  // }
+}
+
+function mousePressed() {
+  taVivo = true;
+  bala.posicaoX = personagem.posicaoX
 }

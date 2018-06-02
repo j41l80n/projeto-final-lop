@@ -61,7 +61,8 @@ function draw() {
   obstaculo.posicaoX -= 1;
 
   // reseta a posicao do obstaculo
-  if (obstaculo.posicaoX < -100) {
+  if (obstaculo.posicaoX < -120) {
     obstaculo.posicaoX = width;
+    obstaculo.posicaoy = 200;
   }
 }

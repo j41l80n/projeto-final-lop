@@ -16,13 +16,16 @@ function draw() {
   // definindo cor do background
   background(0);
 
+  // faz personagem andar para esquerda quando seta do teclado pessionada
   if (keyIsDown(LEFT_ARROW)) {
     posicaoX -= 5;
   }
 
+  // faz personagem andar para direita quando seta do teclado pessionada
   if (keyIsDown(RIGHT_ARROW)) {
     posicaoX += 5;
   }
+
   // personagem
   ellipse(posicaoX, 200, 50, 50);
 

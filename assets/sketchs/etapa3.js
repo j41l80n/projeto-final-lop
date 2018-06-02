@@ -2,8 +2,8 @@
 var canvasX = 600;
 var canvasY = 400;
 
-var posicaoX = 150;
-var posicaoY = 0;
+// var posicaoX = 150;
+// var posicaoY = 0;
 
 var personagem;
 var obstaculo;
@@ -45,13 +45,11 @@ function draw() {
   // faz personagem andar para esquerda quando seta do teclado pessionada
   if (keyIsDown(LEFT_ARROW)) {
     personagem.posicaoX -= 5;
-    posicaoX -= 5;
   }
 
   // faz personagem andar para direita quando seta do teclado pessionada
   if (keyIsDown(RIGHT_ARROW)) {
     personagem.posicaoX += 5;
-    posicaoX += 5;
   }
 
   // personagem
@@ -59,19 +57,11 @@ function draw() {
 
   // obstaculo
   obstaculo.criar();
-}
+  obstaculo.posicaoY += random(-1, 1);
+  obstaculo.posicaoX -= 1;
 
-function star(x, y, radius1, radius2, npoints) {
-  var angle = TWO_PI / npoints;
-  var halfAngle = angle / 2.0;
-  beginShape();
-  for (var a = 0; a < TWO_PI; a += angle) {
-    var sx = x + cos(a) * radius2;
-    var sy = y + sin(a) * radius2;
-    vertex(sx, sy);
-    sx = x + cos(a + halfAngle) * radius1;
-    sy = y + sin(a + halfAngle) * radius1;
-    vertex(sx, sy);
+  // reseta a posicao do obstaculo
+  if (obstaculo.posicaoX < -100) {
+    obstaculo.posicaoX = width;
   }
-  endShape(CLOSE);
 }

@@ -85,19 +85,13 @@ function draw() {
   // reseta a posicao do obstaculo
   if (obstaculo.posicaoX < -120) {
     obstaculo.posicaoX = width;
-    obstaculo.posicaoy = 200;
+    obstaculo.posicaoY = 200;
   }
 
   if (taVivo == true) {
     bala.criar();
-
     bala.posicaoX += 6;
   }
-
-  // if (mouseIsPressed) {
-  //   taVivo = true;
-  //   bala.posicaoX = personagem.posicaoX
-  // }
 }
 
 function mousePressed() {

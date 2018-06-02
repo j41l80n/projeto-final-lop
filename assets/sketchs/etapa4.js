@@ -2,11 +2,11 @@
 var canvasX = 600;
 var canvasY = 400;
 
-// var posicaoX = 150;
-// var posicaoY = 0;
-
 var personagem;
 var obstaculo;
+var bulletImage
+
+var circle, explode, sleep, glitch;
 
 //definindo caracteristicas do personagem
 function Personagem() {
@@ -35,13 +35,16 @@ function Obstaculo() {
 function setup() {
   // funcao setup eh iniciada apenas uma vez
   createCanvas(canvasX, canvasY);
+  createSprite(400, 200, 50, 50);
+  // remove a seta do mouse
+  //noCursor();
   personagem = new Personagem();
   obstaculo = new Obstaculo();
 }
 
 function draw() {
   background(0);
-
+  drawSprites();
   // faz personagem andar para esquerda quando seta do teclado pessionada
   if (keyIsDown(LEFT_ARROW)) {
     personagem.posicaoX -= 5;

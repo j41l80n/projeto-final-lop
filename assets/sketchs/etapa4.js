@@ -2,8 +2,9 @@
 var canvasX = 600;
 var canvasY = 400;
 
-var xspeed = 10.8; // Speed of the shape
-var yspeed = 1.2; //
+var tamanhoPulo = 30;
+
+var xspeed = 10.8;
 
 var personagem;
 var obstaculo;
@@ -98,14 +99,6 @@ function draw() {
     bala.criar();
     bala.posicaoX += 6;
   }
-
-  // if (keyCode == UP_ARROW) {
-  //   for (var i = 0; i < 10; i++) {
-  //     personagem.posicaoY -= xspeed;
-  //
-  //     // /personagem.criar();
-  //  }
-  // }
 }
 
 function mousePressed() {
@@ -123,14 +116,3 @@ function keyReleased() {
   return false; // prevent any default behavior
 
 }
-
-// function keyPressed() {
-//   if (keyCode == UP_ARROW) {
-//     for (var i = 0; i < 30; i++) {
-//       personagem.posicaoY -= yspeed;
-//       frameRate(90);
-//       personagem.criar();
-//    }
-//   }
-//   frameRate(30);
-// }

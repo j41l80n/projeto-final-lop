@@ -2,6 +2,9 @@
 var canvasX = 600;
 var canvasY = 400;
 
+var xspeed = 10.8; // Speed of the shape
+var yspeed = 1.2; //
+
 var personagem;
 var obstaculo;
 var bala = false;
@@ -45,7 +48,6 @@ function Bala() {
   this.tamanhoY = 10;
 
   this.criar = function() {
-    // rectMode(CENTER);
     ellipse(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
   }
 };
@@ -54,8 +56,6 @@ function setup() {
   // funcao setup eh iniciada apenas uma vez
   createCanvas(canvasX, canvasY);
   // createSprite(400, 200, 50, 50);
-  // remove a seta do mouse
-  //noCursor();
   personagem = new Personagem();
   obstaculo = new Obstaculo();
   bala = new Bala();
@@ -74,6 +74,11 @@ function draw() {
     personagem.posicaoX += 4;
   }
 
+  // faz personagem andar para direita quando seta do teclado pessionada
+  if (keyIsDown(UP_ARROW)) {
+    personagem.posicaoY -= xspeed;
+  }
+
   // personagem
   personagem.criar();
 
@@ -81,6 +86,7 @@ function draw() {
   obstaculo.criar();
   obstaculo.posicaoY += random(-1, 1);
   obstaculo.posicaoX -= 1;
+
 
   // reseta a posicao do obstaculo
   if (obstaculo.posicaoX < -120) {
@@ -92,9 +98,39 @@ function draw() {
     bala.criar();
     bala.posicaoX += 6;
   }
+
+  // if (keyCode == UP_ARROW) {
+  //   for (var i = 0; i < 10; i++) {
+  //     personagem.posicaoY -= xspeed;
+  //
+  //     // /personagem.criar();
+  //  }
+  // }
 }
 
 function mousePressed() {
   taVivo = true;
-  bala.posicaoX = personagem.posicaoX
+  bala.posicaoX = personagem.posicaoX;
+  bala.posicaoY = personagem.posicaoY;
 }
+
+function keyReleased() {
+  if (keyCode == UP_ARROW) {
+    for (var i = 0; i < personagem.posicaoY; i++) {
+      personagem.posicaoY = 200;
+    }
+  }
+  return false; // prevent any default behavior
+
+}
+
+// function keyPressed() {
+//   if (keyCode == UP_ARROW) {
+//     for (var i = 0; i < 30; i++) {
+//       personagem.posicaoY -= yspeed;
+//       frameRate(90);
+//       personagem.criar();
+//    }
+//   }
+//   frameRate(30);
+// }

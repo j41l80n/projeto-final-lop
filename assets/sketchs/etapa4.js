@@ -60,6 +60,7 @@ function setup() {
   personagem = new Personagem();
   obstaculo = new Obstaculo();
   bala = new Bala();
+  smooth();
 }
 
 function draw() {
@@ -88,7 +89,6 @@ function draw() {
   obstaculo.posicaoY += random(-1, 1);
   obstaculo.posicaoX -= 1;
 
-
   // reseta a posicao do obstaculo
   if (obstaculo.posicaoX < -120) {
     obstaculo.posicaoX = width;
@@ -107,12 +107,21 @@ function mousePressed() {
   bala.posicaoY = personagem.posicaoY;
 }
 
+// function keyPressed() {
+//   if (keyCode == UP_ARROW) {
+//     for (var i = 0; i < 60; i++) {
+//       personagem.posicaoY -= i;
+//       personagem.criar();
+//    }
+//   }
+// }
+
 function keyReleased() {
   if (keyCode == UP_ARROW) {
-    for (var i = 0; i < personagem.posicaoY; i++) {
+    for (var i = 1; i <= 200; i++) {
+      frameRate(100);
       personagem.posicaoY = 200;
     }
   }
-  return false; // prevent any default behavior
-
+  return false;
 }

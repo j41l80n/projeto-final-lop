@@ -2,7 +2,7 @@
 var canvasX = 600;
 var canvasY = 400;
 
-var tamanhoPulo = 30;
+var ritgh = false;
 
 var xspeed = 10.8;
 
@@ -60,7 +60,7 @@ function setup() {
   personagem = new Personagem();
   obstaculo = new Obstaculo();
   bala = new Bala();
-  smooth();
+//  smooth();
 }
 
 function draw() {
@@ -74,12 +74,13 @@ function draw() {
   // faz personagem andar para direita quando seta do teclado pessionada
   if (keyIsDown(RIGHT_ARROW)) {
     personagem.posicaoX += 4;
+    ritgh = true;
   }
 
   // faz personagem andar para direita quando seta do teclado pessionada
-  if (keyIsDown(UP_ARROW)) {
-    personagem.posicaoY -= xspeed;
-  }
+  // if (keyIsDown(UP_ARROW)) {
+  //   personagem.posicaoY -= xspeed;
+  // }
 
   // personagem
   personagem.criar();
@@ -116,12 +117,12 @@ function mousePressed() {
 //   }
 // }
 
-function keyReleased() {
-  if (keyCode == UP_ARROW) {
-    for (var i = 1; i <= 200; i++) {
-      frameRate(100);
-      personagem.posicaoY = 200;
-    }
-  }
-  return false;
-}
+// function keyReleased() {
+//   if (keyCode == UP_ARROW) {
+//     for (var i = 1; i <= 200; i++) {
+//       personagem.posicaoY = i;
+//       personagem.posicaoX = i;
+//       personagem.criar();
+//     }
+//   }
+//}

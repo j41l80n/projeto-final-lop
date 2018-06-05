@@ -9,6 +9,8 @@ var nivel = 0;
 var balas = 0;
 var ritgh = false;
 
+let timer = 10;
+
 var xspeed = 10.8;
 
 var personagem;
@@ -72,9 +74,9 @@ function draw() {
   background(0);
   fill(255, 255, 255);
   text('Vidas: ' + vidas, 10, 30);
-  text('Balas: ' + balas, 100, 30);
-  text('Pontuação: ' + pontuacao, 190, 30);
-  text('Nivel: ' + nivel, 300, 30);
+  text('Balas: ' + balas, 90, 30);
+  text('Pontuação: ' + pontuacao, 170, 30);
+  text('Nivel: ' + nivel, 280, 30);
   // faz personagem andar para esquerda quando seta do teclado pessionada
   if (keyIsDown(LEFT_ARROW)) {
     personagem.posicaoX -= 4;
@@ -85,11 +87,6 @@ function draw() {
     personagem.posicaoX += 4;
     ritgh = true;
   }
-
-  // faz personagem andar para direita quando seta do teclado pessionada
-  // if (keyIsDown(UP_ARROW)) {
-  //   personagem.posicaoY -= xspeed;
-  // }
 
   // personagem
   personagem.criar();
@@ -108,6 +105,21 @@ function draw() {
   if (taVivo == true) {
     bala.criar();
     bala.posicaoX += 6;
+  }
+
+  if (frameCount % 60 == 0 && timer > 0) {
+    timer --;
+  }
+
+  fill(255, 255, 255);
+  text("Tempo: " + timer, 360, 30);
+
+  if (timer == 0) {
+  //  clear();
+    noLoop();
+    fill(255, 255, 255);
+
+    text("GAME OVER", width/2, height*0.8);
   }
 }
 

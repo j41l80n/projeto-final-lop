@@ -9,7 +9,7 @@ var nivel = 0;
 var balas = 0;
 var ritgh = false;
 
-let timer = 10;
+let tempo = 10;
 
 var xspeed = 10.8;
 
@@ -107,14 +107,14 @@ function draw() {
     bala.posicaoX += 6;
   }
 
-  if (frameCount % 60 == 0 && timer > 0) {
-    timer --;
+  if (frameCount % 60 == 0 && tempo > 0) {
+    tempo --;
   }
 
   fill(255, 255, 255);
-  text("Tempo: " + timer, 360, 30);
+  text("Tempo: " + tempo, 360, 30);
 
-  if (timer == 0) {
+  if (tempo == 0) {
   //  clear();
     noLoop();
     fill(255, 255, 255);

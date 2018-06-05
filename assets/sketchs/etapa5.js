@@ -11,18 +11,14 @@ var ritgh = false;
 
 let tempo = 10;
 
-var xspeed = 10.8;
-
 var personagem;
 var obstaculo;
 var bala = false;
 
-var circle, explode, sleep, glitch;
-
 var x = 0;
 var y = 0;
 
-var taVivo;
+var atirar;
 
 //definindo caracteristicas do personagem
 function Personagem() {
@@ -67,7 +63,7 @@ function setup() {
   personagem = new Personagem();
   obstaculo = new Obstaculo();
   bala = new Bala();
-//  smooth();
+  smooth();
 }
 
 function draw() {
@@ -102,29 +98,28 @@ function draw() {
     obstaculo.posicaoY = 200;
   }
 
-  if (taVivo == true) {
+  if (atirar == true) {
     bala.criar();
     bala.posicaoX += 6;
   }
 
   if (frameCount % 60 == 0 && tempo > 0) {
-    tempo --;
+    tempo--;
   }
 
   fill(255, 255, 255);
   text("Tempo: " + tempo, 360, 30);
 
   if (tempo == 0) {
-  //  clear();
     noLoop();
     fill(255, 255, 255);
 
-    text("GAME OVER", width/2, height*0.8);
+    text("GAME OVER", width / 2, height * 0.8);
   }
 }
 
 function mousePressed() {
-  taVivo = true;
+  atirar = true;
   bala.posicaoX = personagem.posicaoX;
   bala.posicaoY = personagem.posicaoY;
 }

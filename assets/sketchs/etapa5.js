@@ -2,6 +2,11 @@
 var canvasX = 600;
 var canvasY = 400;
 
+// variaveis que escreve na teclado
+var vidas = 0;
+var pontuacao = 0;
+var nivel = 0;
+
 var ritgh = false;
 
 var xspeed = 10.8;
@@ -64,8 +69,10 @@ function setup() {
 }
 
 function draw() {
-  background(0);
-
+  background(255);
+  text('Vidas: ' + vidas, 10, 30);
+  text('Pontuação: ' + pontuacao, 90, 30);
+  text('Nivel: ' + nivel, 210, 30);
   // faz personagem andar para esquerda quando seta do teclado pessionada
   if (keyIsDown(LEFT_ARROW)) {
     personagem.posicaoX -= 4;

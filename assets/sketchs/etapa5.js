@@ -18,9 +18,6 @@ var personagem;
 var obstaculo;
 var bala = false;
 
-var x = 0;
-var y = 0;
-
 var atirar;
 
 //definindo caracteristicas do personagem

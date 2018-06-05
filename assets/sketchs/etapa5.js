@@ -6,7 +6,7 @@ var canvasY = 400;
 var vidas = 0;
 var pontuacao = 0;
 var nivel = 0;
-
+var balas = 0;
 var ritgh = false;
 
 var xspeed = 10.8;
@@ -69,10 +69,12 @@ function setup() {
 }
 
 function draw() {
-  background(255);
+  background(0);
+  fill(255, 255, 255);
   text('Vidas: ' + vidas, 10, 30);
-  text('Pontuação: ' + pontuacao, 90, 30);
-  text('Nivel: ' + nivel, 210, 30);
+  text('Balas: ' + balas, 100, 30);
+  text('Pontuação: ' + pontuacao, 190, 30);
+  text('Nivel: ' + nivel, 300, 30);
   // faz personagem andar para esquerda quando seta do teclado pessionada
   if (keyIsDown(LEFT_ARROW)) {
     personagem.posicaoX -= 4;
@@ -114,22 +116,3 @@ function mousePressed() {
   bala.posicaoX = personagem.posicaoX;
   bala.posicaoY = personagem.posicaoY;
 }
-
-// function keyPressed() {
-//   if (keyCode == UP_ARROW) {
-//     for (var i = 0; i < 60; i++) {
-//       personagem.posicaoY -= i;
-//       personagem.criar();
-//    }
-//   }
-// }
-
-// function keyReleased() {
-//   if (keyCode == UP_ARROW) {
-//     for (var i = 1; i <= 200; i++) {
-//       personagem.posicaoY = i;
-//       personagem.posicaoX = i;
-//       personagem.criar();
-//     }
-//   }
-//}

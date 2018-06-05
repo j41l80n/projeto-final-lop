@@ -10,10 +10,10 @@ var balas = 13;
 var ritgh = false;
 
 let tempoJogo = 10;
-let tempoAtirar = 2;
+let tempoAtirar = 3;
 var gameOVer = false;
 var podeAtirar = true;
-
+var carregandoBalas = false;
 var personagem;
 var obstaculo;
 var bala = false;
@@ -124,15 +124,22 @@ function draw() {
 
   if (frameCount % 60 == 0 && tempoAtirar != 0 && podeAtirar == false) {
     tempoAtirar--;
+    carregandoBalas = true;
   }
 
-  fill(255, 0, 0);
-  text("recarregando ... " + tempoAtirar, 450, 30);
+  if (carregandoBalas) {
+    fill(255, 0, 0);
+    text("recarregando ... " + tempoAtirar, 450, 30);
+  }
 
   if (tempoAtirar == 0) {
     podeAtirar = true;
     tempoAtirar = 4;
     balas = 13;
+  }
+
+  if (tempoAtirar == 4) {
+    carregandoBalas = false;
   }
 }
 

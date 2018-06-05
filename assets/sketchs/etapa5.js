@@ -6,10 +6,13 @@ var canvasY = 400;
 var vidas = 0;
 var pontuacao = 0;
 var nivel = 0;
-var balas = 0;
+var balas = 13;
 var ritgh = false;
 
-let tempo = 10;
+let tempoJogo = 10;
+let tempoAtirar = 2;
+var gameOVer = false;
+var podeAtirar = true;
 
 var personagem;
 var obstaculo;
@@ -37,7 +40,7 @@ function Obstaculo() {
   this.posicaoY = 200;
   this.tamanhoX = 50;
   this.tamanhoY = 50;
-
+  this.velocidade = 1;
   this.criar = function() {
     rectMode(CENTER);
     rect(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
@@ -53,6 +56,7 @@ function Bala() {
 
   this.criar = function() {
     ellipse(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
+    // sphere(this.tamanhoX);
   }
 };
 
@@ -90,7 +94,7 @@ function draw() {
   // obstaculo
   obstaculo.criar();
   obstaculo.posicaoY += random(-1, 1);
-  obstaculo.posicaoX -= 1;
+  obstaculo.posicaoX -= obstaculo.velocidade;
 
   // reseta a posicao do obstaculo
   if (obstaculo.posicaoX < -120) {
@@ -103,23 +107,48 @@ function draw() {
     bala.posicaoX += 6;
   }
 
-  if (frameCount % 60 == 0 && tempo > 0) {
-    tempo--;
+  if (frameCount % 60 == 0 && tempoJogo > 0) {
+    tempoJogo--;
   }
 
   fill(255, 255, 255);
-  text("Tempo: " + tempo, 360, 30);
+  text("Tempo: " + tempoJogo, 360, 30);
 
-  if (tempo == 0) {
+  if (tempoJogo == 0) {
     noLoop();
     fill(255, 255, 255);
+    text("G A M E  O V E R", width / 2, height * 0.8);
+    gameOVer = true;
+  }
 
-    text("GAME OVER", width / 2, height * 0.8);
+  if (balas == 0) {
+    podeAtirar = false;
+  }
+
+  if (frameCount % 60 == 0 && tempoAtirar != 0 && podeAtirar == false) {
+    tempoAtirar--;
+  }
+
+  fill(255, 0, 0);
+  text("recarregando ... " + tempoAtirar, 450, 30);
+
+  if (tempoAtirar == 0) {
+    podeAtirar = true;
+    tempoAtirar = 4;
+    balas = 13;
   }
 }
 
 function mousePressed() {
-  atirar = true;
-  bala.posicaoX = personagem.posicaoX;
-  bala.posicaoY = personagem.posicaoY;
+  if (podeAtirar) {
+    atirar = true;
+    bala.posicaoX = personagem.posicaoX;
+    bala.posicaoY = personagem.posicaoY;
+    balas--;
+  }
+
+  if (gameOVer) {
+    tempoJogo = 15;
+    loop();
+  }
 }

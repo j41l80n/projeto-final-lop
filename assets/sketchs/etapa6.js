@@ -102,21 +102,12 @@ function draw() {
     obstaculoArray[i].posicaoY += random(-1, 1);
     obstaculoArray[i].posicaoX -= obstaculoArray[i].velocidade;
   }
-  //  obstaculo.criar();
-  // obstaculo.posicaoY += random(-1, 1);
-  // obstaculo.posicaoX -= obstaculo.velocidade;
 
   // reseta a posicao do obstaculo
   if (obstaculoArray[0].posicaoX < -120) {
     obstaculoArray[0].posicaoX = width;
     obstaculoArray[0].posicaoY = 200;
     obstaculoArray.push(new Obstaculo());
-
-    // obstaculoArray[0].criar();
-    // obstaculoArray[0].posicaoX+= 30;
-
-    console.log("obstaculoArray[0].posicaoX" + obstaculoArray[0].posicaoX);
-
   }
 
   if (atirar == true) {
@@ -125,7 +116,7 @@ function draw() {
   }
 
   if (frameCount % 60 == 0 && tempoJogo > 0) {
-    //  tempoJogo--;
+     tempoJogo--;
   }
 
   fill(255, 255, 255);

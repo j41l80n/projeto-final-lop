@@ -108,6 +108,7 @@ function draw() {
     obstaculoArray[0].posicaoX = width;
     obstaculoArray[0].posicaoY = 200;
     obstaculoArray.push(new Obstaculo());
+    obstaculoArray[obstaculoArray.length-1].velocidade+=1.03;
   }
 
   if (atirar == true) {
@@ -116,7 +117,7 @@ function draw() {
   }
 
   if (frameCount % 60 == 0 && tempoJogo > 0) {
-     tempoJogo--;
+     // tempoJogo--;
   }
 
   fill(255, 255, 255);

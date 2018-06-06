@@ -15,12 +15,12 @@ var gameOVer = false;
 var podeAtirar = true;
 var carregandoBalas = false;
 var personagem;
-var obstaculo = [];
+var obstaculo;
+var obstaculoArray = new Array();
 var bala = false;
 
 var atirar;
-var ghostRed;
-
+var ghostRed
 
 //definindo caracteristicas do personagem
 function Personagem() {
@@ -66,15 +66,10 @@ function preload() {
 function setup() {
   // funcao setup eh iniciada apenas uma vez
   createCanvas(canvasX, canvasY);
-  // createSprite(400, 200, 50, 50);
   personagem = new Personagem();
-  obstaculo = new Obstaculo();
-  // obstaculo.push(new Obstaculo());
+  obstaculoArray.push(new Obstaculo());
+  obstaculoArray[0].criar();
   bala = new Bala();
-
-  createSprite(400, 200, 50, 50);
-
-  smooth();
 }
 
 function draw() {
@@ -101,14 +96,27 @@ function draw() {
   personagem.criar();
 
   // obstaculo
-  obstaculo.criar();
-  obstaculo.posicaoY += random(-1, 1);
-  obstaculo.posicaoX -= obstaculo.velocidade;
+  for (var i = 0; i < obstaculoArray.length; i++) {
+    obstaculoArray[i].criar();
+    // obstaculoArray[i].posicaoX += 30;
+    obstaculoArray[i].posicaoY += random(-1, 1);
+    obstaculoArray[i].posicaoX -= obstaculoArray[i].velocidade;
+  }
+  //  obstaculo.criar();
+  // obstaculo.posicaoY += random(-1, 1);
+  // obstaculo.posicaoX -= obstaculo.velocidade;
 
   // reseta a posicao do obstaculo
-  if (obstaculo.posicaoX < -120) {
-    obstaculo.posicaoX = width;
-    obstaculo.posicaoY = 200;
+  if (obstaculoArray[0].posicaoX < -120) {
+    obstaculoArray[0].posicaoX = width;
+    obstaculoArray[0].posicaoY = 200;
+    obstaculoArray.push(new Obstaculo());
+
+    // obstaculoArray[0].criar();
+    // obstaculoArray[0].posicaoX+= 30;
+
+    console.log("obstaculoArray[0].posicaoX" + obstaculoArray[0].posicaoX);
+
   }
 
   if (atirar == true) {
@@ -117,7 +125,7 @@ function draw() {
   }
 
   if (frameCount % 60 == 0 && tempoJogo > 0) {
-    tempoJogo--;
+    //  tempoJogo--;
   }
 
   fill(255, 255, 255);
@@ -141,13 +149,13 @@ function draw() {
 
   if (carregandoBalas) {
     fill(255, 0, 0);
-    text("r e c a r r e g a n d o ... " + tempoAtirar, 450, 30);
+    text("r e C a r r e g a n d o ... " + tempoAtirar, 450, 30);
   }
 
   if (tempoAtirar == 0) {
     podeAtirar = true;
     tempoAtirar = 4;
-    balas = 13;
+    balas = 7;
   }
 
   if (tempoAtirar == 4) {
@@ -158,7 +166,7 @@ function draw() {
 function mousePressed() {
   if (podeAtirar) {
     atirar = true;
-    bala.posicaoX = personagem.posicaoX+30;
+    bala.posicaoX = personagem.posicaoX + 30;
     bala.posicaoY = personagem.posicaoY;
     balas--;
   }

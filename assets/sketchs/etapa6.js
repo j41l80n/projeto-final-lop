@@ -6,7 +6,7 @@ var canvasY = 400;
 var vidas = 3;
 var pontuacao = 0;
 var nivel = 1;
-var balas = 13;
+var balas = 7;
 var ritgh = false;
 
 let tempoJogo = 10;
@@ -34,6 +34,18 @@ function Personagem() {
 };
 
 //definindo caracteristicas do obstaculo
+function Obstaculo() {
+  this.posicaoX = 450;
+  this.posicaoY = 200;
+  this.tamanhoX = 50;
+  this.tamanhoY = 50;
+  this.velocidade = 1;
+  this.criar = function() {
+    rectMode(CENTER);
+    rect(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
+  }
+};
+
 function Bala() {
   this.posicaoX = 450;
   this.posicaoY = 200;
@@ -56,8 +68,8 @@ function setup() {
   createCanvas(canvasX, canvasY);
   // createSprite(400, 200, 50, 50);
   personagem = new Personagem();
-  // obstaculo = new Obstaculo();
-  obstaculo.push(new Obstaculo());
+  obstaculo = new Obstaculo();
+  // obstaculo.push(new Obstaculo());
   bala = new Bala();
 
   createSprite(400, 200, 50, 50);
@@ -66,12 +78,14 @@ function setup() {
 }
 
 function draw() {
-  background(255);
+  background(0);
+
   fill(255, 255, 255);
   text('Vidas: ' + vidas, 10, 30);
   text('Balas: ' + balas, 90, 30);
   text('Pontuação: ' + pontuacao, 170, 30);
   text('Nivel: ' + nivel, 280, 30);
+
   // faz personagem andar para esquerda quando seta do teclado pessionada
   if (keyIsDown(LEFT_ARROW)) {
     personagem.posicaoX -= 4;
@@ -87,13 +101,9 @@ function draw() {
   personagem.criar();
 
   // obstaculo
-
-  // display pacman
-  obstaculo[0].display();
-
-  // obstaculo.criar();
-  // obstaculo.posicaoY += random(-1, 1);
-  // obstaculo.posicaoX -= obstaculo.velocidade;
+  obstaculo.criar();
+  obstaculo.posicaoY += random(-1, 1);
+  obstaculo.posicaoX -= obstaculo.velocidade;
 
   // reseta a posicao do obstaculo
   if (obstaculo.posicaoX < -120) {
@@ -131,7 +141,7 @@ function draw() {
 
   if (carregandoBalas) {
     fill(255, 0, 0);
-    text("recarregando ... " + tempoAtirar, 450, 30);
+    text("r e c a r r e g a n d o ... " + tempoAtirar, 450, 30);
   }
 
   if (tempoAtirar == 0) {
@@ -148,7 +158,7 @@ function draw() {
 function mousePressed() {
   if (podeAtirar) {
     atirar = true;
-    bala.posicaoX = personagem.posicaoX;
+    bala.posicaoX = personagem.posicaoX+30;
     bala.posicaoY = personagem.posicaoY;
     balas--;
   }
@@ -157,32 +167,4 @@ function mousePressed() {
     tempoJogo = 15;
     loop();
   }
-}
-
-//definindo caracteristicas do obstaculo
-function Obstaculo() {
-  this.posicaoX = 450;
-  this.posicaoY = 200;
-  this.tamanhoX = 50;
-  this.tamanhoY = 50;
-  this.velocidade = 1;
-  this.criar = function() {
-    rectMode(CENTER);
-    rect(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
-  }
-};
-
-Obstaculo.prototype.display = function()
-{
-  imageMode(CENTER);
-
-  // show different color ghost based on it's random 'type' value
-  switch(this.type)
-  {
-    case 1: image(ghostRed, this.xpos, this.ypos, 42, 44); break;
-    case 2: image(ghostRed, this.xpos, this.ypos, 42, 44); break;
-    case 3: image(ghostRed, this.xpos, this.ypos, 42, 44); break;
-    case 4: image(ghostRed, this.xpos, this.ypos, 42, 44); break;
-  }
-  this.ypos = this.ypos + this.speed;
 }

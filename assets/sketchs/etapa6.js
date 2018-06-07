@@ -42,7 +42,8 @@ function Obstaculo() {
   this.tamanhoY = 30;
   this.velocidade = 1;
   this.display = function() {
-    rectMode(CENTER);
+    // rectMode(CENTER);
+    rectMode(CORNER);
     rect(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
   }
 };
@@ -159,17 +160,19 @@ function draw() {
 
   //frameRate(90);
   //collidePointCircle(pointX, pointY, circleX, circleY, diameter)
-  hit = collidePointCircle(obstaculoArray[0].posicaoX, obstaculoArray[0].posicaoY, bala.posicaoX, bala.posicaoY, 10);
+  // hit = collideRectCircle(obstaculoArray[0].posicaoX, obstaculoArray[0].posicaoY, bala.posicaoX, bala.posicaoY, bala.tamanhoX);
+  hit = collideRectCircle(obstaculoArray[0].posicaoX+10, obstaculoArray[0].posicaoY, 30, 30, bala.posicaoX, bala.posicaoY, 1);
   if (hit) {
     // obstaculoArray[0].remove();
     //obstaculoArray.splice(0, 1);
     //delete array[i];
-    noLoop();
+    //noLoop();
     alert('teste');
   }
 
-  console.log('obstaculoArray: ' + obstaculoArray[0].posicaoX);
-  console.log('bala.posicaoX: ' + bala.posicaoX);
+  console.log('hit: ' + hit);
+  console.log('obstaculoArray[0].posicaoX: ' + obstaculoArray[0].posicaoX);
+  console.log('obstaculoArray[0].posicaoY: ' + obstaculoArray[0].posicaoY);
 }
 
 function mousePressed() {

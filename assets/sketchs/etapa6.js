@@ -26,9 +26,9 @@ var ghostRed
 function Personagem() {
   this.posicaoX = 100;
   this.posicaoY = 200;
-  this.diametro = 50;
+  this.diametro = 30;
 
-  this.criar = function() {
+  this.diaplay = function() {
     ellipse(this.posicaoX, this.posicaoY, this.diametro, this.diametro);
   }
 };
@@ -37,24 +37,23 @@ function Personagem() {
 function Obstaculo() {
   this.posicaoX = 450;
   this.posicaoY = 200;
-  this.tamanhoX = 50;
-  this.tamanhoY = 50;
+  this.tamanhoX = 30;
+  this.tamanhoY = 30;
   this.velocidade = 1;
-  this.criar = function() {
+  this.diaplay = function() {
     rectMode(CENTER);
     rect(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
   }
 };
 
 function Bala() {
-  this.posicaoX = 450;
+  this.posicaoX = 100;
   this.posicaoY = 200;
-  this.tamanhoX = 10;
-  this.tamanhoY = 10;
+  this.tamanhoX = 5;
+  this.tamanhoY = 5;
 
-  this.criar = function() {
+  this.diaplay = function() {
     ellipse(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
-    // sphere(this.tamanhoX);
   }
 };
 
@@ -65,10 +64,12 @@ function preload() {
 
 function setup() {
   // funcao setup eh iniciada apenas uma vez
+  //window.innerWidth
+  //window.innerHeight
   createCanvas(canvasX, canvasY);
   personagem = new Personagem();
   obstaculoArray.push(new Obstaculo());
-  obstaculoArray[0].criar();
+  obstaculoArray[0].diaplay();
   bala = new Bala();
 }
 
@@ -93,11 +94,11 @@ function draw() {
   }
 
   // personagem
-  personagem.criar();
+  personagem.diaplay();
 
   // obstaculo
   for (var i = 0; i < obstaculoArray.length; i++) {
-    obstaculoArray[i].criar();
+    obstaculoArray[i].diaplay();
     // obstaculoArray[i].posicaoX += 30;
     obstaculoArray[i].posicaoY += random(-1, 1);
     obstaculoArray[i].posicaoX -= obstaculoArray[i].velocidade;
@@ -108,16 +109,16 @@ function draw() {
     obstaculoArray[0].posicaoX = width;
     obstaculoArray[0].posicaoY = 200;
     obstaculoArray.push(new Obstaculo());
-    obstaculoArray[obstaculoArray.length-1].velocidade+=1.03;
+    obstaculoArray[obstaculoArray.length - 1].velocidade += 1.03;
   }
 
   if (atirar == true) {
-    bala.criar();
-    bala.posicaoX += 6;
+    bala.diaplay();
+    bala.posicaoX += 1;
   }
 
   if (frameCount % 60 == 0 && tempoJogo > 0) {
-     // tempoJogo--;
+    // tempoJogo--;
   }
 
   fill(255, 255, 255);
@@ -144,6 +145,7 @@ function draw() {
     text("r e C a r r e g a n d o ... " + tempoAtirar, 450, 30);
   }
 
+
   if (tempoAtirar == 0) {
     podeAtirar = true;
     tempoAtirar = 4;
@@ -153,10 +155,24 @@ function draw() {
   if (tempoAtirar == 4) {
     carregandoBalas = false;
   }
+
+  frameRate(30);
+  if (bala.posicaoX == obstaculoArray[0].posicaoX) {
+    // obstaculoArray[0].remove();
+    //obstaculoArray.splice(0, 1);
+    //delete array[i];
+    noLoop();
+    alert('teste');
+  }
+
+  console.log('obstaculoArray: ' + obstaculoArray[0].posicaoX);
+  console.log('bala.posicaoX: ' + bala.posicaoX);
 }
 
 function mousePressed() {
   if (podeAtirar) {
+    console.log('obstaculoArray: ' + obstaculoArray[0].posicaoX);
+    console.log('bala.posicaoX: ' + bala.posicaoX);
     atirar = true;
     bala.posicaoX = personagem.posicaoX + 30;
     bala.posicaoY = personagem.posicaoY;

@@ -28,7 +28,8 @@ function Personagem() {
   this.posicaoY = 200;
   this.diametro = 30;
 
-  this.diaplay = function() {
+  this.display = function() {
+    ellipseMode(CENTER);
     ellipse(this.posicaoX, this.posicaoY, this.diametro, this.diametro);
   }
 };
@@ -40,7 +41,7 @@ function Obstaculo() {
   this.tamanhoX = 30;
   this.tamanhoY = 30;
   this.velocidade = 1;
-  this.diaplay = function() {
+  this.display = function() {
     rectMode(CENTER);
     rect(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
   }
@@ -52,7 +53,7 @@ function Bala() {
   this.tamanhoX = 5;
   this.tamanhoY = 5;
 
-  this.diaplay = function() {
+  this.display = function() {
     ellipse(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
   }
 };
@@ -69,7 +70,7 @@ function setup() {
   createCanvas(canvasX, canvasY);
   personagem = new Personagem();
   obstaculoArray.push(new Obstaculo());
-  obstaculoArray[0].diaplay();
+  obstaculoArray[0].display();
   bala = new Bala();
 }
 
@@ -94,11 +95,11 @@ function draw() {
   }
 
   // personagem
-  personagem.diaplay();
+  personagem.display();
 
   // obstaculo
   for (var i = 0; i < obstaculoArray.length; i++) {
-    obstaculoArray[i].diaplay();
+    obstaculoArray[i].display();
     // obstaculoArray[i].posicaoX += 30;
     obstaculoArray[i].posicaoY += random(-1, 1);
     obstaculoArray[i].posicaoX -= obstaculoArray[i].velocidade;
@@ -109,12 +110,12 @@ function draw() {
     obstaculoArray[0].posicaoX = width;
     obstaculoArray[0].posicaoY = 200;
     obstaculoArray.push(new Obstaculo());
-    obstaculoArray[obstaculoArray.length - 1].velocidade += 1.03;
+    obstaculoArray[obstaculoArray.length - 1].velocidade += 1;
   }
 
   if (atirar == true) {
-    bala.diaplay();
-    bala.posicaoX += 1;
+    bala.display();
+    bala.posicaoX += 4;
   }
 
   if (frameCount % 60 == 0 && tempoJogo > 0) {
@@ -156,8 +157,10 @@ function draw() {
     carregandoBalas = false;
   }
 
-  frameRate(30);
-  if (bala.posicaoX == obstaculoArray[0].posicaoX) {
+  //frameRate(90);
+  //collidePointCircle(pointX, pointY, circleX, circleY, diameter)
+  hit = collidePointCircle(obstaculoArray[0].posicaoX, obstaculoArray[0].posicaoY, bala.posicaoX, bala.posicaoy, 200);
+  if (hit) {
     // obstaculoArray[0].remove();
     //obstaculoArray.splice(0, 1);
     //delete array[i];

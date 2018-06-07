@@ -159,7 +159,7 @@ function draw() {
 
   //frameRate(90);
   //collidePointCircle(pointX, pointY, circleX, circleY, diameter)
-  hit = collidePointCircle(obstaculoArray[0].posicaoX, obstaculoArray[0].posicaoY, bala.posicaoX, bala.posicaoy, 200);
+  hit = collidePointCircle(obstaculoArray[0].posicaoX, obstaculoArray[0].posicaoY, bala.posicaoX, bala.posicaoY, 10);
   if (hit) {
     // obstaculoArray[0].remove();
     //obstaculoArray.splice(0, 1);

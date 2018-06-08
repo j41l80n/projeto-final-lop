@@ -23,6 +23,7 @@ var balaArray = new Array();;
 var atirar;
 var ghostRed;
 
+var bg;
 function preload() {
   //ghostRed = loadImage('/assets/img/ghost.png');
   //font = loadFont('assets/SourceSansPro-Regular.otf');
@@ -32,15 +33,16 @@ function setup() {
   // funcao setup eh iniciada apenas uma vez
   //window.innerWidth
   //window.innerHeight
-  createCanvas(canvasX, canvasY);
   personagem = new Personagem();
   obstaculoArray.push(new Obstaculo());
   obstaculoArray[0].display();
+  bg= loadImage('assets/img/maxresdefault.jpg');
+  createCanvas(canvasX, canvasY);
 }
 
 function draw() {
   // define o backgroung para preto
-  background(0);
+  background(bg);
   // mostra posicao atual no personagem
   personagem.display();
   // realiza contador decressivo de tmepo
@@ -50,6 +52,8 @@ function draw() {
   // movimentacao dos Obstaculos
   movimentacaoObstaculos();
 
+  finalJogo();
+
   poderFogo();
 
   indicadoresInformacao();
@@ -58,7 +62,6 @@ function draw() {
 
   colisaoObstaculoPersonagem();
 
-  gameOVer();
 } // fim draw
 
 //definindo caracteristicas do personagem
@@ -163,14 +166,16 @@ function resetaMovimentacaoObstaculo() {
   }
 }
 
-function colisaoBalaObstaculo(){
+function colisaoBalaObstaculo() {
   if (balaArray.length > 0) {
     for (var i = 0; i < balaArray.length; i++) {
       for (var j = 0; j < obstaculoArray.length; j++) {
         let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 2);
         if (hit) {
+          console.log('teste');
           pontuacao++;
           balaArray.splice(i, 1);
+          console.log('teste2s');
           obstaculoArray.splice(j, 1);
         } // fim if
       } // fim for
@@ -188,27 +193,28 @@ function colisaoObstaculoPersonagem() {
   } // fim for
 }
 
-function gameOVer() {
+function finalJogo() {
+  fill(255, 255, 255);
+
   if (obstaculoArray.length == 0) {
-    fill(255, 255, 255);
     text("P A R A B É N S\n\teliminação completa da ameaça", width / 2, height * 0.8);
-    fimJogo = true;
-    noLoop();
+    gameOVer();
   }
 
   if (vidas == 0) {
-    noLoop();
-    fill(255, 255, 255);
     text("G A M E  O V E R\n\tsem mais chances", width / 2, height * 0.8);
-    fimJogo = true;
+    gameOVer();
   }
 
   if (tempoJogo == 0) {
-    noLoop();
-    fill(255, 255, 255);
     text("G A M E  O V E R\n\tmorte por tempo", width / 2, height * 0.8);
-    fimJogo = true;
+    gameOVer();
   }
+}
+
+function gameOVer() {
+  noLoop();
+  fimJogo = true;
 }
 
 function poderFogo() {

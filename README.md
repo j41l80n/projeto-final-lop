@@ -12,9 +12,9 @@ Para esse projeto, foi utlizado o editor de texto Atom com seguintes pacotes:
 * minimap
 
 ### Estrutura o projeto
-Após o download do arquivo no repositório, descompacte o arquivo e entre na pasta descompactada.
+Após o download do arquivo no repositório, descompacte e entre na pasta descompactada.
 
-Na pasta irá conter os arquivo index.html,README.md e a pasta assets, a qual temm todos os arquivos necessários.
+Na pasta irá conter os arquivo index.html,README.md e a pasta assets, a qual tem todos os arquivos necessários.
 
 Há três seções no arquivo index.
 

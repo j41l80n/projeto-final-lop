@@ -78,6 +78,7 @@ function setup() {
 
 function draw() {
   background(0);
+
   personagem.display();
 
   fill(255, 255, 255);
@@ -97,7 +98,7 @@ function draw() {
     ritgh = true;
   }
 
-  // obstaculo
+  // obstaculos
   for (var i = 0; i < obstaculoArray.length; i++) {
     obstaculoArray[i].display();
     obstaculoArray[i].posicaoY += random(-1, 1);
@@ -122,16 +123,23 @@ function draw() {
   }
 
   if (frameCount % 60 == 0 && tempoJogo > 0) {
-    // tempoJogo--;
+    tempoJogo--;
   }
 
   fill(255, 255, 255);
   text("Tempo: " + tempoJogo, 360, 30);
 
-  if (tempoJogo == 0 || vidas == 0) {
+  if (vidas == 0) {
     noLoop();
     fill(255, 255, 255);
-    text("G A M E  O V E R", width / 2, height * 0.8);
+    text("G A M E  O V E R\n\tsem mais chances", width / 2, height * 0.8);
+    gameOVer = true;
+  }
+
+  if (tempoJogo == 0) {
+    noLoop();
+    fill(255, 255, 255);
+    text("G A M E  O V E R\n\tmorte por tempo", width / 2, height * 0.8);
     gameOVer = true;
   }
 
@@ -163,59 +171,15 @@ function draw() {
   }
 
   if (obstaculoArray.length == 0) {
-    noLoop();
     fill(255, 255, 255);
-    text("P A R A B É N S\neliminação completa da ameaça", width / 2, height * 0.8);
+    text("P A R A B É N S\n\teliminação completa da ameaça", width / 2, height * 0.8);
     gameOVer = true;
+    noLoop();
   }
 
-  //pontuacao();
-  if (balaArray.length > 0) {
-    for (var i = 0; i < balaArray.length; i++) {
-      for (var j = 0; j < obstaculoArray.length; j++) {
-        let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 2);
-        if (hit) {
-          pontuacao++;
-          balaArray.splice(i, 1);
-          obstaculoArray.splice(j, 1);
-        } // fim if
-      } // fim for
-    } // fim for
-  } // fim if
-
-  for (var i = 0; i < obstaculoArray.length; i++) {
-    let hit = collideRectCircle(obstaculoArray[i].posicaoX + 10, obstaculoArray[i].posicaoY, 30, 30, personagem.posicaoX, personagem.posicaoY, 5);
-    if (hit) {
-      vidas--;
-      obstaculoArray.splice(i, 1);
-      // if (vidas > 0 && obstaculoArray.length == 0) {
-      //   fill(255, 255, 255);
-      //   obstaculoArray.splice(j, 1);
-      //   text("WIN", width / 2, height * 0.8);
-      //   noLoop();
-      // } // fim if
-    } // fim if
-  } // fim for
-
-  // stroke(255);
-  // line(10, 75, width-10, 75);
-  // 
+  colisaoBalaObstaculo();
+  colisaoObstaculoPersonagem();
 } // fim draw
-
-function pontuacao() {
-  if (balaArray.length > 0) {
-    for (var i = 0; i < balaArray.length; i++) {
-      for (var j = 0; j < obstaculoArray.length; j++) {
-        let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 2);
-        if (hit) {
-          pontuacao++;
-          balaArray.splice(i, 1);
-          obstaculoArray.splice(j, 1);
-        } // fim if
-      } // fim for
-    } // fim for
-  } // fim if
-} // fim pontuacao
 
 function mousePressed() {
   if (podeAtirar) {
@@ -225,7 +189,34 @@ function mousePressed() {
   }
 
   if (gameOVer) {
-    tempoJogo = 15;
-    loop();
+    atirar = false;
+    podeAtirar = false;
+    // tempoJogo = 15;
+    // loop();
   }
+}
+
+function colisaoBalaObstaculo(){
+  if (balaArray.length > 0) {
+    for (var i = 0; i < balaArray.length; i++) {
+      for (var j = 0; j < obstaculoArray.length; j++) {
+        let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 2);
+        if (hit) {
+          pontuacao++;
+          balaArray.splice(i, 1);
+          obstaculoArray.splice(j, 1);
+        } // fim if
+      } // fim for
+    } // fim for
+  } // fim if
+} // fim function
+
+function colisaoObstaculoPersonagem() {
+  for (var i = 0; i < obstaculoArray.length; i++) {
+    let hit = collideRectCircle(obstaculoArray[i].posicaoX + 10, obstaculoArray[i].posicaoY, 30, 30, personagem.posicaoX, personagem.posicaoY, 5);
+    if (hit) {
+      vidas--;
+      obstaculoArray.splice(i, 1);
+    } // fim if
+  } // fim for
 }

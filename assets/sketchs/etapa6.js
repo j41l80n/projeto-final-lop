@@ -15,12 +15,14 @@ var gameOVer = false;
 var podeAtirar = true;
 var carregandoBalas = false;
 var personagem;
+
 var obstaculo;
 var obstaculoArray = new Array();
-var bala = false;
+
+var balaArray = new Array();;
 
 var atirar;
-var ghostRed
+var ghostRed;
 
 //definindo caracteristicas do personagem
 function Personagem() {
@@ -48,9 +50,9 @@ function Obstaculo() {
   }
 };
 
-function Bala() {
-  this.posicaoX = 0;
-  this.posicaoY = 0;
+function Bala(x, y) {
+  this.posicaoX = x;
+  this.posicaoY = y;
   this.tamanhoX = 5;
   this.tamanhoY = 5;
 
@@ -60,7 +62,7 @@ function Bala() {
 };
 
 function preload() {
-  ghostRed = loadImage('/assets/img/ghost.png');
+  //ghostRed = loadImage('/assets/img/ghost.png');
   //font = loadFont('assets/SourceSansPro-Regular.otf');
 }
 
@@ -72,7 +74,7 @@ function setup() {
   personagem = new Personagem();
   obstaculoArray.push(new Obstaculo());
   obstaculoArray[0].display();
-  bala = new Bala();
+  //bala = new Bala();
 }
 
 function draw() {
@@ -114,8 +116,11 @@ function draw() {
   }
 
   if (atirar == true) {
-    bala.display();
-    bala.posicaoX += 4;
+    for (var i = 0; i < balaArray.length; i++) {
+      balaArray[i].display();
+      balaArray[i].posicaoX += 4;
+    }
+    console.log('balaArray.length ' + balaArray.length);
   }
 
   if (frameCount % 60 == 0 && tempoJogo > 0) {
@@ -144,6 +149,9 @@ function draw() {
   if (carregandoBalas) {
     fill(255, 0, 0);
     text("r e C a r r e g a n d o ... " + tempoAtirar, 450, 30);
+    while (balaArray.length > 0) {
+      balaArray.pop();
+    }
   }
 
   if (tempoAtirar == 0) {
@@ -157,18 +165,22 @@ function draw() {
   }
 
   //frameRate(90);
-  hit = collideRectCircle(obstaculoArray[0].posicaoX+10, obstaculoArray[0].posicaoY, 30, 30, bala.posicaoX, bala.posicaoY, 2);
+  let hit;
+  if (balaArray.length > 0) {
+    hit = collideRectCircle(obstaculoArray[0].posicaoX + 10, obstaculoArray[0].posicaoY, 30, 30, balaArray[0].posicaoX, balaArray[0].posicaoY, 2);
+  }
   if (hit) {
     pontuacao++;
     obstaculoArray.splice(0, 1);
   }
 }
 
+
+
 function mousePressed() {
   if (podeAtirar) {
     atirar = true;
-    bala.posicaoX = personagem.posicaoX + 30;
-    bala.posicaoY = personagem.posicaoY;
+    balaArray.push(new Bala(personagem.posicaoX, personagem.posicaoY));
     balas--;
   }
 

@@ -119,7 +119,6 @@ function draw() {
       balaArray[i].display();
       balaArray[i].posicaoX += 5;
     }
-    console.log('balaArray.length ' + balaArray.length);
   }
 
   if (frameCount % 60 == 0 && tempoJogo > 0) {
@@ -129,7 +128,7 @@ function draw() {
   fill(255, 255, 255);
   text("Tempo: " + tempoJogo, 360, 30);
 
-  if (tempoJogo == 0) {
+  if (tempoJogo == 0 || vidas == 0) {
     noLoop();
     fill(255, 255, 255);
     text("G A M E  O V E R", width / 2, height * 0.8);
@@ -185,10 +184,10 @@ function draw() {
   } // fim if
 
   for (var i = 0; i < obstaculoArray.length; i++) {
-    let hit = collideRectCircle(obstaculoArray[i].posicaoX + 10, obstaculoArray[i].posicaoY, 30, 30, personagem.posicaoX, personagem.posicaoY, 35);
+    let hit = collideRectCircle(obstaculoArray[i].posicaoX + 10, obstaculoArray[i].posicaoY, 30, 30, personagem.posicaoX, personagem.posicaoY, 5);
     if (hit) {
       vidas--;
-      obstaculoArray.splice(j, 1);
+      obstaculoArray.splice(i, 1);
       // if (vidas > 0 && obstaculoArray.length == 0) {
       //   fill(255, 255, 255);
       //   obstaculoArray.splice(j, 1);
@@ -198,6 +197,9 @@ function draw() {
     } // fim if
   } // fim for
 
+  // stroke(255);
+  // line(10, 75, width-10, 75);
+  // 
 } // fim draw
 
 function pontuacao() {

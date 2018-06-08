@@ -108,11 +108,13 @@ function draw() {
   }
 
   // reseta a posicao do obstaculo
-  if (obstaculoArray[0].posicaoX < -120) {
-    obstaculoArray[0].posicaoX = width;
-    obstaculoArray[0].posicaoY = 200;
-    obstaculoArray.push(new Obstaculo());
-    obstaculoArray[obstaculoArray.length - 1].velocidade += 1;
+  for (var i = 0; i < obstaculoArray.length; i++) {
+    if (obstaculoArray[i].posicaoX < -120) {
+      obstaculoArray[i].posicaoX = width;
+      obstaculoArray[i].posicaoY = 200;
+      obstaculoArray.push(new Obstaculo());
+      obstaculoArray[obstaculoArray.length - 1].velocidade += 1;
+    }
   }
 
   if (atirar == true) {
@@ -167,15 +169,21 @@ function draw() {
   //frameRate(90);
   let hit;
   if (balaArray.length > 0) {
-    hit = collideRectCircle(obstaculoArray[0].posicaoX + 10, obstaculoArray[0].posicaoY, 30, 30, balaArray[0].posicaoX, balaArray[0].posicaoY, 2);
-  }
-  if (hit) {
-    pontuacao++;
-    obstaculoArray.splice(0, 1);
+    for (var i = 0; i < balaArray.length; i++) {
+      for (var j = 0; j < obstaculoArray.length; j++) {
+        hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 2);
+        if (hit) {
+          pontuacao++;
+          balaArray.splice(i, 1);
+          obstaculoArray.splice(j, 1);
+        }
+      }
+
+      console.log('obstaculoArray.length ' + obstaculoArray.length);
+
+    }
   }
 }
-
-
 
 function mousePressed() {
   if (podeAtirar) {

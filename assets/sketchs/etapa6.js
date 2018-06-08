@@ -23,6 +23,44 @@ var balaArray = new Array();;
 var atirar;
 var ghostRed;
 
+function preload() {
+  //ghostRed = loadImage('/assets/img/ghost.png');
+  //font = loadFont('assets/SourceSansPro-Regular.otf');
+}
+
+function setup() {
+  // funcao setup eh iniciada apenas uma vez
+  //window.innerWidth
+  //window.innerHeight
+  createCanvas(canvasX, canvasY);
+  personagem = new Personagem();
+  obstaculoArray.push(new Obstaculo());
+  obstaculoArray[0].display();
+}
+
+function draw() {
+  // define o backgroung para preto
+  background(0);
+  // mostra posicao atual no personagem
+  personagem.display();
+  // realiza contador decressivo de tmepo
+  contagemRegressiva();
+  // movimentacao do Personagem
+  movimentacaoPersonagem();
+  // movimentacao dos Obstaculos
+  movimentacaoObstaculos();
+
+  poderFogo();
+
+  indicadoresInformacao();
+
+  colisaoBalaObstaculo();
+
+  colisaoObstaculoPersonagem();
+
+  gameOVer();
+} // fim draw
+
 //definindo caracteristicas do personagem
 function Personagem() {
   this.posicaoX = 100;
@@ -59,75 +97,6 @@ function Bala(x, y) {
     ellipse(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
   }
 };
-
-function preload() {
-  //ghostRed = loadImage('/assets/img/ghost.png');
-  //font = loadFont('assets/SourceSansPro-Regular.otf');
-}
-
-function setup() {
-  // funcao setup eh iniciada apenas uma vez
-  //window.innerWidth
-  //window.innerHeight
-  createCanvas(canvasX, canvasY);
-  personagem = new Personagem();
-  obstaculoArray.push(new Obstaculo());
-  obstaculoArray[0].display();
-}
-
-function draw() {
-  // define o backgroung para preto
-  background(0);
-  // mostra posicao atual no personagem
-  personagem.display();
-  // realiza contador decressivo de tmepo
-  contagemRegressiva();
-  // movimentacao do Personagem
-  movimentacaoPersonagem();
-  // movimentacao dos Obstaculos
-  movimentacaoObstaculos();
-
-  if (atirar == true) {
-    for (var i = 0; i < balaArray.length; i++) {
-      balaArray[i].display();
-      balaArray[i].posicaoX += 5;
-    }
-  }
-
-  if (balas == 0) {
-    podeAtirar = false;
-  }
-
-  if (carregandoBalas) {
-    fill(255, 0, 0);
-    text("r e C a r r e g a n d o ... " + tempoAtirar, 450, 30);
-    while (balaArray.length > 0) {
-      balaArray.pop();
-    }
-  }
-
-  if (tempoAtirar == 0) {
-    podeAtirar = true;
-    tempoAtirar = 4;
-    balas = 7;
-  }
-
-  if (tempoAtirar == 4) {
-    carregandoBalas = false;
-  }
-
-  if (obstaculoArray.length == 0) {
-    fill(255, 255, 255);
-    text("P A R A B É N S\n\teliminação completa da ameaça", width / 2, height * 0.8);
-    fimJogo = true;
-    noLoop();
-  }
-
-  indicadoresInformacao();
-  colisaoBalaObstaculo();
-  colisaoObstaculoPersonagem();
-  gameOVer();
-} // fim draw
 
 function mousePressed() {
   if (podeAtirar) {
@@ -220,6 +189,13 @@ function colisaoObstaculoPersonagem() {
 }
 
 function gameOVer() {
+  if (obstaculoArray.length == 0) {
+    fill(255, 255, 255);
+    text("P A R A B É N S\n\teliminação completa da ameaça", width / 2, height * 0.8);
+    fimJogo = true;
+    noLoop();
+  }
+
   if (vidas == 0) {
     noLoop();
     fill(255, 255, 255);
@@ -232,5 +208,36 @@ function gameOVer() {
     fill(255, 255, 255);
     text("G A M E  O V E R\n\tmorte por tempo", width / 2, height * 0.8);
     fimJogo = true;
+  }
+}
+
+function poderFogo() {
+  if (atirar == true) {
+    for (var i = 0; i < balaArray.length; i++) {
+      balaArray[i].display();
+      balaArray[i].posicaoX += 5;
+    }
+  }
+
+  if (balas == 0) {
+    podeAtirar = false;
+  }
+
+  if (carregandoBalas) {
+    fill(255, 0, 0);
+    text("r e C a r r e g a n d o ... " + tempoAtirar, 450, 30);
+    while (balaArray.length > 0) {
+      balaArray.pop();
+    }
+  }
+
+  if (tempoAtirar == 0) {
+    podeAtirar = true;
+    tempoAtirar = 4;
+    balas = 7;
+  }
+
+  if (tempoAtirar == 4) {
+    carregandoBalas = false;
   }
 }

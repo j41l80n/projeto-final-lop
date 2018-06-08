@@ -27,7 +27,7 @@ var ghostRed;
 //definindo caracteristicas do personagem
 function Personagem() {
   this.posicaoX = 100;
-  this.posicaoY = 200;
+  this.posicaoY = 300;
   this.diametro = 30;
 
   this.display = function() {
@@ -39,7 +39,7 @@ function Personagem() {
 //definindo caracteristicas do obstaculo
 function Obstaculo() {
   this.posicaoX = 450;
-  this.posicaoY = 200;
+  this.posicaoY = 300;
   this.tamanhoX = 30;
   this.tamanhoY = 30;
   this.velocidade = 1;
@@ -51,7 +51,7 @@ function Obstaculo() {
 };
 
 function Bala(x, y) {
-  this.posicaoX = x;
+  this.posicaoX = x + 20;
   this.posicaoY = y;
   this.tamanhoX = 5;
   this.tamanhoY = 5;
@@ -72,9 +72,9 @@ function setup() {
   //window.innerHeight
   createCanvas(canvasX, canvasY);
   personagem = new Personagem();
+  personagem.display();
   obstaculoArray.push(new Obstaculo());
   obstaculoArray[0].display();
-  //bala = new Bala();
 }
 
 function draw() {
@@ -97,9 +97,6 @@ function draw() {
     ritgh = true;
   }
 
-  // personagem
-  personagem.display();
-
   // obstaculo
   for (var i = 0; i < obstaculoArray.length; i++) {
     obstaculoArray[i].display();
@@ -120,7 +117,7 @@ function draw() {
   if (atirar == true) {
     for (var i = 0; i < balaArray.length; i++) {
       balaArray[i].display();
-      balaArray[i].posicaoX += 4;
+      balaArray[i].posicaoX += 5;
     }
     console.log('balaArray.length ' + balaArray.length);
   }
@@ -136,6 +133,13 @@ function draw() {
     noLoop();
     fill(255, 255, 255);
     text("G A M E  O V E R", width / 2, height * 0.8);
+    gameOVer = true;
+  }
+
+  if (obstaculoArray.length == 0) {
+    noLoop();
+    fill(255, 255, 255);
+    text("P A R A B É N S\neliminação completa da ameaça", width / 2, height * 0.8);
     gameOVer = true;
   }
 
@@ -166,20 +170,40 @@ function draw() {
     carregandoBalas = false;
   }
 
-  let hit;
+  //pontuacao();
+
+  for (var i = 0; i < obstaculoArray.length; i++) {
+    let hit = collideRectCircle(obstaculoArray[i].posicaoX + 10, obstaculoArray[i].posicaoY, 30, 30, personagem.posicaoX, personagem.posicaoY, 30);
+    if (hit) {
+      vidas--;
+      if (vidas > 1 && obstaculoArray.length) {
+        noLoop();
+        fill(255, 255, 255);
+        text("G A M E  O V E R", width / 2, height * 0.8);
+      } else {
+        noLoop();
+        fill(255, 255, 255);
+        text("G A M E  O V E R", width / 2, height * 0.8);
+      }
+      obstaculoArray.splice(j, 1);
+    } // fim if
+  } // fim for
+} // fim draw
+
+function pontuacao(t) {
   if (balaArray.length > 0) {
     for (var i = 0; i < balaArray.length; i++) {
       for (var j = 0; j < obstaculoArray.length; j++) {
-        hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 2);
+        let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 2);
         if (hit) {
           pontuacao++;
           balaArray.splice(i, 1);
           obstaculoArray.splice(j, 1);
-        }
-      }
-    }
-  }
-}
+        } // fim if
+      } // fim for
+    } // fim for
+  } // fim if
+} // fim pontuacao
 
 function mousePressed() {
   if (podeAtirar) {

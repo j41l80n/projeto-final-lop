@@ -49,8 +49,8 @@ function Obstaculo() {
 };
 
 function Bala() {
-  this.posicaoX = 100;
-  this.posicaoY = 200;
+  this.posicaoX = 0;
+  this.posicaoY = 0;
   this.tamanhoX = 5;
   this.tamanhoY = 5;
 
@@ -60,8 +60,8 @@ function Bala() {
 };
 
 function preload() {
-  // load in ghost images
   ghostRed = loadImage('/assets/img/ghost.png');
+  //font = loadFont('assets/SourceSansPro-Regular.otf');
 }
 
 function setup() {
@@ -101,7 +101,6 @@ function draw() {
   // obstaculo
   for (var i = 0; i < obstaculoArray.length; i++) {
     obstaculoArray[i].display();
-    // obstaculoArray[i].posicaoX += 30;
     obstaculoArray[i].posicaoY += random(-1, 1);
     obstaculoArray[i].posicaoX -= obstaculoArray[i].velocidade;
   }
@@ -147,7 +146,6 @@ function draw() {
     text("r e C a r r e g a n d o ... " + tempoAtirar, 450, 30);
   }
 
-
   if (tempoAtirar == 0) {
     podeAtirar = true;
     tempoAtirar = 4;
@@ -159,26 +157,15 @@ function draw() {
   }
 
   //frameRate(90);
-  //collidePointCircle(pointX, pointY, circleX, circleY, diameter)
-  // hit = collideRectCircle(obstaculoArray[0].posicaoX, obstaculoArray[0].posicaoY, bala.posicaoX, bala.posicaoY, bala.tamanhoX);
-  hit = collideRectCircle(obstaculoArray[0].posicaoX+10, obstaculoArray[0].posicaoY, 30, 30, bala.posicaoX, bala.posicaoY, 1);
+  hit = collideRectCircle(obstaculoArray[0].posicaoX+10, obstaculoArray[0].posicaoY, 30, 30, bala.posicaoX, bala.posicaoY, 2);
   if (hit) {
-    // obstaculoArray[0].remove();
-    //obstaculoArray.splice(0, 1);
-    //delete array[i];
-    //noLoop();
-    alert('teste');
+    pontuacao++;
+    obstaculoArray.splice(0, 1);
   }
-
-  console.log('hit: ' + hit);
-  console.log('obstaculoArray[0].posicaoX: ' + obstaculoArray[0].posicaoX);
-  console.log('obstaculoArray[0].posicaoY: ' + obstaculoArray[0].posicaoY);
 }
 
 function mousePressed() {
   if (podeAtirar) {
-    console.log('obstaculoArray: ' + obstaculoArray[0].posicaoX);
-    console.log('bala.posicaoX: ' + bala.posicaoX);
     atirar = true;
     bala.posicaoX = personagem.posicaoX + 30;
     bala.posicaoY = personagem.posicaoY;

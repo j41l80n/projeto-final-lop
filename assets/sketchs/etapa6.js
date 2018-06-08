@@ -166,7 +166,6 @@ function draw() {
     carregandoBalas = false;
   }
 
-  //frameRate(90);
   let hit;
   if (balaArray.length > 0) {
     for (var i = 0; i < balaArray.length; i++) {
@@ -178,9 +177,6 @@ function draw() {
           obstaculoArray.splice(j, 1);
         }
       }
-
-      console.log('obstaculoArray.length ' + obstaculoArray.length);
-
     }
   }
 }

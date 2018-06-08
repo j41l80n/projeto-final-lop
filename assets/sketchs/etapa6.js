@@ -72,13 +72,13 @@ function setup() {
   //window.innerHeight
   createCanvas(canvasX, canvasY);
   personagem = new Personagem();
-  personagem.display();
   obstaculoArray.push(new Obstaculo());
   obstaculoArray[0].display();
 }
 
 function draw() {
   background(0);
+  personagem.display();
 
   fill(255, 255, 255);
   text('Vidas: ' + vidas, 10, 30);
@@ -136,13 +136,6 @@ function draw() {
     gameOVer = true;
   }
 
-  if (obstaculoArray.length == 0) {
-    noLoop();
-    fill(255, 255, 255);
-    text("P A R A B É N S\neliminação completa da ameaça", width / 2, height * 0.8);
-    gameOVer = true;
-  }
-
   if (balas == 0) {
     podeAtirar = false;
   }
@@ -170,27 +163,44 @@ function draw() {
     carregandoBalas = false;
   }
 
+  if (obstaculoArray.length == 0) {
+    noLoop();
+    fill(255, 255, 255);
+    text("P A R A B É N S\neliminação completa da ameaça", width / 2, height * 0.8);
+    gameOVer = true;
+  }
+
   //pontuacao();
+  if (balaArray.length > 0) {
+    for (var i = 0; i < balaArray.length; i++) {
+      for (var j = 0; j < obstaculoArray.length; j++) {
+        let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 2);
+        if (hit) {
+          pontuacao++;
+          balaArray.splice(i, 1);
+          obstaculoArray.splice(j, 1);
+        } // fim if
+      } // fim for
+    } // fim for
+  } // fim if
 
   for (var i = 0; i < obstaculoArray.length; i++) {
-    let hit = collideRectCircle(obstaculoArray[i].posicaoX + 10, obstaculoArray[i].posicaoY, 30, 30, personagem.posicaoX, personagem.posicaoY, 30);
+    let hit = collideRectCircle(obstaculoArray[i].posicaoX + 10, obstaculoArray[i].posicaoY, 30, 30, personagem.posicaoX, personagem.posicaoY, 35);
     if (hit) {
       vidas--;
-      if (vidas > 1 && obstaculoArray.length) {
-        noLoop();
-        fill(255, 255, 255);
-        text("G A M E  O V E R", width / 2, height * 0.8);
-      } else {
-        noLoop();
-        fill(255, 255, 255);
-        text("G A M E  O V E R", width / 2, height * 0.8);
-      }
       obstaculoArray.splice(j, 1);
+      // if (vidas > 0 && obstaculoArray.length == 0) {
+      //   fill(255, 255, 255);
+      //   obstaculoArray.splice(j, 1);
+      //   text("WIN", width / 2, height * 0.8);
+      //   noLoop();
+      // } // fim if
     } // fim if
   } // fim for
+
 } // fim draw
 
-function pontuacao(t) {
+function pontuacao() {
   if (balaArray.length > 0) {
     for (var i = 0; i < balaArray.length; i++) {
       for (var j = 0; j < obstaculoArray.length; j++) {

@@ -93,12 +93,12 @@ function Obstaculo() {
 function Bala(x, y) {
   this.posicaoX = x + 20;
   this.posicaoY = y;
-  this.tamanhoX = 5;
-  this.tamanhoY = 5;
+  this.tamanhoX = 40;
+  this.tamanhoY = 40;
 
   this.display = function() {
     // ellipse(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
-    image(bone, this.posicaoX, this.posicaoY);
+    image(bone, this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
   }
 };
 

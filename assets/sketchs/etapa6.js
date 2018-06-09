@@ -180,7 +180,7 @@ function colisaoBalaObstaculo(){
 
 function colisaoObstaculoPersonagem() {
   for (var i = 0; i < obstaculoArray.length; i++) {
-    let hit = collideRectCircle(obstaculoArray[i].posicaoX + 10, obstaculoArray[i].posicaoY, 30, 30, personagem.posicaoX, personagem.posicaoY, 20);
+    let hit = collideRectCircle(obstaculoArray[i].posicaoX + 10, obstaculoArray[i].posicaoY, 30, 30, personagem.posicaoX, personagem.posicaoY, 22);
     if (hit) {
       vidas--;
       obstaculoArray.splice(i, 1);

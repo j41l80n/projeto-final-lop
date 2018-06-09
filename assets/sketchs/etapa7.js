@@ -1,6 +1,6 @@
 // variaveis
-var canvasX = 600;
-var canvasY = 400;
+var canvasX = 800;
+var canvasY = 460;
 
 // variaveis que escreve na teclado
 var vidas = 3;
@@ -21,11 +21,11 @@ var obstaculoArray = new Array();
 var balaArray = new Array();;
 
 var atirar;
-var ghostRed;
+var bone;
 
 var bg;
 function preload() {
-  //ghostRed = loadImage('/assets/img/ghost.png');
+  bone = loadImage('/assets/img/bone.png');
   //font = loadFont('assets/SourceSansPro-Regular.otf');
 }
 
@@ -36,7 +36,7 @@ function setup() {
   personagem = new Personagem();
   obstaculoArray.push(new Obstaculo());
   obstaculoArray[0].display();
-  bg= loadImage('assets/img/maxresdefault.jpg');
+  bg= loadImage('assets/img/bg.png');
   createCanvas(canvasX, canvasY);
 }
 
@@ -97,7 +97,8 @@ function Bala(x, y) {
   this.tamanhoY = 5;
 
   this.display = function() {
-    ellipse(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
+    // ellipse(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
+    image(bone, this.posicaoX, this.posicaoY);
   }
 };
 

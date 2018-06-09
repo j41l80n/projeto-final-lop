@@ -98,6 +98,7 @@ function Bala(x, y) {
 
   this.display = function() {
     // ellipse(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
+    imageMode(CENTER);
     image(bone, this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
   }
 };
@@ -171,7 +172,7 @@ function colisaoBalaObstaculo() {
   if (balaArray.length > 0) {
     for (var i = 0; i < balaArray.length; i++) {
       for (var j = 0; j < obstaculoArray.length; j++) {
-        let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 2);
+        let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 10);
         if (hit) {
           console.log('teste');
           pontuacao++;

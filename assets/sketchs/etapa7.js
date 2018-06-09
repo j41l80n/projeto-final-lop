@@ -24,6 +24,8 @@ var atirar;
 var bone;
 
 var bg;
+var cnv;
+
 function preload() {
   bone = loadImage('/assets/img/bone.png');
   //font = loadFont('assets/SourceSansPro-Regular.otf');
@@ -36,8 +38,23 @@ function setup() {
   personagem = new Personagem();
   obstaculoArray.push(new Obstaculo());
   obstaculoArray[0].display();
-  bg= loadImage('assets/img/bg.png');
-  createCanvas(canvasX, canvasY);
+  bg = loadImage('assets/img/bg.png');
+
+  cnv = createCanvas(canvasX, canvasY);
+  //cnv.style('display', 'block');
+  //cnv.position(x, y);
+  cnv.parent('sketch-holder');
+  //createCanvas(canvasX, canvasY);
+}
+
+function centerCanvas() {
+  var x = (windowWidth - width) / 2;
+  var y = (windowHeight - height) / 2;
+  cnv.position(x, y);
+}
+
+function windowResized() {
+  centerCanvas();
 }
 
 function draw() {

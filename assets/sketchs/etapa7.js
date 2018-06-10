@@ -29,6 +29,7 @@ var yy = 80;
 var minhaFonte;
 
 function preload() {
+  bg = loadImage('assets/img/bg.png');
   bone = loadImage('/assets/img/bone.png');
   jack = loadImage('/assets/img/jack.png');
   zombie = loadImage('/assets/img/zombie.png');
@@ -39,16 +40,11 @@ function preload() {
 function setup() {
   // funcao setup eh iniciada apenas uma vez
   personagem = new Personagem();
-  // textFont(font);
   obstaculoArray.push(new Obstaculo());
   obstaculoArray[0].display();
-  bg = loadImage('assets/img/bg.png');
   cnv = createCanvas(canvasX, canvasY);
-  //cnv.style('display', 'block');
-  //cnv.position(x, y);
   cnv.parent('sketch-holder');
-
-
+  angleMode(DEGREES);
 }
 
 function centerCanvas() {
@@ -116,6 +112,9 @@ function Obstaculo() {
   }
 };
 
+var angle;
+var jitter;
+
 function Bala(x, y) {
   this.posicaoX = x + 20;
   this.posicaoY = y;
@@ -123,10 +122,14 @@ function Bala(x, y) {
   this.tamanhoY = 40;
 
   this.display = function() {
-    // ellipse(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
-    //imageMode(CENTER);
+      push();
+      angle = angle + jitter;
+      var c = cos(angle);
+      translate(width/2, height/2);
+      rotate(c);
     imageMode(CENTER);
     image(bone, this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
+    pop();
   }
 };
 
@@ -201,9 +204,9 @@ function colisaoBalaObstaculo() {
       for (var j = 0; j < obstaculoArray.length; j++) {
         let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 60);
         if (hit) {
-          pontuacao++;
-          balaArray.splice(i, 1);
-          obstaculoArray.splice(j, 1);
+          // pontuacao++;
+          // balaArray.splice(i, 1);
+          // obstaculoArray.splice(j, 1);
         } // fim if
       } // fim for
     } // fim for

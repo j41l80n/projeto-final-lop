@@ -1,56 +1,60 @@
 // variaveis
 var canvasX = 800;
 var canvasY = 460;
-
-// variaveis que escreve na teclado
 var vidas = 3;
 var pontuacao = 0;
 var nivel = 1;
 var balas = 7;
-
 let tempoJogo = 10;
 let tempoAtirar = 3;
 var fimJogo = false;
 var podeAtirar = true;
 var carregandoBalas = false;
 var personagem;
-
 var obstaculo;
 var obstaculoArray = new Array();
-
 var balaArray = new Array();;
-
 var atirar;
-var bone;
-
 var bg;
 var cnv;
 
+var bone;
+var jack;
+var zombie;
+var stars;
+
+var xx = 380;
+var yy = 80;
+
+var minhaFonte;
+
 function preload() {
   bone = loadImage('/assets/img/bone.png');
-  //font = loadFont('assets/SourceSansPro-Regular.otf');
+  jack = loadImage('/assets/img/jack.png');
+  zombie = loadImage('/assets/img/zombie.png');
+  stars = loadImage('/assets/img/stars.png');
+  minhaFonte = loadFont('assets/fonts/zombie_holocaust.ttf');
 }
 
 function setup() {
   // funcao setup eh iniciada apenas uma vez
-  //window.innerWidth
-  //window.innerHeight
   personagem = new Personagem();
+  // textFont(font);
   obstaculoArray.push(new Obstaculo());
   obstaculoArray[0].display();
   bg = loadImage('assets/img/bg.png');
-
   cnv = createCanvas(canvasX, canvasY);
   //cnv.style('display', 'block');
   //cnv.position(x, y);
   cnv.parent('sketch-holder');
-  //createCanvas(canvasX, canvasY);
+
+
 }
 
 function centerCanvas() {
-  var x = (windowWidth - width) / 2;
-  var y = (windowHeight - height) / 2;
-  cnv.position(x, y);
+  let x = (windowWidth - width) / 2;
+  let y = (windowHeight - height) / 2;
+  //  cnv.position(x, y);
 }
 
 function windowResized() {
@@ -60,6 +64,10 @@ function windowResized() {
 function draw() {
   // define o backgroung para preto
   background(bg);
+
+  finalJogo();
+
+  mostraEstrelas();
   // mostra posicao atual no personagem
   personagem.display();
   // realiza contador decressivo de tmepo
@@ -68,8 +76,6 @@ function draw() {
   movimentacaoPersonagem();
   // movimentacao dos Obstaculos
   movimentacaoObstaculos();
-
-  finalJogo();
 
   poderFogo();
 
@@ -83,27 +89,30 @@ function draw() {
 
 //definindo caracteristicas do personagem
 function Personagem() {
-  this.posicaoX = 100;
+  this.tamanhoX = 100;
+  this.tamanhoY = 80;
+  this.posicaoX = 90;
   this.posicaoY = 300;
-  this.diametro = 30;
 
   this.display = function() {
-    ellipseMode(CENTER);
-    ellipse(this.posicaoX, this.posicaoY, this.diametro, this.diametro);
+    // ellipseMode(CENTER);
+    // ellipse(this.posicaoX, this.posicaoY, this.diametro, this.diametro);
+    imageMode(CENTER);
+    image(jack, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
   }
 };
 
 //definindo caracteristicas do obstaculo
 function Obstaculo() {
-  this.posicaoX = 450;
+  this.posicaoX = 650;
   this.posicaoY = 300;
-  this.tamanhoX = 30;
-  this.tamanhoY = 30;
+  this.tamanhoX = 100;
+  this.tamanhoY = 80;
   this.velocidade = 1;
   this.display = function() {
-    // rectMode(CENTER);
-    rectMode(CORNER);
-    rect(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
+    // rectMode(CORNER);
+    // rect(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
+    image(zombie, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
   }
 };
 
@@ -115,6 +124,7 @@ function Bala(x, y) {
 
   this.display = function() {
     // ellipse(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
+    //imageMode(CENTER);
     imageMode(CENTER);
     image(bone, this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
   }
@@ -168,7 +178,7 @@ function movimentacaoPersonagem() {
 function movimentacaoObstaculos() {
   for (var i = 0; i < obstaculoArray.length; i++) {
     obstaculoArray[i].display();
-    obstaculoArray[i].posicaoY += random(-1, 1);
+    obstaculoArray[i].posicaoY += random(-2, 2);
     obstaculoArray[i].posicaoX -= obstaculoArray[i].velocidade;
   }
   resetaMovimentacaoObstaculo();
@@ -189,12 +199,10 @@ function colisaoBalaObstaculo() {
   if (balaArray.length > 0) {
     for (var i = 0; i < balaArray.length; i++) {
       for (var j = 0; j < obstaculoArray.length; j++) {
-        let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 10);
+        let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 60);
         if (hit) {
-          console.log('teste');
           pontuacao++;
           balaArray.splice(i, 1);
-          console.log('teste2s');
           obstaculoArray.splice(j, 1);
         } // fim if
       } // fim for
@@ -204,7 +212,7 @@ function colisaoBalaObstaculo() {
 
 function colisaoObstaculoPersonagem() {
   for (var i = 0; i < obstaculoArray.length; i++) {
-    let hit = collideRectCircle(obstaculoArray[i].posicaoX + 10, obstaculoArray[i].posicaoY, 30, 30, personagem.posicaoX, personagem.posicaoY, 20);
+    let hit = collideRectCircle(obstaculoArray[i].posicaoX + 10, obstaculoArray[i].posicaoY, 30, 30, personagem.posicaoX, personagem.posicaoY, 80);
     if (hit) {
       vidas--;
       obstaculoArray.splice(i, 1);
@@ -226,14 +234,17 @@ function finalJogo() {
   }
 
   if (tempoJogo == 0) {
-    text("G A M E  O V E R\n\tmorte por tempo", width / 2, height * 0.8);
+    // textFont(minhaFonte);
+    // textSize(30);
+    text("G  A  M  E   O  V  E  R\n\tm o r t e  p o r  t e m p o", (width / 2) + 30, height * 0.8);
+    textFont(font);
     gameOVer();
   }
 }
 
 function gameOVer() {
-  noLoop();
   fimJogo = true;
+  noLoop();
 }
 
 function poderFogo() {
@@ -265,4 +276,10 @@ function poderFogo() {
   if (tempoAtirar == 4) {
     carregandoBalas = false;
   }
+}
+
+function mostraEstrelas() {
+  imageMode(CENTER);
+  image(stars, xx, yy, 850, 450);
+  xx -= 0.05;
 }

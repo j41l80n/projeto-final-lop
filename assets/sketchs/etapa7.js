@@ -44,7 +44,6 @@ function setup() {
   obstaculoArray[0].display();
   cnv = createCanvas(canvasX, canvasY);
   cnv.parent('sketch-holder');
-  angleMode(DEGREES);
 }
 
 function centerCanvas() {
@@ -112,8 +111,7 @@ function Obstaculo() {
   }
 };
 
-var angle;
-var jitter;
+var a = 0;
 
 function Bala(x, y) {
   this.posicaoX = x + 20;
@@ -122,14 +120,8 @@ function Bala(x, y) {
   this.tamanhoY = 40;
 
   this.display = function() {
-      push();
-      angle = angle + jitter;
-      var c = cos(angle);
-      translate(width/2, height/2);
-      rotate(c);
     imageMode(CENTER);
     image(bone, this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
-    pop();
   }
 };
 
@@ -255,6 +247,7 @@ function poderFogo() {
     for (var i = 0; i < balaArray.length; i++) {
       balaArray[i].display();
       balaArray[i].posicaoX += 5;
+      rotateZ(millis() / 1000);
     }
   }
 

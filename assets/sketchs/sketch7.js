@@ -1,27 +1,16 @@
-// variaveis
-var canvasX = 600;
-var canvasY = 400;
+var a = 0;
 
 function setup() {
-  // funcao setup eh iniciada apenas uma vez
-  createCanvas(canvasX, canvasY);
+  createCanvas(400, 400);
+
 }
 
 function draw() {
-  // funcao draw eh repetida em loop infinito
-
-  background(0);
-
-  stroke(255);
-  strokeWeight(2);
-  noFill();
-
-  if (mouseX > 300) {
-    fill(255, 0, 200);
-    // background(255);
-  }
-  // else {
-  //   background(0);
-  // }
-  ellipse(300, 200, 100, 100);
+  background(220);
+  rectMode(CENTER);
+  translate(width/2, height/2);
+  rotate(a);
+  rect(0, 0, width/2, height/4);
+  line(0, 0, 0, height/8);
+  a = a + 0.01
 }

@@ -6,6 +6,7 @@ var pontuacao = 0;
 var nivel = 1;
 var balas = 7;
 let tempoJogo = 10;
+var tempoJogado = 0;
 let tempoAtirar = 3;
 var fimJogo = false;
 var podeAtirar = true;
@@ -22,6 +23,7 @@ var bone;
 var jack;
 var ghost;
 var stars;
+var vida;
 
 var xx = 380;
 var yy = 80;
@@ -31,7 +33,9 @@ var minhaFonte;
 function preload() {
   bg = loadImage('assets/img/bg.png');
   bone = loadImage('/assets/img/bone.png');
-  jack = loadImage('/assets/img/jack.png');
+  brain = loadImage('/assets/img/brain.png');
+  jackLeft = loadImage('/assets/img/jack_left.png');
+  jackRight = loadImage('/assets/img/jack_right.png');
   ghost = loadImage('/assets/img/ghost2.png');
   stars = loadImage('/assets/img/stars.png');
   floorLeft = loadImage('/assets/img/floor_left.png');
@@ -48,15 +52,8 @@ function setup() {
   obstaculoArray[0].display();
   cnv = createCanvas(canvasX, canvasY);
   cnv.parent('sketch-holder');
-}
-
-function centerCanvas() {
-  let x = (windowWidth - width) / 2;
-  let y = (windowHeight - height) / 2;
-}
-
-function windowResized() {
-  centerCanvas();
+  personagem.display(jackRight);
+  vida = new Vida(random(50, 800), random(40, 100));
 }
 
 function draw() {
@@ -64,8 +61,6 @@ function draw() {
   background(bg);
 
   base();
-
-  personagem.display(jack);
 
   finalJogo();
 
@@ -77,6 +72,13 @@ function draw() {
 
   movimentacaoObstaculos();
 
+  personagem.display(jackRight);
+
+  if (vidas <= 2 && !fimJogo) {
+    vida.display();
+    vida.posicaoY += 1;
+  }
+
   poderFogo();
 
   indicadoresInformacao();
@@ -84,6 +86,8 @@ function draw() {
   colisaoBalaObstaculo();
 
   colisaoObstaculoPersonagem();
+
+  colisaoPersonagemVida();
 } // fim draw
 
 //definindo caracteristicas do personagem
@@ -94,8 +98,10 @@ function Personagem() {
   this.posicaoY = 345;
 
   this.display = function(sprite) {
+    push();
     imageMode(CENTER);
     image(sprite, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
+    pop();
   }
 };
 
@@ -107,8 +113,6 @@ function Obstaculo(posicaoX, posicaoY) {
   this.tamanhoY = 70;
   this.velocidade = 1;
   this.display = function() {
-    // rectMode(CORNER);
-    // rect(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
     image(ghost, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
   }
 };
@@ -122,6 +126,18 @@ function Bala(posicaoX, posicaoY) {
   this.display = function() {
     imageMode(CENTER);
     image(bone, this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
+  }
+};
+
+function Vida(posicaoX, posicaoY) {
+  this.posicaoX = posicaoX + 20;
+  this.posicaoY = posicaoY;
+  this.tamanhoX = 30;
+  this.tamanhoY = 30;
+
+  this.display = function() {
+    imageMode(CENTER);
+    image(brain, this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
   }
 };
 
@@ -150,6 +166,7 @@ function indicadoresInformacao() {
 function contagemRegressiva() {
   if (frameCount % 60 == 0 && tempoJogo > 0) {
     // tempoJogo--;
+    tempoJogado++;
   }
 
   if (frameCount % 60 == 0 && tempoAtirar != 0 && podeAtirar == false) {
@@ -161,14 +178,14 @@ function contagemRegressiva() {
 function movimentacaoPersonagem() {
   // faz personagem andar para esquerda quando seta do teclado pessionada
   if (keyIsDown(LEFT_ARROW)) {
-    personagem.display(jack);
+    personagem.display(jackLeft);
     personagem.posicaoX -= 4;
   }
 
   // faz personagem andar para direita quando seta do teclado pessionada
   if (keyIsDown(RIGHT_ARROW)) {
+    personagem.display(jackRight);
     personagem.posicaoX += 4;
-    personagem.display(jack);
   }
 }
 
@@ -207,9 +224,25 @@ function colisaoBalaObstaculo() {
   } // fim if
 } // fim function
 
+function colisaoPersonagemVida() {
+  let hit = collideRectCircle(personagem.posicaoX, personagem.posicaoY, 50, 50, vida.posicaoX, vida.posicaoY, 50);
+  if (hit) {
+    vidas+=1;
+    vida.posicaoY = -10;
+  } // fim if
+} // fim function
+
 function colisaoObstaculoPersonagem() {
   for (var i = 0; i < obstaculoArray.length; i++) {
-    let hit = collideRectCircle(obstaculoArray[i].posicaoX + 10, obstaculoArray[i].posicaoY, 30, 30, personagem.posicaoX, personagem.posicaoY, 80);
+    let hit = collideRectRect(
+      obstaculoArray[i].posicaoX,
+      obstaculoArray[i].posicaoY,
+      obstaculoArray[i].tamanhoX,
+      obstaculoArray[i].tamanhoX,
+      personagem.posicaoX,
+      personagem.posicaoY,
+      30,
+      personagem.tamanhoY);
     if (hit) {
       vidas--;
       obstaculoArray.splice(i, 1);

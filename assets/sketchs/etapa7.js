@@ -20,7 +20,7 @@ var cnv;
 
 var bone;
 var jack;
-var zombie;
+var ghost;
 var stars;
 
 var xx = 380;
@@ -32,15 +32,19 @@ function preload() {
   bg = loadImage('assets/img/bg.png');
   bone = loadImage('/assets/img/bone.png');
   jack = loadImage('/assets/img/jack.png');
-  zombie = loadImage('/assets/img/zombie.png');
+  ghost = loadImage('/assets/img/ghost2.png');
   stars = loadImage('/assets/img/stars.png');
+  floorLeft = loadImage('/assets/img/floor_left.png');
+  floorCenter = loadImage('/assets/img/floor_center.png');
+  floorRight = loadImage('/assets/img/floor_right.png');
   minhaFonte = loadFont('assets/fonts/zombie_holocaust.ttf');
 }
+
 
 function setup() {
   // funcao setup eh iniciada apenas uma vez
   personagem = new Personagem();
-  obstaculoArray.push(new Obstaculo());
+  obstaculoArray.push(new Obstaculo(random(400, 800), random(100, 400)));
   obstaculoArray[0].display();
   cnv = createCanvas(canvasX, canvasY);
   cnv.parent('sketch-holder');
@@ -49,7 +53,6 @@ function setup() {
 function centerCanvas() {
   let x = (windowWidth - width) / 2;
   let y = (windowHeight - height) / 2;
-  //  cnv.position(x, y);
 }
 
 function windowResized() {
@@ -60,16 +63,18 @@ function draw() {
   // define o backgroung para preto
   background(bg);
 
+  base();
+
+  personagem.display(jack);
+
   finalJogo();
 
   mostraEstrelas();
-  // mostra posicao atual no personagem
-  personagem.display();
-  // realiza contador decressivo de tmepo
+
   contagemRegressiva();
-  // movimentacao do Personagem
+
   movimentacaoPersonagem();
-  // movimentacao dos Obstaculos
+
   movimentacaoObstaculos();
 
   poderFogo();
@@ -79,7 +84,6 @@ function draw() {
   colisaoBalaObstaculo();
 
   colisaoObstaculoPersonagem();
-
 } // fim draw
 
 //definindo caracteristicas do personagem
@@ -87,35 +91,31 @@ function Personagem() {
   this.tamanhoX = 100;
   this.tamanhoY = 80;
   this.posicaoX = 90;
-  this.posicaoY = 300;
+  this.posicaoY = 345;
 
-  this.display = function() {
-    // ellipseMode(CENTER);
-    // ellipse(this.posicaoX, this.posicaoY, this.diametro, this.diametro);
+  this.display = function(sprite) {
     imageMode(CENTER);
-    image(jack, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
+    image(sprite, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
   }
 };
 
 //definindo caracteristicas do obstaculo
-function Obstaculo() {
-  this.posicaoX = 650;
-  this.posicaoY = 300;
-  this.tamanhoX = 100;
-  this.tamanhoY = 80;
+function Obstaculo(posicaoX, posicaoY) {
+  this.posicaoX = posicaoX;
+  this.posicaoY = posicaoY;
+  this.tamanhoX = 79;
+  this.tamanhoY = 70;
   this.velocidade = 1;
   this.display = function() {
     // rectMode(CORNER);
     // rect(this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
-    image(zombie, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
+    image(ghost, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
   }
 };
 
-var a = 0;
-
-function Bala(x, y) {
-  this.posicaoX = x + 20;
-  this.posicaoY = y;
+function Bala(posicaoX, posicaoY) {
+  this.posicaoX = posicaoX + 20;
+  this.posicaoY = posicaoY;
   this.tamanhoX = 40;
   this.tamanhoY = 40;
 
@@ -149,7 +149,7 @@ function indicadoresInformacao() {
 
 function contagemRegressiva() {
   if (frameCount % 60 == 0 && tempoJogo > 0) {
-    tempoJogo--;
+    // tempoJogo--;
   }
 
   if (frameCount % 60 == 0 && tempoAtirar != 0 && podeAtirar == false) {
@@ -161,12 +161,14 @@ function contagemRegressiva() {
 function movimentacaoPersonagem() {
   // faz personagem andar para esquerda quando seta do teclado pessionada
   if (keyIsDown(LEFT_ARROW)) {
+    personagem.display(jack);
     personagem.posicaoX -= 4;
   }
 
   // faz personagem andar para direita quando seta do teclado pessionada
   if (keyIsDown(RIGHT_ARROW)) {
     personagem.posicaoX += 4;
+    personagem.display(jack);
   }
 }
 
@@ -182,9 +184,9 @@ function movimentacaoObstaculos() {
 function resetaMovimentacaoObstaculo() {
   for (var i = 0; i < obstaculoArray.length; i++) {
     if (obstaculoArray[i].posicaoX < -120) {
-      obstaculoArray[i].posicaoX = width;
-      obstaculoArray[i].posicaoY = 200;
-      obstaculoArray.push(new Obstaculo());
+      obstaculoArray[i].posicaoX = random(400, 800);
+      obstaculoArray[i].posicaoY = random(100, 400);
+      obstaculoArray.push(new Obstaculo(random(400, 800), random(100, 400)));
       obstaculoArray[obstaculoArray.length - 1].velocidade += 1;
     }
   }
@@ -196,9 +198,9 @@ function colisaoBalaObstaculo() {
       for (var j = 0; j < obstaculoArray.length; j++) {
         let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 60);
         if (hit) {
-          // pontuacao++;
-          // balaArray.splice(i, 1);
-          // obstaculoArray.splice(j, 1);
+          pontuacao++;
+          balaArray.splice(i, 1);
+          obstaculoArray.splice(j, 1);
         } // fim if
       } // fim for
     } // fim for
@@ -247,7 +249,6 @@ function poderFogo() {
     for (var i = 0; i < balaArray.length; i++) {
       balaArray[i].display();
       balaArray[i].posicaoX += 5;
-      rotateZ(millis() / 1000);
     }
   }
 
@@ -278,4 +279,14 @@ function mostraEstrelas() {
   imageMode(CENTER);
   image(stars, xx, yy, 850, 450);
   xx -= 0.05;
+}
+
+function base() {
+  imageMode(CENTER);
+  image(floorLeft, 70, 425, 100, 70);
+  for (var i = 170; i < 731; i += 100) {
+    image(floorCenter, i, 425, 100, 70);
+  }
+  image(floorCenter, 270, 425, 100, 70);
+  image(floorRight, 730, 425, 100, 70);
 }

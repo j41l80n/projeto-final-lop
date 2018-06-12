@@ -214,8 +214,6 @@ function colisaoBalaObstaculo() {
     for (var i = 0; i < balaArray.length; i++) {
       for (var j = 0; j < obstaculoArray.length; j++) {
         let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 60);
-        console.log(hit);
-
         if (hit) {
           pontuacao++;
           balaArray.splice(i, 1);
@@ -230,7 +228,7 @@ function colisaoBalaObstaculo() {
 function colisaoPersonagemVida() {
   let hit = collideRectCircle(personagem.posicaoX, personagem.posicaoY, 50, 50, vida.posicaoX, vida.posicaoY, 50);
   if (hit) {
-    vidas+=1;
+    vidas += 1;
     vida.posicaoY = -10;
   } // fim if
 } // fim function
@@ -285,12 +283,10 @@ function poderFogo() {
     for (var i = 0; i < balaArray.length; i++) {
       balaArray[i].display();
       balaArray[i].posicaoX += 5;
-
       if (balaArray[i].posicaoX > 800) {
         balaArray.splice(i, 1);
       }
     }
-
   }
 
   if (balas == 0) {

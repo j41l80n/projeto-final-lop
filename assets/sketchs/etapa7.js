@@ -24,6 +24,7 @@ var jack;
 var ghost;
 var stars;
 var vida;
+var skeleton;
 
 var xx = 380;
 var yy = 80;
@@ -33,6 +34,8 @@ var minhaFonte;
 function preload() {
   bg = loadImage('assets/img/bg.png');
   bone = loadImage('/assets/img/bone.png');
+  treeBones = loadImage('/assets/img/tree_bones.png');
+  twoBones = loadImage('/assets/img/two_bones.png');
   brain = loadImage('/assets/img/brain.png');
   jackLeft = loadImage('/assets/img/jack_left.png');
   jackRight = loadImage('/assets/img/jack_right.png');
@@ -41,6 +44,8 @@ function preload() {
   floorLeft = loadImage('/assets/img/floor_left.png');
   floorCenter = loadImage('/assets/img/floor_center.png');
   floorRight = loadImage('/assets/img/floor_right.png');
+  skeleton = loadImage('/assets/img/skeleton.png');
+
   minhaFonte = loadFont('assets/fonts/zombie_holocaust.ttf');
 }
 
@@ -54,12 +59,12 @@ function setup() {
   cnv.parent('sketch-holder');
   personagem.display(jackRight);
   vida = new Vida(random(50, 800), random(40, 100));
+  // textFont(minhaFonte, 36);
 }
 
 function draw() {
   // define o backgroung para preto
   background(bg);
-
   base();
 
   finalJogo();
@@ -319,11 +324,17 @@ function mostraEstrelas() {
 }
 
 function base() {
+  push();
   imageMode(CENTER);
   image(floorLeft, 70, 425, 100, 70);
   for (var i = 170; i < 731; i += 100) {
     image(floorCenter, i, 425, 100, 70);
   }
-  image(floorCenter, 270, 425, 100, 70);
   image(floorRight, 730, 425, 100, 70);
+  image(treeBones, 200, 430, 40, 40);
+  image(twoBones, 700, 430, 40, 40);
+  image(twoBones, 670, 450, 40, 40);
+  image(twoBones, 290, 450, 40, 40);
+  image(skeleton, 570, 450, 50, 20);
+  pop();
 }

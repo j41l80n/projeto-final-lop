@@ -34,6 +34,10 @@ Para visualizar o projeto, abra seu navegador e acesse o endereço:
 ```
 127.0.0.1:8000
 ```
+
+#### Sobre o jogo
+#### Níveis de dificuldade
+
 ### Referências
 editor de texto [Atom][atom]
 [P5.jsd](https://p5js.org/reference/)

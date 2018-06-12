@@ -64,6 +64,8 @@ function draw() {
 
   finalJogo();
 
+  personagem.display(jackRight);
+
   mostraEstrelas();
 
   contagemRegressiva();
@@ -71,8 +73,6 @@ function draw() {
   movimentacaoPersonagem();
 
   movimentacaoObstaculos();
-
-  personagem.display(jackRight);
 
   if (vidas <= 2 && !fimJogo) {
     vida.display();
@@ -178,13 +178,13 @@ function contagemRegressiva() {
 function movimentacaoPersonagem() {
   // faz personagem andar para esquerda quando seta do teclado pessionada
   if (keyIsDown(LEFT_ARROW)) {
-    personagem.display(jackLeft);
+    // personagem.display(jackRight);
     personagem.posicaoX -= 4;
   }
 
   // faz personagem andar para direita quando seta do teclado pessionada
   if (keyIsDown(RIGHT_ARROW)) {
-    personagem.display(jackRight);
+    // personagem.display(jackRight);
     personagem.posicaoX += 4;
   }
 }
@@ -214,10 +214,13 @@ function colisaoBalaObstaculo() {
     for (var i = 0; i < balaArray.length; i++) {
       for (var j = 0; j < obstaculoArray.length; j++) {
         let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 60);
+        console.log(hit);
+
         if (hit) {
           pontuacao++;
           balaArray.splice(i, 1);
           obstaculoArray.splice(j, 1);
+          break;
         } // fim if
       } // fim for
     } // fim for
@@ -282,7 +285,12 @@ function poderFogo() {
     for (var i = 0; i < balaArray.length; i++) {
       balaArray[i].display();
       balaArray[i].posicaoX += 5;
+
+      if (balaArray[i].posicaoX > 800) {
+        balaArray.splice(i, 1);
+      }
     }
+
   }
 
   if (balas == 0) {

@@ -1,7 +1,7 @@
 # Projeto final da disciplina LoP UFRN 2018.1
 algum texto descrevendo o trabalho.
 
-### Editor e plugins utilizados
+## Editor e plugins utilizados
 Para esse projeto, foi utlizado o editor de texto Atom com seguintes pacotes:
 * atom-beautify
 * emmet
@@ -11,7 +11,7 @@ Para esse projeto, foi utlizado o editor de texto Atom com seguintes pacotes:
 * minimap-pigments
 * minimap
 
-### Estrutura o projeto
+## Estrutura o projeto
 Após o download do arquivo no repositório, descompacte e entre na pasta descompactada.
 
 Na pasta irá conter os arquivo index.html,README.md e a pasta assets, a qual tem todos os arquivos necessários.
@@ -22,7 +22,7 @@ Etapas concluídas;
 Sketchs de estudos;
 Canvas com a última etapa implementada;
 
-#### Rodando Servidor HTTP
+### Rodando Servidor HTTP
 
 Execute o seguinte comando dentro da pasta do projeto para criar um servidor HTTP para requisições do navegador.
 
@@ -35,10 +35,10 @@ Para visualizar o projeto, abra seu navegador e acesse o endereço:
 127.0.0.1:8000
 ```
 
-#### Sobre o jogo
-#### Níveis de dificuldade
+##Sobre o jogo
+### Níveis de dificuldade
 
-### Referências
+## Referências
 editor de texto [Atom][atom]
 [P5.jsd](https://p5js.org/reference/)
 [P5.Play](http://p5play.molleindustria.org/docs/index.html)

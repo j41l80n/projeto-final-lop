@@ -17,13 +17,13 @@ Para esse projeto, foi utlizado o editor de texto Atom com seguintes pacotes:
 ## Estrutura o projeto
 Após o download do arquivo no repositório, descompacte e entre na pasta descompactada.
 
-Na pasta irá conter os arquivo index, README e a pasta assets, a qual possui todos os arquivos necessários para o carregamento completo do jogo.
+Na pasta irá conter os arquivo index, README e a pasta Assets, a qual possui todos os arquivos necessários para o carregamento completo do jogo.
 
 Há três seções no arquivo index.
 
-Etapas concluídas;
-Sketchs de estudos;
-Canvas com a última etapa implementada;
+1.  Etapas concluídas;
+2.  Sketchs de estudos;
+3.  Canvas, com a última etapa implementada;
 
 ### Rodando Servidor HTTP
 
@@ -43,11 +43,11 @@ Fome de ZOmbiE
 ### Personagem principal
 Jack Cabeça de Lanterna
 ### Níveis de dificuldade
-1.   matar um fantasma
-2.   chegar ao final do cenário sem sofrer nenhum _hit_
-3.   matar no minimo 5 fantasmas e chegar ao _end point_
-4.   resgatar o companheiro do Jack
-5.   Matar o Chefão
+1.   matar um fantasma;
+2.   chegar ao final do cenário sem sofrer nenhum _hit_;
+3.   matar no minimo 5 fantasmas e chegar ao _end point_;
+4.   resgatar o companheiro do Jack;
+5.   Matar o Chefão.
 ## Referências
 editor de texto [Atom][atom]
 [P5.jsd](https://p5js.org/reference/)

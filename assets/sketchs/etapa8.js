@@ -58,7 +58,7 @@ function setup() {
   cnv = createCanvas(canvasX, canvasY);
   cnv.parent('sketch-holder');
   personagem.display(jackRight);
-  vida = new Vida(random(50, 800), random(40, 100));
+  vida = new Vida(random(50, 700), random(40, 100));
   // textFont(minhaFonte, 36);
 }
 
@@ -79,7 +79,7 @@ function draw() {
 
   movimentacaoObstaculos();
 
-  if (vidas <= 2 && !fimJogo) {
+  if (vidas == 1 && !fimJogo) {
     vida.display();
     vida.posicaoY += 1;
   }
@@ -117,8 +117,12 @@ function Obstaculo(posicaoX, posicaoY) {
   this.tamanhoX = 79;
   this.tamanhoY = 70;
   this.velocidade = 1;
+  this.vidas = 2;
   this.display = function() {
+    push();
+    imageMode(CENTER);
     image(ghost, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
+    pop();
   }
 };
 
@@ -218,12 +222,19 @@ function colisaoBalaObstaculo() {
   if (balaArray.length > 0) {
     for (var i = 0; i < balaArray.length; i++) {
       for (var j = 0; j < obstaculoArray.length; j++) {
-        let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 60);
+        let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
         if (hit) {
-          pontuacao++;
+          obstaculoArray[j].vidas--;
           balaArray.splice(i, 1);
-          obstaculoArray.splice(j, 1);
-          break;
+
+          for (var k = 0; k < obstaculoArray.length; k++) {
+            if (obstaculoArray[k].vidas == 0) {
+              pontuacao++;
+              obstaculoArray.splice(k, 1);
+              break;
+            }
+          }
+
         } // fim if
       } // fim for
     } // fim for

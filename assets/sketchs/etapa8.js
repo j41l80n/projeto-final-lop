@@ -133,8 +133,10 @@ function Bala(posicaoX, posicaoY) {
   this.tamanhoY = 40;
 
   this.display = function() {
+    push();
     imageMode(CENTER);
     image(bone, this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
+    pop();
   }
 };
 
@@ -295,15 +297,16 @@ function gameOVer() {
 }
 
 function poderFogo() {
-  if (atirar == true) {
+  //if (atirar == true) {
     for (var i = 0; i < balaArray.length; i++) {
       balaArray[i].display();
       balaArray[i].posicaoX += 5;
       if (balaArray[i].posicaoX > 800) {
         balaArray.splice(i, 1);
+        // balas++;
       }
     }
-  }
+  //}
 
   if (balas == 0) {
     podeAtirar = false;
@@ -312,9 +315,9 @@ function poderFogo() {
   if (carregandoBalas) {
     fill(255, 0, 0);
     text("r e C a r r e g a n d o ... " + tempoAtirar, 450, 30);
-    while (balaArray.length > 0) {
-      balaArray.pop();
-    }
+    // while (balaArray.length > 0) {
+    //   balaArray.pop();
+    // }
   }
 
   if (tempoAtirar == 0) {

@@ -121,6 +121,8 @@ function Obstaculo(posicaoX, posicaoY) {
   this.display = function() {
     push();
     imageMode(CENTER);
+    // aplica tranparencia na miagem
+    tint(255, 255);
     image(ghost, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
     pop();
   }
@@ -298,14 +300,14 @@ function gameOVer() {
 
 function poderFogo() {
   //if (atirar == true) {
-    for (var i = 0; i < balaArray.length; i++) {
-      balaArray[i].display();
-      balaArray[i].posicaoX += 5;
-      if (balaArray[i].posicaoX > 800) {
-        balaArray.splice(i, 1);
-        // balas++;
-      }
+  for (var i = 0; i < balaArray.length; i++) {
+    balaArray[i].display();
+    balaArray[i].posicaoX += 5;
+    if (balaArray[i].posicaoX > 800) {
+      balaArray.splice(i, 1);
+      // balas++;
     }
+  }
   //}
 
   if (balas == 0) {

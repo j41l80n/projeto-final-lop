@@ -3,7 +3,7 @@ var canvasX = 800;
 var canvasY = 460;
 var vidas = 3;
 var pontuacao = 0;
-var nivel = 2;
+var nivel = 1;
 var balas = 7;
 let tempoJogo = 10;
 var tempoJogado = 0;
@@ -45,10 +45,10 @@ function preload() {
   floorCenter = loadImage('/assets/img/floor_center.png');
   floorRight = loadImage('/assets/img/floor_right.png');
   skeleton = loadImage('/assets/img/skeleton.png');
+  sing = loadImage('/assets/img/sign.png');
 
   minhaFonte = loadFont('assets/fonts/zombie_holocaust.ttf');
 }
-
 
 function setup() {
   // funcao setup eh iniciada apenas uma vez
@@ -65,11 +65,19 @@ function setup() {
 function draw() {
   // define o backgroung para preto
   background(bg);
+
   base();
 
   finalJogo();
 
   personagem.display(jackRight);
+
+  if (nivel  == 2) {
+    push();
+    imageMode(CENTER);
+    image(sing, 750, 360, 60, 60);
+    pop();
+  }
 
   mostraEstrelas();
 
@@ -79,10 +87,7 @@ function draw() {
 
   movimentacaoObstaculos();
 
-  if (vidas == 1 && !fimJogo) {
-    vida.display();
-    vida.posicaoY += 1;
-  }
+  mostraVida();
 
   poderFogo();
 
@@ -246,6 +251,9 @@ function colisaoBalaObstaculo() {
     for (var i = 0; i < balaArray.length; i++) {
       for (var j = 0; j < obstaculoArray.length; j++) {
         let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
+        if (hit && nivel ==1) {
+          nivel = 2;
+        }
         if (hit) {
           obstaculoArray[j].vidas--;
           balaArray.splice(i, 1);
@@ -257,7 +265,6 @@ function colisaoBalaObstaculo() {
               break;
             }
           }
-
         } // fim if
       } // fim for
     } // fim for
@@ -293,10 +300,10 @@ function colisaoObstaculoPersonagem() {
 function finalJogo() {
   fill(255, 255, 255);
 
-  if (obstaculoArray.length == 0) {
-    text("P A R A B É N S\n\teliminação completa da ameaça", width / 2, height * 0.8);
-    gameOVer();
-  }
+  // if (obstaculoArray.length == 0) {
+  //   text("P A R A B É N S\n\teliminação completa da ameaça", width / 2, height * 0.8);
+  //   gameOVer();
+  // }
 
   if (vidas == 0) {
     text("G A M E  O V E R\n\tsem mais chances", width / 2, height * 0.8);
@@ -372,4 +379,11 @@ function base() {
   image(twoBones, 290, 450, 40, 40);
   image(skeleton, 570, 450, 50, 20);
   pop();
+}
+
+function mostraVida() {
+  if (vidas == 1 && !fimJogo) {
+    vida.display();
+    vida.posicaoY += 1;
+  }
 }

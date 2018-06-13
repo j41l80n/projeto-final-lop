@@ -30,6 +30,7 @@ var xx = 380;
 var yy = 80;
 
 var minhaFonte;
+var para = false;
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -59,6 +60,7 @@ function setup() {
   cnv.parent('sketch-holder');
   personagem.display(jackRight);
   vida = new Vida(random(50, 700), random(40, 100));
+
   // textFont(minhaFonte, 36);
 }
 
@@ -70,14 +72,20 @@ function draw() {
 
   finalJogo();
 
-  personagem.display(jackRight);
-
   if (nivel  == 2) {
+    if (!para) {
+      for (var i = 0; i < 3; i++) {
+        obstaculoArray.push(new Obstaculo(random(700, 800), random(100, 350)));
+      }
+    }
     push();
     imageMode(CENTER);
     image(sing, 750, 360, 60, 60);
     pop();
+    para = true;
   }
+
+  personagem.display(jackRight);
 
   mostraEstrelas();
 

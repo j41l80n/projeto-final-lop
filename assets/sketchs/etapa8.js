@@ -3,7 +3,7 @@ var canvasX = 800;
 var canvasY = 460;
 var vidas = 3;
 var pontuacao = 0;
-var nivel = 1;
+var nivel = 2;
 var balas = 7;
 let tempoJogo = 10;
 var tempoJogado = 0;
@@ -101,6 +101,7 @@ function Personagem() {
   this.tamanhoY = 80;
   this.posicaoX = 90;
   this.posicaoY = 345;
+  this.velocidade = 1;
 
   this.display = function(sprite) {
     push();
@@ -116,13 +117,26 @@ function Obstaculo(posicaoX, posicaoY) {
   this.posicaoY = posicaoY;
   this.tamanhoX = 79;
   this.tamanhoY = 70;
-  this.velocidade = 1;
+  // this.velocidade = 1;
   this.vidas = 2;
+
+  if (nivel == 1) {
+    this.velocidade = 1;
+    this.tint = 255;
+  } else if (nivel == 2) {
+    this.velocidade = random(2, 3);
+    this.tint = random(140, 200);
+  } else {
+    this.velocidade = random(4, 6);
+    this.tint = random(30, 190);
+  }
+
+
   this.display = function() {
     push();
     imageMode(CENTER);
     // aplica tranparencia na miagem
-    tint(255, 255);
+    tint(255, this.tint);
     image(ghost, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
     pop();
   }
@@ -150,6 +164,7 @@ function Vida(posicaoX, posicaoY) {
 
   this.display = function() {
     imageMode(CENTER);
+    tint(255, 180);
     image(brain, this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
   }
 };
@@ -203,6 +218,8 @@ function movimentacaoPersonagem() {
 }
 
 function movimentacaoObstaculos() {
+
+  console.log(obstaculoArray[0].posicaoX);
   for (var i = 0; i < obstaculoArray.length; i++) {
     obstaculoArray[i].display();
     obstaculoArray[i].posicaoY += random(-2, 2);

@@ -93,6 +93,7 @@ function draw() {
   colisaoObstaculoPersonagem();
 
   colisaoPersonagemVida();
+  //filter(BLUR, 3);
 } // fim draw
 
 //definindo caracteristicas do personagem
@@ -123,19 +124,21 @@ function Obstaculo(posicaoX, posicaoY) {
   if (nivel == 1) {
     this.velocidade = 1;
     this.tint = 255;
+    this.vidas = 2;
   } else if (nivel == 2) {
     this.velocidade = random(2, 3);
     this.tint = random(140, 200);
+    this.vidas = 3;
   } else {
     this.velocidade = random(4, 6);
     this.tint = random(30, 190);
+    this.vidas = random(3, 4);
   }
-
 
   this.display = function() {
     push();
     imageMode(CENTER);
-    // aplica tranparencia na miagem
+    // a funcao tint aplica tranparencia na miagem
     tint(255, this.tint);
     image(ghost, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
     pop();
@@ -219,7 +222,6 @@ function movimentacaoPersonagem() {
 
 function movimentacaoObstaculos() {
 
-  console.log(obstaculoArray[0].posicaoX);
   for (var i = 0; i < obstaculoArray.length; i++) {
     obstaculoArray[i].display();
     obstaculoArray[i].posicaoY += random(-2, 2);

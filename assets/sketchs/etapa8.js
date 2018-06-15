@@ -24,7 +24,7 @@ var ghost;
 var stars;
 var vida;
 var skeleton;
-
+var sofreuHit = false;
 var xx = 380;
 var yy = 80;
 
@@ -83,6 +83,13 @@ function draw() {
     image(sing, 750, 360, 60, 60);
     pop();
     para = true;
+
+    if (sofreuHit) {
+      text("G A M E  O V E R\n\tsem mais chances", width / 2, height * 0.8);
+      gameOVer();
+    }
+
+    console.log(sofreuHit);
   }
 
   personagem.display(jackRight);
@@ -254,7 +261,7 @@ function resetaMovimentacaoObstaculo() {
 
 function colisaoBalaObstaculo() {
   if (balaArray.length > 0) {
-    for (var i = 0; i <  balaArray.length; i++) {
+    for (var i = 0; i < balaArray.length; i++) {
       for (var j = 0; j < obstaculoArray.length; j++) {
 
         let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
@@ -262,9 +269,6 @@ function colisaoBalaObstaculo() {
         if (hit) {
           obstaculoArray[j].vidas--;
           balaArray.splice(i, 1);
-
-
-
           for (var k = 0; k < obstaculoArray.length; k++) {
             if (obstaculoArray[k].vidas == 0) {
               pontuacao++;
@@ -272,7 +276,6 @@ function colisaoBalaObstaculo() {
               // break;
             }
           }
-
         } // fim if
       } // fim for
     } // fim for
@@ -303,6 +306,9 @@ function colisaoObstaculoPersonagem() {
       30,
       personagem.tamanhoY);
     if (hit) {
+      if (nivel > 1) {
+        sofreuHit = true;
+      }
       vidas--;
       obstaculoArray.splice(i, 1);
     } // fim if

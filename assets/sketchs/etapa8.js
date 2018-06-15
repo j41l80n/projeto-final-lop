@@ -34,6 +34,7 @@ var para = false;
 var nivelTres = false;
 var bruxaX = 850;
 var bruxaY = 140;
+var friend;
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -53,6 +54,7 @@ function preload() {
   sing = loadImage('/assets/img/sign.png');
   crate = loadImage('/assets/img/crate.png');
   bruxa = loadImage('/assets/img/bruxa.png');
+  friend = loadImage('/assets/img/friend.png');
 
   minhaFonte = loadFont('assets/fonts/zombie_holocaust.ttf');
 }

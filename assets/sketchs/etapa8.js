@@ -94,10 +94,13 @@ function draw() {
   nivel5();
 
   if (nivel > 1) {
+    if (nivel < 5) {
+      image(sing, 750, 360, 80, 80);
+      
+    }
     push();
     imageMode(CENTER);
     image(bruxa, bruxaX, bruxaY, 80, 80);
-    image(sing, 750, 360, 80, 80);
     pop();
     bruxaX -= 1.3;
   }

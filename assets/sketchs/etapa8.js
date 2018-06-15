@@ -244,7 +244,8 @@ function Obstaculo(posicaoX, posicaoY, sprite) {
   } else if (nivel == 5) {
     this.tamanhoX = 480;
     this.tamanhoY = 350;
-    this.vidas = 10;
+    this.vidas = 11;
+    tempoJogo = 23;
   } else {
     this.velocidade = random(4, 6);
     this.tint = random(30, 190);
@@ -316,7 +317,7 @@ function indicadoresInformacao() {
 
 function contagemRegressiva() {
   if (frameCount % 60 == 0 && tempoJogo > 0) {
-    // tempoJogo--;
+    tempoJogo--;
     tempoJogado++;
   }
 

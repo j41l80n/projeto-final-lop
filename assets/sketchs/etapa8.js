@@ -81,6 +81,7 @@ function setup() {
 
 function draw() {
   // define o backgroung para imagem carregada no preload
+  smooth();
   background(bg);
 
   base();
@@ -131,6 +132,8 @@ function draw() {
   colisaoPersonagemCaixa();
 
   colisaoPersonagemAmigo();
+
+  console.log('balaArray.length - > ' + balaArray.length);
   //filter(BLUR, 3);
 } // fim draw
 
@@ -203,8 +206,6 @@ function nivel4() {
 
 function nivel5() {
   if (nivel == 5) {
-    console.log('obstaculoArray.length ' + obstaculoArray.length);
-
     if (!ultimaFase) {
       tempoJogo = 23;
       ultimaFase = true;
@@ -213,12 +214,10 @@ function nivel5() {
     imageMode(CENTER);
     image(friend, 100, friendY, 65, 105);
     pop();
-    friendY -= 3;
-
-    if (tempoJogo % 2=== 0 ) {
-      obstaculoArray.push(new Obstaculo(obstaculoArray[0].posicaoX, obstaculoArray[0].posicaoY, ghost));
-      // novoFantasma = false
+    if (frameCount % 200 == 0) {
+      geraFantasmas();
     }
+    friendY -= 3;
   }
 }
 
@@ -242,7 +241,7 @@ function Personagem() {
 function Obstaculo(posicaoX, posicaoY, sprite) {
   this.posicaoX = posicaoX;
   this.posicaoY = posicaoY;
-  this.tamanhoX = 79;
+  this.tamanhoX = 80;
   this.tamanhoY = 70;
   // this.velocidade = 1;
   this.vidas = 2;
@@ -259,6 +258,14 @@ function Obstaculo(posicaoX, posicaoY, sprite) {
     this.tamanhoX = 480;
     this.tamanhoY = 350;
     this.vidas = 11;
+
+    if (obstaculoArray.length > 0) {
+      this.tamanhoX = 80;
+      this.tamanhoY = 70;
+      this.tint = random(30, 190);
+      this.vidas = 11;
+    }
+
   } else {
     this.velocidade = random(4, 6);
     this.tint = random(30, 190);
@@ -320,11 +327,11 @@ function mousePressed() {
 
 function indicadoresInformacao() {
   fill(255, 255, 255);
-  text('Vidas: ' + vidas, 10, 30);
-  text('Balas: ' + balas, 90, 30);
-  text('Pontuação: ' + pontuacao, 170, 30);
-  text('Nivel: ' + nivel, 280, 30);
-  text("Tempo: " + tempoJogo, 360, 30);
+  text('Lifes: ' + vidas, 10, 30);
+  text('SkULls: ' + balas, 90, 30);
+  text('PoiNts: ' + pontuacao, 170, 30);
+  text('LeVel: ' + nivel, 280, 30);
+  text("TimE: " + tempoJogo, 360, 30);
 }
 
 function contagemRegressiva() {
@@ -373,6 +380,12 @@ function movimentacaoObstaculos() {
         subiu = false;
       }
     }
+
+    for (var i = 1; i < obstaculoArray.length - 1; i++) {
+      obstaculoArray[i].display();
+      obstaculoArray[i].posicaoY += random(-2, 2);
+      obstaculoArray[i].posicaoX -= 1;
+    }
   } else {
     for (var i = 0; i < obstaculoArray.length; i++) {
       obstaculoArray[i].display();
@@ -396,10 +409,13 @@ function resetaMovimentacaoObstaculo() {
 
 function colisaoBalaObstaculo() {
   if (balaArray.length > 0) {
+    console.log('balaArray.length - > ' + balaArray.length);
     for (var i = 0; i < balaArray.length; i++) {
       for (var j = 0; j < obstaculoArray.length; j++) {
+        console.log('balaArray.length - > ' + balaArray.length);
 
         let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
+        console.log(' hit balaArray.length - > ' + balaArray.length);
 
         if (hit) {
           obstaculoArray[j].vidas--;
@@ -412,6 +428,9 @@ function colisaoBalaObstaculo() {
             }
           }
         } // fim if
+        if (balaArray.length == 0) {
+          break;
+        }
       } // fim for
     } // fim for
   } // fim if
@@ -579,4 +598,8 @@ function mostraVida() {
     vida.display();
     vida.posicaoY += 1;
   }
+}
+
+function geraFantasmas() {
+  obstaculoArray.push(new Obstaculo(obstaculoArray[0].posicaoX, obstaculoArray[0].posicaoY, ghost));
 }

@@ -14,7 +14,7 @@ var carregandoBalas = false;
 var personagem;
 var obstaculo;
 var obstaculoArray = new Array();
-var balaArray = new Array();;
+var balaArray = new Array();
 var atirar;
 var bg;
 var cnv;
@@ -57,6 +57,7 @@ function preload() {
   crate = loadImage('/assets/img/crate.png');
   bruxa = loadImage('/assets/img/bruxa.png');
   friend = loadImage('/assets/img/friend.png');
+  chefao = loadImage('/assets/img/skull.png');
 
   minhaFonte = loadFont('assets/fonts/zombie_holocaust.ttf');
 }
@@ -66,7 +67,6 @@ function setup() {
   personagem = new Personagem();
   personagem.display(jackRight);
 
-  // obstaculoArray.push(new Obstaculo(random(400, 800), random(100, 400)));
   obstaculoArray.push(new Obstaculo(900, 350, ghost));
   obstaculoArray[0].display();
 
@@ -94,12 +94,11 @@ function draw() {
   nivel5();
 
   if (nivel > 1) {
-    if (nivel < 5) {
-      image(sing, 750, 360, 80, 80);
-      
-    }
     push();
     imageMode(CENTER);
+    if (nivel < 5) {
+      image(sing, 750, 360, 80, 80);
+    }
     image(bruxa, bruxaX, bruxaY, 80, 80);
     pop();
     bruxaX -= 1.3;
@@ -241,6 +240,10 @@ function Obstaculo(posicaoX, posicaoY, sprite) {
     this.velocidade = random(2, 3);
     this.tint = random(140, 200);
     this.vidas = 3;
+  } else if (nivel == 5) {
+    this.tamanhoX = 80;
+    this.tamanhoY = 200;
+    this.vidas = 10;
   } else {
     this.velocidade = random(4, 6);
     this.tint = random(30, 190);
@@ -342,6 +345,14 @@ function movimentacaoObstaculos() {
       obstaculoArray[i].display();
       obstaculoArray[i].posicaoY += random(-2, 2);
       obstaculoArray[i].posicaoX += obstaculoArray[i].velocidade;
+    }
+  } else if (nivel == 5) {
+      obstaculoArray[0].display();
+    if (obstaculoArray[0].posicaoY > 50) {
+      obstaculoArray[0].posicaoY -= 1;
+    }
+    else if (obstaculoArray[0].posicaoY == 50) {
+      obstaculoArray[0].posicaoY += 1;
     }
   } else {
     for (var i = 0; i < obstaculoArray.length; i++) {
@@ -450,8 +461,6 @@ function colisaoPersonagemCaixa() {
 
 function colisaoPersonagemAmigo() {
   let hit = collideRectCircle(personagem.posicaoX, personagem.posicaoY, 50, 50, 100, friendY, 90);
-  console.log(hit);
-
   if (hit && nivel == 4) {
     nivel = 5;
     para = false;
@@ -464,16 +473,12 @@ function colisaoPersonagemAmigo() {
     while (balaArray.length > 0) {
       balaArray.pop();
     }
+    obstaculoArray.push(new Obstaculo(300, 250, chefao));
   }
 }
 
 function finalJogo() {
   fill(255, 255, 255);
-
-  // if (obstaculoArray.length == 0) {
-  //   text("P A R A B É N S\n\teliminação completa da ameaça", width / 2, height * 0.8);
-  //   gameOVer();
-  // }
 
   if (vidas == 0) {
     text("G A M E  O V E R\n\tsem mais chances", width / 2, height * 0.8);
@@ -495,7 +500,6 @@ function gameOVer() {
 }
 
 function poderFogo() {
-  //if (atirar == true) {
   for (var i = 0; i < balaArray.length; i++) {
 
     balaArray[i].display();
@@ -511,7 +515,6 @@ function poderFogo() {
       }
     }
   }
-  //}
 
   if (balas == 0) {
     podeAtirar = false;
@@ -520,9 +523,6 @@ function poderFogo() {
   if (carregandoBalas) {
     fill(255, 0, 0);
     text("r e C a r r e g a n d o ... " + tempoAtirar, 450, 30);
-    // while (balaArray.length > 0) {
-    //   balaArray.pop();
-    // }
   }
 
   if (tempoAtirar == 0) {

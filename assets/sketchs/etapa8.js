@@ -495,10 +495,7 @@ function finalJogo() {
   }
 
   if (tempoJogo == 0) {
-    // textFont(minhaFonte);
-    // textSize(30);
     text("G  A  M  E   O  V  E  R\n\tm o r t e  p o r  t e m p o", (width / 2) + 30, height * 0.8);
-    textFont(font);
     gameOVer();
   }
 }

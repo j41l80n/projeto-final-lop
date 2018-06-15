@@ -39,6 +39,7 @@ var friendY = 340;
 var mostrarChefao = false;
 let subiu = false;;
 var boss;
+var ultimaFase = false;
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -202,11 +203,22 @@ function nivel4() {
 
 function nivel5() {
   if (nivel == 5) {
+    console.log('obstaculoArray.length ' + obstaculoArray.length);
+
+    if (!ultimaFase) {
+      tempoJogo = 23;
+      ultimaFase = true;
+    }
     push();
     imageMode(CENTER);
     image(friend, 100, friendY, 65, 105);
     pop();
     friendY -= 3;
+
+    if (tempoJogo % 2=== 0 ) {
+      obstaculoArray.push(new Obstaculo(obstaculoArray[0].posicaoX, obstaculoArray[0].posicaoY, ghost));
+      // novoFantasma = false
+    }
   }
 }
 
@@ -247,13 +259,11 @@ function Obstaculo(posicaoX, posicaoY, sprite) {
     this.tamanhoX = 480;
     this.tamanhoY = 350;
     this.vidas = 11;
-    tempoJogo = 23;
   } else {
     this.velocidade = random(4, 6);
     this.tint = random(30, 190);
     this.vidas = random(3, 4);
   }
-
   this.display = function() {
     push();
     imageMode(CENTER);
@@ -354,8 +364,6 @@ function movimentacaoObstaculos() {
     obstaculoArray[0].display();
     if (!subiu) {
       obstaculoArray[0].posicaoY -= 1;
-      console.log('subiu ' + subiu);
-      console.log('(obstaculoArray[0].posicaoY ' + obstaculoArray[0].posicaoY);
       if (obstaculoArray[0].posicaoY == 50) {
         subiu = true;
       }
@@ -484,7 +492,7 @@ function colisaoPersonagemAmigo() {
     while (balaArray.length > 0) {
       balaArray.pop();
     }
-    obstaculoArray.push(new Obstaculo(750, 250, chefao));
+    obstaculoArray.push(new Obstaculo(730, 250, boss));
   }
 }
 

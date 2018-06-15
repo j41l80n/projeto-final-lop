@@ -132,9 +132,7 @@ function draw() {
   colisaoPersonagemCaixa();
 
   colisaoPersonagemAmigo();
-
-  console.log('balaArray.length - > ' + balaArray.length);
-  //filter(BLUR, 3);
+  // filter(BLUR, 3);
 } // fim draw
 
 function nivel2() {
@@ -206,8 +204,10 @@ function nivel4() {
 
 function nivel5() {
   if (nivel == 5) {
+    console.log('obstaculoArray[0].vidas ' + obstaculoArray[0].vidas);
     if (!ultimaFase) {
-      tempoJogo = 23;
+      tempoJogo = 30;
+      balas = 11;
       ultimaFase = true;
     }
     push();
@@ -218,6 +218,7 @@ function nivel5() {
       geraFantasmas();
     }
     friendY -= 3;
+
   }
 }
 
@@ -263,7 +264,7 @@ function Obstaculo(posicaoX, posicaoY, sprite) {
       this.tamanhoX = 80;
       this.tamanhoY = 70;
       this.tint = random(30, 190);
-      this.vidas = 11;
+      this.vidas = 2;
     }
 
   } else {
@@ -409,18 +410,28 @@ function resetaMovimentacaoObstaculo() {
 
 function colisaoBalaObstaculo() {
   if (balaArray.length > 0) {
-    console.log('balaArray.length - > ' + balaArray.length);
     for (var i = 0; i < balaArray.length; i++) {
       for (var j = 0; j < obstaculoArray.length; j++) {
-        console.log('balaArray.length - > ' + balaArray.length);
-
-        let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
-        console.log(' hit balaArray.length - > ' + balaArray.length);
-
+        let hit;
+        if (nivel == 5 ) {
+          hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
+        }
+        else {
+          hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
+        }
         if (hit) {
           obstaculoArray[j].vidas--;
           balaArray.splice(i, 1);
           for (var k = 0; k < obstaculoArray.length; k++) {
+            if (nivel==5) {
+              if (obstaculoArray[0].vidas == 0) {
+                fimJogo = true;
+                fill(255, 255, 255);
+                filter(BLUR, 3);
+                text("P  A  R  A  B  E  N  S\n\tE l i m i n a ç ã o   c o m p l e t a   d o s   F a n t a s m a s", (width / 2) + 30, height * 0.8);
+                noLoop();
+              }
+            }
             if (obstaculoArray[k].vidas == 0) {
               pontuacao++;
               obstaculoArray.splice(k, 1);
@@ -557,7 +568,7 @@ function poderFogo() {
 
   if (carregandoBalas) {
     fill(255, 0, 0);
-    text("r e C a r r e g a n d o ... " + tempoAtirar, 450, 30);
+    text("R e L o a D i n g ... " + tempoAtirar, 450, 30);
   }
 
   if (tempoAtirar == 0) {

@@ -242,8 +242,8 @@ function Obstaculo(posicaoX, posicaoY, sprite) {
     this.tint = random(140, 200);
     this.vidas = 3;
   } else if (nivel == 5) {
-    this.tamanhoX = 80;
-    this.tamanhoY = 200;
+    this.tamanhoX = 480;
+    this.tamanhoY = 350;
     this.vidas = 10;
   } else {
     this.velocidade = random(4, 6);
@@ -348,7 +348,6 @@ function movimentacaoObstaculos() {
       obstaculoArray[i].posicaoX += obstaculoArray[i].velocidade;
     }
   } else if (nivel == 5) {
-
     obstaculoArray[0].display();
     if (!subiu) {
       obstaculoArray[0].posicaoY -= 1;
@@ -359,7 +358,7 @@ function movimentacaoObstaculos() {
       }
     } else if (subiu) {
       obstaculoArray[0].posicaoY += 1;
-      if (obstaculoArray[0].posicaoY == 450) {
+      if (obstaculoArray[0].posicaoY == 400) {
         subiu = false;
       }
     }
@@ -482,7 +481,7 @@ function colisaoPersonagemAmigo() {
     while (balaArray.length > 0) {
       balaArray.pop();
     }
-    obstaculoArray.push(new Obstaculo(300, 250, chefao));
+    obstaculoArray.push(new Obstaculo(750, 250, chefao));
   }
 }
 

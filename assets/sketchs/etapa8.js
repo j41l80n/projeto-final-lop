@@ -55,7 +55,8 @@ function setup() {
   personagem = new Personagem();
   personagem.display(jackRight);
 
-  obstaculoArray.push(new Obstaculo(random(400, 800), random(100, 400)));
+  // obstaculoArray.push(new Obstaculo(random(400, 800), random(100, 400)));
+  obstaculoArray.push(new Obstaculo(900, 350));
   obstaculoArray[0].display();
 
   cnv = createCanvas(canvasX, canvasY);
@@ -71,10 +72,10 @@ function draw() {
 
   finalJogo();
 
-  if (nivel  == 2) {
+  if (nivel == 2) {
     if (!para) {
       for (var i = 0; i < 3; i++) {
-        obstaculoArray.push(new Obstaculo(random(700, 800), random(100, 350)));
+        obstaculoArray.push(new Obstaculo(random(700, 900), random(100, 350)));
       }
     }
     push();
@@ -253,32 +254,33 @@ function resetaMovimentacaoObstaculo() {
 
 function colisaoBalaObstaculo() {
   if (balaArray.length > 0) {
-    let sizeBala = balaArray.length;
-    let sizeObstaculo = obstaculoArray.length;
-    console.log('let sizeBala = '+ balaArray.length);
-    console.log('let sizeObstaculo = '+obstaculoArray.length);
-    for (var i = 0; i < sizeBala; i++) {
-      for (var j = 0; j < sizeObstaculo; j++) {
+    for (var i = 0; i <  balaArray.length; i++) {
+      for (var j = 0; j < obstaculoArray.length; j++) {
+
         let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
 
         if (hit) {
           obstaculoArray[j].vidas--;
           balaArray.splice(i, 1);
 
-          for (var k = 0; k < sizeObstaculo; k++) {
+
+
+          for (var k = 0; k < obstaculoArray.length; k++) {
             if (obstaculoArray[k].vidas == 0) {
               pontuacao++;
               obstaculoArray.splice(k, 1);
-              break;
+              // break;
             }
           }
-          if (nivel == 1 && sizeObstaculo == 0) {
-            nivel = 2;
-          }
+
         } // fim if
       } // fim for
     } // fim for
   } // fim if
+
+  if (nivel == 1 && obstaculoArray.length == 0) {
+    nivel = 2;
+  }
 } // fim function
 
 function colisaoPersonagemVida() {
@@ -336,7 +338,6 @@ function gameOVer() {
 
 function poderFogo() {
   //if (atirar == true) {
-  console.log('pf +'+balaArray.length);
   for (var i = 0; i < balaArray.length; i++) {
     balaArray[i].display();
     balaArray[i].posicaoX += 5;

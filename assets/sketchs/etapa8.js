@@ -37,6 +37,7 @@ var bruxaY = 140;
 var friend;
 var friendY = 340;
 var mostrarChefao = false;
+let subiu = false;;
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -347,12 +348,20 @@ function movimentacaoObstaculos() {
       obstaculoArray[i].posicaoX += obstaculoArray[i].velocidade;
     }
   } else if (nivel == 5) {
-      obstaculoArray[0].display();
-    if (obstaculoArray[0].posicaoY > 50) {
+
+    obstaculoArray[0].display();
+    if (!subiu) {
       obstaculoArray[0].posicaoY -= 1;
-    }
-    else if (obstaculoArray[0].posicaoY == 50) {
+      console.log('subiu ' + subiu);
+      console.log('(obstaculoArray[0].posicaoY ' + obstaculoArray[0].posicaoY);
+      if (obstaculoArray[0].posicaoY == 50) {
+        subiu = true;
+      }
+    } else if (subiu) {
       obstaculoArray[0].posicaoY += 1;
+      if (obstaculoArray[0].posicaoY == 450) {
+        subiu = false;
+      }
     }
   } else {
     for (var i = 0; i < obstaculoArray.length; i++) {

@@ -35,6 +35,8 @@ var nivelTres = false;
 var bruxaX = 850;
 var bruxaY = 140;
 var friend;
+var friendY = 340;
+var mostrarChefao = false;
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -89,13 +91,15 @@ function draw() {
 
   nivel4();
 
+  nivel5();
+
   if (nivel > 1) {
     push();
     imageMode(CENTER);
     image(bruxa, bruxaX, bruxaY, 80, 80);
     image(sing, 750, 360, 80, 80);
     pop();
-    bruxaX -=  1.3;
+    bruxaX -= 1.3;
   }
 
   mostraEstrelas();
@@ -119,6 +123,8 @@ function draw() {
   colisaoPersonagemVida();
 
   colisaoPersonagemCaixa();
+
+  colisaoPersonagemAmigo();
   //filter(BLUR, 3);
 } // fim draw
 
@@ -171,7 +177,7 @@ function nivel4() {
     if (mostraAmigo) {
       push();
       imageMode(CENTER);
-      image(crate, 400, 360, 60, 60);
+      image(friend, 100, friendY, 65, 105);
       pop();
     }
 
@@ -188,6 +194,17 @@ function nivel4() {
     }
   }
 }
+
+function nivel5() {
+  if (nivel == 5) {
+    push();
+    imageMode(CENTER);
+    image(friend, 100, friendY, 65, 105);
+    pop();
+    friendY -= 3;
+  }
+}
+
 //definindo caracteristicas do personagem
 function Personagem() {
   this.tamanhoX = 100;
@@ -419,6 +436,25 @@ function colisaoPersonagemCaixa() {
     para = false;
     mostraCaixa = false;
     mostraAmigo = true;
+    while (obstaculoArray.length > 0) {
+      obstaculoArray.pop();
+    }
+    while (balaArray.length > 0) {
+      balaArray.pop();
+    }
+  }
+}
+
+function colisaoPersonagemAmigo() {
+  let hit = collideRectCircle(personagem.posicaoX, personagem.posicaoY, 50, 50, 100, friendY, 90);
+  console.log(hit);
+
+  if (hit && nivel == 4) {
+    nivel = 5;
+    para = false;
+    mostraCaixa = false;
+    mostraAmigo = true;
+    mostrarChefao = true;
     while (obstaculoArray.length > 0) {
       obstaculoArray.pop();
     }

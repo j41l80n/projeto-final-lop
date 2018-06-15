@@ -18,7 +18,6 @@ var balaArray = new Array();;
 var atirar;
 var bg;
 var cnv;
-
 var bone;
 var jack;
 var ghost;
@@ -54,14 +53,14 @@ function preload() {
 function setup() {
   // funcao setup eh iniciada apenas uma vez
   personagem = new Personagem();
+  personagem.display(jackRight);
+
   obstaculoArray.push(new Obstaculo(random(400, 800), random(100, 400)));
   obstaculoArray[0].display();
+
   cnv = createCanvas(canvasX, canvasY);
   cnv.parent('sketch-holder');
-  personagem.display(jackRight);
   vida = new Vida(random(50, 700), random(40, 100));
-
-  // textFont(minhaFonte, 36);
 }
 
 function draw() {
@@ -234,7 +233,6 @@ function movimentacaoPersonagem() {
 }
 
 function movimentacaoObstaculos() {
-
   for (var i = 0; i < obstaculoArray.length; i++) {
     obstaculoArray[i].display();
     obstaculoArray[i].posicaoY += random(-2, 2);
@@ -248,7 +246,6 @@ function resetaMovimentacaoObstaculo() {
     if (obstaculoArray[i].posicaoX < -120) {
       obstaculoArray[i].posicaoX = random(400, 800);
       obstaculoArray[i].posicaoY = random(100, 400);
-      obstaculoArray.push(new Obstaculo(random(400, 800), random(100, 400)));
       obstaculoArray[obstaculoArray.length - 1].velocidade += 1;
     }
   }
@@ -256,22 +253,27 @@ function resetaMovimentacaoObstaculo() {
 
 function colisaoBalaObstaculo() {
   if (balaArray.length > 0) {
-    for (var i = 0; i < balaArray.length; i++) {
-      for (var j = 0; j < obstaculoArray.length; j++) {
+    let sizeBala = balaArray.length;
+    let sizeObstaculo = obstaculoArray.length;
+    console.log('let sizeBala = '+ balaArray.length);
+    console.log('let sizeObstaculo = '+obstaculoArray.length);
+    for (var i = 0; i < sizeBala; i++) {
+      for (var j = 0; j < sizeObstaculo; j++) {
         let hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
-        if (hit && nivel ==1) {
-          nivel = 2;
-        }
+
         if (hit) {
           obstaculoArray[j].vidas--;
           balaArray.splice(i, 1);
 
-          for (var k = 0; k < obstaculoArray.length; k++) {
+          for (var k = 0; k < sizeObstaculo; k++) {
             if (obstaculoArray[k].vidas == 0) {
               pontuacao++;
               obstaculoArray.splice(k, 1);
               break;
             }
+          }
+          if (nivel == 1 && sizeObstaculo == 0) {
+            nivel = 2;
           }
         } // fim if
       } // fim for
@@ -334,12 +336,12 @@ function gameOVer() {
 
 function poderFogo() {
   //if (atirar == true) {
+  console.log('pf +'+balaArray.length);
   for (var i = 0; i < balaArray.length; i++) {
     balaArray[i].display();
     balaArray[i].posicaoX += 5;
     if (balaArray[i].posicaoX > 800) {
       balaArray.splice(i, 1);
-      // balas++;
     }
   }
   //}

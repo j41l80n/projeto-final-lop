@@ -38,6 +38,7 @@ var friend;
 var friendY = 340;
 var mostrarChefao = false;
 let subiu = false;;
+var boss;
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -59,6 +60,7 @@ function preload() {
   bruxa = loadImage('/assets/img/bruxa.png');
   friend = loadImage('/assets/img/friend.png');
   chefao = loadImage('/assets/img/skull.png');
+  boss = loadImage('/assets/img/boss.png');
 
   minhaFonte = loadFont('assets/fonts/zombie_holocaust.ttf');
 }
@@ -77,7 +79,7 @@ function setup() {
 }
 
 function draw() {
-  // define o backgroung para preto
+  // define o backgroung para imagem carregada no preload
   background(bg);
 
   base();

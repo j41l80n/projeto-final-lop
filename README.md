@@ -1,10 +1,13 @@
-# Projeto final da disciplina LoP UFRN 2018.1
+# Projeto final da disciplina Lógica de Programação (LoP) UFRN 2018.1
+O objetivo deste trabalho é a implementação de um jogo eletrônico usando elementos gráficos em duas dimensões. Nele os alunos vão desenvolver suas competências no uso de estruturas de repetição, vetores, entrada e saída de dados e programação estruturada como um todo.
 
-algum texto descrevendo o trabalho.
+## Configurações do desenvolvimento
+### Sistema operacional
+Ubuntu 18.4 Long Term Support (LTS) (Bionic Beaver).
 
-## Editor e plugins utilizados
+### Editor e plugins utilizados
 
-Para esse projeto, foi utlizado o editor de texto Atom com seguintes pacotes:
+Para esse projeto, foi utlizado o editor de texto Atom (1.26.1 x64) com seguintes pacotes:
 
 -   atom-beautify
 -   emmet
@@ -14,16 +17,23 @@ Para esse projeto, foi utlizado o editor de texto Atom com seguintes pacotes:
 -   minimap-pigments
 -   minimap
 
+### Navegador padrão
+[//]: <> ( ```sh $  google-chrome --version``` )
+Google Chrome 67.0.3396.87
+
 ## Estrutura o projeto
 Após o download do arquivo no repositório, descompacte e entre na pasta descompactada.
 
-Na pasta irá conter os arquivo index, README e a pasta assets, a qual possui todos os arquivos necessários para o carregamento completo do jogo.
+Na pasta irá conter os arquivo index, README e a pasta _assets_, a qual possui todos os arquivos necessários para o carregamento completo do jogo.
 
 Há três seções no arquivo index.
 
-Etapas concluídas;
-Sketchs de estudos;
-Canvas com a última etapa implementada;
+-   **Etapas concluídas;**
+    lista as etapas do projeto concluídas. Da etapa 1 a 10.
+-   **Sketchs de estudos;**
+    são sketchs utilizadas para o estudo da P5.js. Foram trabalhados conceitos básicos como a criação de formas primitivas de círculos e retângulos a trabalho com imagens e funções disponíveis na biblioteca.
+-   **Canvas com a última etapa implementada;**
+    espaço utilizado para o "desenho" do código implementado.
 
 ### Rodando Servidor HTTP
 

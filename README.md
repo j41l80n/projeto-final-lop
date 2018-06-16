@@ -28,12 +28,12 @@ Na pasta irá conter os arquivo index, README e a pasta _assets_, a qual possui 
 
 Há três seções no arquivo index.
 
--   **Etapas concluídas;**
-    lista as etapas do projeto concluídas. Da etapa 1 a 10.
--   **Sketchs de estudos;**
-    são sketchs utilizadas para o estudo da P5.js. Foram trabalhados conceitos básicos como a criação de formas primitivas de círculos e retângulos a trabalho com imagens e funções disponíveis na biblioteca.
--   **Canvas com a última etapa implementada;**
-    espaço utilizado para o "desenho" do código implementado.
+-   **Etapas concluídas:**
+    - lista as etapas do projeto concluídas. Da etapa 1 a 10.
+-   **Sketchs de estudos:**
+    - são sketchs utilizadas para o estudo da P5.js. Foram trabalhados conceitos básicos como a criação de formas primitivas de círculos e retângulos a trabalho com imagens e funções disponíveis na biblioteca.
+-   **Canvas com a última etapa implementada:**
+    - espaço utilizado para o "desenho" do código implementado.
 
 ### Rodando Servidor HTTP
 

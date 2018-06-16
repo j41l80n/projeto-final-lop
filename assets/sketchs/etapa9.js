@@ -43,6 +43,14 @@ var ultimaFase = false;
 var tombStone;
 var contagemHits = 0;
 var ativarVida = false;
+var cloudX = 750;
+var telaInicial = true;
+var jackAttacks;
+var cx = 100;
+var cy = 300;
+var cr = 50;
+var speed = 5;
+var customFill = 0;
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -66,6 +74,8 @@ function preload() {
   chefao = loadImage('/assets/img/skull.png');
   boss = loadImage('/assets/img/boss.png');
   tombStone = loadImage('/assets/img/tombStone.png');
+  cloud = loadImage('/assets/img/cloud.png');
+  jackAttacks = loadImage('/assets/img/tela1.png');
   minhaFonte = loadFont('assets/fonts/zombie_holocaust.ttf');
 }
 
@@ -84,51 +94,69 @@ function setup() {
 
 function draw() {
   // define o backgroung para imagem carregada no preload
-  background(bg);
 
-  base();
+  if (telaInicial) {
+    background(0);
+    image(jackAttacks, 110, 150, 500, 100);
 
-  finalJogo();
+    fill(customFill);
+    text('pressione a telca espaço para iniciar', width/2, 350);
+    customFill++
 
-  nivel1();
+    if (customFill > 255) {
+      customFill = 0;
+    }
+    // for (var i = 255; i >= 0; i--) {
+    //   fill(i);
+    //   text('pressione a telca espaço para iniciar', 250, 350);
+    // }
 
-  nivel2();
+  } else {
+    background(bg);
 
-  nivel3();
+    base();
 
-  nivel4();
+    finalJogo();
 
-  nivel5();
+    nivel1();
 
-  colisaoPersonagemPlaca();
+    nivel2();
 
-  mostraEstrelas();
+    nivel3();
 
-  contagemRegressiva();
+    nivel4();
 
-  movimentacaoPersonagem();
+    nivel5();
 
-  movimentacaoObstaculos();
+    colisaoPersonagemPlaca();
 
-  poderFogo();
+    mostraEstrelas();
 
-  indicadoresInformacao();
+    contagemRegressiva();
 
-  colisaoBalaObstaculo();
+    movimentacaoPersonagem();
 
-  colisaoObstaculoPersonagem();
+    movimentacaoObstaculos();
 
-  colisaoPersonagemVida();
+    poderFogo();
 
-  colisaoPersonagemCaixa();
+    indicadoresInformacao();
 
-  colisaoPersonagemAmigo();
+    colisaoBalaObstaculo();
 
-  if (frameCount % 400 == 0) {
-    ativarVida = true;
+    colisaoObstaculoPersonagem();
+
+    colisaoPersonagemVida();
+
+    colisaoPersonagemCaixa();
+
+    colisaoPersonagemAmigo();
+
+    if (frameCount % 400 == 0) {
+      ativarVida = true;
+    }
+    mostraVida();
   }
-
-  mostraVida();
 } // fim draw
 
 function nivel1() {
@@ -503,8 +531,8 @@ function colisaoObstaculoPersonagem() {
 
       personagem.posicaoX,
       personagem.posicaoY,
-      personagem.tamanhoX-50,
-      personagem.tamanhoY-60);
+      personagem.tamanhoX - 50,
+      personagem.tamanhoY - 60);
     if (hit) {
       if (nivel > 1) {
         sofreuHit = true;
@@ -631,7 +659,9 @@ function poderFogo() {
 function mostraEstrelas() {
   imageMode(CENTER);
   image(stars, xx, yy, 850, 450);
-  xx -= 0.05;
+  image(cloud, cloudX, yy + 50, 850, 450);
+  cloudX -= 0.4;
+  xx -= 0.03;
 }
 
 function base() {
@@ -681,4 +711,12 @@ function tela3() {
 
 function tela4() {
 
+}
+
+function overCircle(x, y, r) {
+  if (dist(x, y, mouseX, mouseY) < r) {
+    return true;
+  } else {
+    return false;
+  }
 }

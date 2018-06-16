@@ -59,7 +59,7 @@ function preload() {
   sing = loadImage('/assets/img/sign.png');
   crate = loadImage('/assets/img/crate.png');
   bruxa = loadImage('/assets/img/bruxa.png');
-  friend = loadImage('/assets/img/friend.png');
+  friend = loadImage('/assets/img/frankenstein.png');
   chefao = loadImage('/assets/img/skull.png');
   boss = loadImage('/assets/img/boss.png');
 
@@ -184,7 +184,7 @@ function nivel4() {
     if (mostraAmigo) {
       push();
       imageMode(CENTER);
-      image(friend, 100, friendY, 65, 105);
+      image(friend, 100, friendY, 105, 120);
       pop();
     }
 
@@ -212,7 +212,7 @@ function nivel5() {
     }
     push();
     imageMode(CENTER);
-    image(friend, 100, friendY, 65, 105);
+    image(friend, 100, friendY, 105, 120);
     pop();
     if (frameCount % 200 == 0) {
       geraFantasmas();
@@ -329,7 +329,7 @@ function mousePressed() {
 function indicadoresInformacao() {
   fill(255, 255, 255);
   text('Lifes: ' + vidas, 10, 30);
-  text('SkULls: ' + balas, 90, 30);
+  text('SkULLs: ' + balas, 90, 30);
   text('PoiNts: ' + pontuacao, 170, 30);
   text('LeVel: ' + nivel, 280, 30);
   text("TimE: " + tempoJogo, 360, 30);

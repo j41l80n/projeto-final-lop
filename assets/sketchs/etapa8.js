@@ -41,6 +41,8 @@ let subiu = false;;
 var boss;
 var ultimaFase = false;
 var tombStone;
+var contagemHits = 0;
+var ativarVida = false;
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -108,8 +110,6 @@ function draw() {
 
   movimentacaoObstaculos();
 
-  mostraVida();
-
   poderFogo();
 
   indicadoresInformacao();
@@ -123,6 +123,12 @@ function draw() {
   colisaoPersonagemCaixa();
 
   colisaoPersonagemAmigo();
+
+  if (frameCount % 400 == 0) {
+    ativarVida = true;
+  }
+
+  mostraVida();
   // filter(BLUR, 3);
 } // fim draw
 
@@ -176,7 +182,7 @@ function nivel3() {
       para = true;
     }
 
-    if (sofreuHit) {
+    if (contagemHits > 2) {
       text("G A M E  O V E R\n\tsem mais chances", width / 2, height * 0.8);
       gameOVer();
     }
@@ -199,7 +205,7 @@ function nivel4() {
       para = true;
     }
 
-    if (sofreuHit) {
+    if (contagemHits) {
       text("G A M E  O V E R\n\tsem mais chances", width / 2, height * 0.8);
       gameOVer();
     }
@@ -222,7 +228,6 @@ function nivel5() {
       geraFantasmas();
     }
     friendY -= 3;
-
   }
 }
 
@@ -278,8 +283,7 @@ function Obstaculo(posicaoX, posicaoY, sprite) {
   }
   this.display = function() {
     push();
-    imageMode(CENTER);
-    // a funcao tint aplica tranparencia na miagem
+    // /imageMode(CENTER);
     tint(255, this.tint);
     image(sprite, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
     pop();
@@ -336,7 +340,7 @@ function indicadoresInformacao() {
   text('SkULLs: ' + balas, 90, 30);
   text('PoiNts: ' + pontuacao, 170, 30);
   text('LeVel: ' + nivel, 280, 30);
-  text("TimE: " + tempoJogo, 360, 30);
+  text("TiME: " + tempoJogo, 360, 30);
 }
 
 function contagemRegressiva() {
@@ -419,23 +423,21 @@ function colisaoBalaObstaculo() {
         let hit;
         if (nivel == 5) {
           hit = collideRectRect(
-          obstaculoArray[j].posicaoX,
-          obstaculoArray[j].posicaoY,
-          obstaculoArray[j].tamanhoX-5,
-          obstaculoArray[j].tamanhoY-10,
-          balaArray[i].posicaoX,
-          balaArray[i].posicaoY,
-          balaArray[i].tamanhoX,
-          balaArray[i].tamanhoY
-        );
-          // hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
-        } else {
-          // hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
-            hit = collideRectRect(
             obstaculoArray[j].posicaoX,
             obstaculoArray[j].posicaoY,
-            obstaculoArray[j].tamanhoX-5,
-            obstaculoArray[j].tamanhoY-10,
+            obstaculoArray[j].tamanhoX - 5,
+            obstaculoArray[j].tamanhoY - 10,
+            balaArray[i].posicaoX,
+            balaArray[i].posicaoY,
+            balaArray[i].tamanhoX,
+            balaArray[i].tamanhoY
+          );
+        } else {
+          hit = collideRectRect(
+            obstaculoArray[j].posicaoX,
+            obstaculoArray[j].posicaoY,
+            obstaculoArray[j].tamanhoX - 5,
+            obstaculoArray[j].tamanhoY - 10,
             balaArray[i].posicaoX,
             balaArray[i].posicaoY,
             balaArray[i].tamanhoX,
@@ -458,7 +460,6 @@ function colisaoBalaObstaculo() {
             if (obstaculoArray[k].vidas == 0) {
               pontuacao++;
               obstaculoArray.splice(k, 1);
-              // break;
             }
           }
         } // fim if
@@ -468,6 +469,7 @@ function colisaoBalaObstaculo() {
       } // fim for
     } // fim for
   } // fim if
+
   if (nivel == 1 && obstaculoArray.length == 0) {
     nivel = 2;
     tempoJogo += 8;
@@ -476,10 +478,19 @@ function colisaoBalaObstaculo() {
 } // fim function
 
 function colisaoPersonagemVida() {
-  let hit = collideRectCircle(personagem.posicaoX, personagem.posicaoY, 50, 50, vida.posicaoX, vida.posicaoY, 50);
+  let hit = collideRectRect(
+    personagem.posicaoX,
+    personagem.posicaoY,
+    personagem.tamanhoX,
+    personagem.tamanhoX,
+    vida.posicaoX,
+    vida.posicaoY,
+    vida.tamanhoX,
+    vida.tamanhoY);
   if (hit) {
     vidas += 1;
-    vida.posicaoY = -10;
+    vida.posicaoY = -100;
+    ativarVida = false;
   } // fim if
 } // fim function
 
@@ -490,10 +501,11 @@ function colisaoObstaculoPersonagem() {
       obstaculoArray[i].posicaoY,
       obstaculoArray[i].tamanhoX,
       obstaculoArray[i].tamanhoX,
+
       personagem.posicaoX,
       personagem.posicaoY,
-      30,
-      personagem.tamanhoY);
+      personagem.tamanhoX-50,
+      personagem.tamanhoY-60);
     if (hit) {
       if (nivel > 1) {
         sofreuHit = true;
@@ -505,7 +517,16 @@ function colisaoObstaculoPersonagem() {
 }
 
 function colisaoPersonagemPlaca() {
-  let hit = collideRectCircle(personagem.posicaoX, personagem.posicaoY, 50, 50, 750, 360, 50);
+  let hit = collideRectRect(
+    personagem.posicaoX,
+    personagem.posicaoY,
+    personagem.tamanhoX,
+    personagem.tamanhoY,
+
+    750,
+    360,
+    80,
+    80);
   if (hit && !nivelTres) {
     nivel = 3;
     tempoJogo += 6;
@@ -631,9 +652,15 @@ function base() {
 }
 
 function mostraVida() {
-  if (vidas == 1 && !fimJogo) {
-    vida.display();
-    vida.posicaoY += 1;
+  if (!fimJogo) {
+    if (ativarVida) {
+      vida.display();
+      vida.posicaoY += 1;
+      if (vida.posicaoY > 400) {
+        vida.posicaoY = -10;
+        ativarVida = false;
+      }
+    }
   }
 }
 

@@ -666,3 +666,19 @@ function mostraVida() {
 function geraFantasmas() {
   obstaculoArray.push(new Obstaculo(obstaculoArray[0].posicaoX, obstaculoArray[0].posicaoY, ghost));
 }
+
+function tela1() {
+
+}
+
+function tela2() {
+
+}
+
+function tela3() {
+
+}
+
+function tela4() {
+
+}

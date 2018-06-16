@@ -88,9 +88,9 @@ function draw() {
 
   finalJogo();
 
-  nivel2();
+  nivel1();
 
-  colisaoPersonagemPlaca();
+  nivel2();
 
   nivel3();
 
@@ -98,16 +98,7 @@ function draw() {
 
   nivel5();
 
-  if (nivel > 1) {
-    push();
-    imageMode(CENTER);
-    if (nivel < 5) {
-      image(sing, 750, 360, 80, 80);
-    }
-    image(bruxa, bruxaX, bruxaY, 80, 80);
-    pop();
-    bruxaX -= 1.3;
-  }
+  colisaoPersonagemPlaca();
 
   mostraEstrelas();
 
@@ -134,6 +125,19 @@ function draw() {
   colisaoPersonagemAmigo();
   // filter(BLUR, 3);
 } // fim draw
+
+function nivel1() {
+  if (nivel > 1) {
+    push();
+    imageMode(CENTER);
+    if (nivel < 5) {
+      image(sing, 750, 360, 80, 80);
+    }
+    image(bruxa, bruxaX, bruxaY, 80, 80);
+    pop();
+    bruxaX -= 1.3;
+  }
+}
 
 function nivel2() {
   if (nivel == 2) {
@@ -414,9 +418,29 @@ function colisaoBalaObstaculo() {
       for (var j = 0; j < obstaculoArray.length; j++) {
         let hit;
         if (nivel == 5) {
-          hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
+          hit = collideRectRect(
+          obstaculoArray[j].posicaoX,
+          obstaculoArray[j].posicaoY,
+          obstaculoArray[j].tamanhoX-5,
+          obstaculoArray[j].tamanhoY-10,
+          balaArray[i].posicaoX,
+          balaArray[i].posicaoY,
+          balaArray[i].tamanhoX,
+          balaArray[i].tamanhoY
+        );
+          // hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
         } else {
-          hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
+          // hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
+            hit = collideRectRect(
+            obstaculoArray[j].posicaoX,
+            obstaculoArray[j].posicaoY,
+            obstaculoArray[j].tamanhoX-5,
+            obstaculoArray[j].tamanhoY-10,
+            balaArray[i].posicaoX,
+            balaArray[i].posicaoY,
+            balaArray[i].tamanhoX,
+            balaArray[i].tamanhoY
+          );
         }
         if (hit) {
           obstaculoArray[j].vidas--;

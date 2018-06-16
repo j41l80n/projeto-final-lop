@@ -40,6 +40,7 @@ var mostrarChefao = false;
 let subiu = false;;
 var boss;
 var ultimaFase = false;
+var tombStone;
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -62,7 +63,7 @@ function preload() {
   friend = loadImage('/assets/img/frankenstein.png');
   chefao = loadImage('/assets/img/skull.png');
   boss = loadImage('/assets/img/boss.png');
-
+  tombStone = loadImage('/assets/img/tombStone.png');
   minhaFonte = loadFont('assets/fonts/zombie_holocaust.ttf');
 }
 
@@ -81,7 +82,6 @@ function setup() {
 
 function draw() {
   // define o backgroung para imagem carregada no preload
-  smooth();
   background(bg);
 
   base();
@@ -145,7 +145,7 @@ function nivel2() {
     }
 
     if (sofreuHit) {
-      text("G A M E  O V E R\n\tsem mais chances", width / 2, height * 0.8);
+      text("G A M E  O V E R\n\tno more chances", width / 2, height * 0.8);
       gameOVer();
     }
   }
@@ -413,17 +413,16 @@ function colisaoBalaObstaculo() {
     for (var i = 0; i < balaArray.length; i++) {
       for (var j = 0; j < obstaculoArray.length; j++) {
         let hit;
-        if (nivel == 5 ) {
+        if (nivel == 5) {
           hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
-        }
-        else {
+        } else {
           hit = collideRectCircle(obstaculoArray[j].posicaoX + 10, obstaculoArray[j].posicaoY, 30, 30, balaArray[i].posicaoX, balaArray[i].posicaoY, 40);
         }
         if (hit) {
           obstaculoArray[j].vidas--;
           balaArray.splice(i, 1);
           for (var k = 0; k < obstaculoArray.length; k++) {
-            if (nivel==5) {
+            if (nivel == 5) {
               if (obstaculoArray[0].vidas == 0) {
                 fimJogo = true;
                 fill(255, 255, 255);
@@ -447,6 +446,7 @@ function colisaoBalaObstaculo() {
   } // fim if
   if (nivel == 1 && obstaculoArray.length == 0) {
     nivel = 2;
+    tempoJogo += 8;
     vidas++;
   }
 } // fim function
@@ -484,6 +484,7 @@ function colisaoPersonagemPlaca() {
   let hit = collideRectCircle(personagem.posicaoX, personagem.posicaoY, 50, 50, 750, 360, 50);
   if (hit && !nivelTres) {
     nivel = 3;
+    tempoJogo += 6;
     nivelTres = true;
     para = false;
     while (obstaculoArray.length > 0) {
@@ -496,6 +497,7 @@ function colisaoPersonagemCaixa() {
   let hit = collideRectCircle(personagem.posicaoX, personagem.posicaoY, 50, 50, 400, 360, 50);
   if (hit && nivel == 3) {
     nivel = 4;
+    tempoJogo += 4;
     para = false;
     mostraCaixa = false;
     mostraAmigo = true;

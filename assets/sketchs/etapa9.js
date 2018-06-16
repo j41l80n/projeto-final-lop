@@ -100,17 +100,12 @@ function draw() {
     image(jackAttacks, 110, 150, 500, 100);
 
     fill(customFill);
-    text('pressione a telca espaço para iniciar', width/2, 350);
+    text('pressione a telca ENTER para iniciar', width/2, 350);
     customFill++
 
     if (customFill > 255) {
       customFill = 0;
     }
-    // for (var i = 255; i >= 0; i--) {
-    //   fill(i);
-    //   text('pressione a telca espaço para iniciar', 250, 350);
-    // }
-
   } else {
     background(bg);
 
@@ -713,10 +708,9 @@ function tela4() {
 
 }
 
-function overCircle(x, y, r) {
-  if (dist(x, y, mouseX, mouseY) < r) {
-    return true;
-  } else {
-    return false;
+function keyPressed() {
+  if (keyCode === ENTER) {
+    telaInicial = false;
   }
+  return false; // prevent any default behaviour
 }

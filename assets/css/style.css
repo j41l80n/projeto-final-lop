@@ -1,13 +1,11 @@
-
 @font-face {
-    font-family: fomeZombie;
+  font-family: fomeZombie;
   /* //  font-size: xx-large; */
-
-    src: url(../fonts/zombie_holocaust.ttf);
+  src: url(../fonts/zombie_holocaust.ttf);
 }
 
 .fzombie {
-  font-size:80px;
+  font-size: 80px;
   font-family: fomeZombie;
-
+  padding: 80px;
 }

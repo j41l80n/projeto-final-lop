@@ -51,6 +51,7 @@ var cy = 300;
 var cr = 50;
 var speed = 5;
 var customFill = 0;
+var pause = true;
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -98,15 +99,15 @@ function draw() {
   if (telaInicial) {
     background(0);
     image(jackAttacks, 110, 150, 500, 100);
-
     fill(customFill);
-    text('pressione a telca ENTER para iniciar', width/2, 350);
+    text('pressione a telca ENTER para iniciar', width / 2, 350);
     customFill++
 
     if (customFill > 255) {
       customFill = 0;
     }
   } else {
+
     background(bg);
 
     base();
@@ -151,6 +152,15 @@ function draw() {
       ativarVida = true;
     }
     mostraVida();
+  }
+
+  if (!pause) {
+    fill(0);
+    tint(255, 126);
+    rect(0, 0, width, height);
+    image(jackAttacks, 155, 55, 250, 50);
+    textSize(32);
+    text('PAUSE', 10, 30);
   }
 } // fim draw
 
@@ -704,13 +714,26 @@ function tela3() {
 
 }
 
-function tela4() {
+function pause() {
 
 }
 
 function keyPressed() {
   if (keyCode === ENTER) {
     telaInicial = false;
+  } else if (keyCode === 27) {
+    if (pause) {
+      //image(jackAttacks, 110, 150, 500, 100);
+      pause = false;
+
+      noLoop();
+
+    } else {
+      pause = true;
+      background(0);
+      loop();
+
+    }
   }
   return false; // prevent any default behaviour
 }

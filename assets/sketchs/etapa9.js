@@ -52,6 +52,7 @@ var cr = 50;
 var speed = 5;
 var customFill = 0;
 var pause = true;
+var pauseImage;
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -77,6 +78,7 @@ function preload() {
   tombStone = loadImage('/assets/img/tombStone.png');
   cloud = loadImage('/assets/img/cloud.png');
   jackAttacks = loadImage('/assets/img/tela1.png');
+  pauseImage = loadImage('/assets/img/pause.png');
   minhaFonte = loadFont('assets/fonts/zombie_holocaust.ttf');
 }
 
@@ -102,7 +104,6 @@ function draw() {
     fill(customFill);
     text('pressione a telca ENTER para iniciar', width / 2, 350);
     customFill++
-
     if (customFill > 255) {
       customFill = 0;
     }
@@ -154,13 +155,15 @@ function draw() {
     mostraVida();
   }
 
-  if (!pause) {
+  if (!pause && !telaInicial) {
+    push();
     fill(0);
-    tint(255, 126);
+    noStroke();
+    imageMode(CENTER);
     rect(0, 0, width, height);
-    image(jackAttacks, 155, 55, 250, 50);
-    textSize(32);
-    text('PAUSE', 10, 30);
+    image(jackAttacks, 200, 75, 300, 60);
+    image(pauseImage, width/2, height/2, 150, 60);
+    pop();
   }
 } // fim draw
 
@@ -723,11 +726,8 @@ function keyPressed() {
     telaInicial = false;
   } else if (keyCode === 27) {
     if (pause) {
-      //image(jackAttacks, 110, 150, 500, 100);
       pause = false;
-
       noLoop();
-
     } else {
       pause = true;
       background(0);

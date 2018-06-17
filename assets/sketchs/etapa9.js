@@ -167,7 +167,7 @@ function draw() {
     pop();
   }
 
-    finalJogo();
+  finalJogo();
 } // fim draw
 
 function nivel1() {
@@ -617,12 +617,12 @@ function finalJogo() {
   fill(255, 255, 255);
 
   if (vidas == 0) {
-      telaGameOver();
+    telaGameOver();
     gameOVer();
   }
 
   if (tempoJogo == 0) {
-      telaGameOver();
+    telaGameOver();
     gameOVer();
   }
 }

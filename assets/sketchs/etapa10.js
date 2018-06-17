@@ -163,7 +163,7 @@ function draw() {
     imageMode(CENTER);
     rect(0, 0, width, height);
     image(jackAttacks, 200, 75, 300, 60);
-    image(pauseImage, width / 2, height / 2, 140, 40);
+    image(pauseImage, width / 2, height / 2, 70, 20);
     pop();
   }
   finalJogo();
@@ -174,7 +174,7 @@ function nivel1() {
     push();
     imageMode(CENTER);
     if (nivel < 5) {
-      image(sing, 750, 360, 90, 80);
+      image(sing, 750, 350, 90, 80);
     }
     image(bruxa, bruxaX, bruxaY, 80, 80);
     pop();
@@ -341,7 +341,7 @@ function Bala(posicaoX, posicaoY) {
     rotate(angle);
     imageMode(CENTER);
     image(bone, 0, 0, this.tamanhoX, this.tamanhoY);
-    angle += 0.06;
+    angle += 0.2;
     cx += 2;
     pop();
   }

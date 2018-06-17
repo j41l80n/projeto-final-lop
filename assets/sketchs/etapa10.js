@@ -96,7 +96,6 @@ function preload() {
   pauseImage = loadImage('/assets/img/pause.png');
   wins = loadImage('/assets/img/wins.png');
   gameOverImgage = loadImage('/assets/img/game_over.png');
-
   ghost_movement = loadSound('/assets/sounds/ghost_movement.wav');
   ghost_movement2 = loadSound('/assets/sounds/ghost_movement2.wav');
   boss_appears = loadSound('/assets/sounds/boss_appears.wav');
@@ -133,7 +132,6 @@ function setup() {
 
 function draw() {
   frameRate(30);
-  // define o backgroung para imagem carregada no preload
   if (telaInicial) {
     background(0);
     image(jackAttacks, 110, 150, 500, 100);
@@ -144,7 +142,6 @@ function draw() {
       customFill = 0;
     }
   } else {
-
     halloween_8_bit.stop();
 
     ghostSound(play);
@@ -220,8 +217,6 @@ function draw() {
 
     nivel2();
 
-
-
     mostraVida();
   }
 
@@ -276,12 +271,7 @@ function nivel3() {
       // personagem.display(jackLeft);
       pop();
     }
-  } else {
-
-
-    //}
   }
-
   if (nivel == 3) {
     if (!para) {
       for (var i = 0; i < 3; i++) {
@@ -289,7 +279,6 @@ function nivel3() {
       }
       para = true;
     }
-
     if (contagemHits > 2) {
       telaGameOver();
       gameOVer();
@@ -361,7 +350,6 @@ function Obstaculo(posicaoX, posicaoY, sprite) {
   this.posicaoY = posicaoY;
   this.tamanhoX = 80;
   this.tamanhoY = 70;
-  // this.velocidade = 1;
   this.vidas = 2;
 
   if (nivel == 1) {
@@ -383,7 +371,6 @@ function Obstaculo(posicaoX, posicaoY, sprite) {
       this.tint = random(30, 190);
       this.vidas = 2;
     }
-
   } else {
     this.velocidade = random(4, 6);
     this.tint = random(30, 190);
@@ -391,7 +378,6 @@ function Obstaculo(posicaoX, posicaoY, sprite) {
   }
   this.display = function() {
     push();
-    // imageMode(CENTER);
     tint(255, this.tint);
     image(sprite, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
     pop();
@@ -439,7 +425,6 @@ function mousePressed() {
     balaArray.push(new Bala(personagem.posicaoX, personagem.posicaoY));
     balas--;
   }
-
   if (fimJogo) {
     atirar = false;
     podeAtirar = false;
@@ -451,13 +436,13 @@ function indicadoresInformacao() {
   text('LIFes: ' + vidas, 10, 30);
   text('SkULLs: ' + balas, 90, 30);
   text('PoiNts: ' + pontuacao, 170, 30);
-  text('LeVel: ' + nivel, 280, 30);
+  text('LEVel: ' + nivel, 280, 30);
   text("TiME: " + tempoJogo, 360, 30);
 }
 
 function contagemRegressiva() {
   if (frameCount % 60 == 0 && tempoJogo > 0) {
-    //  tempoJogo--;
+    tempoJogo--;
     tempoJogado++;
   }
 
@@ -506,7 +491,6 @@ function movimentacaoObstaculos() {
         subiu = false;
       }
     }
-
     for (var i = 1; i < obstaculoArray.length - 1; i++) {
       obstaculoArray[i].display();
       obstaculoArray[i].posicaoY += random(-2, 2);
@@ -720,7 +704,6 @@ function gameOVer() {
 
 function poderFogo() {
   for (var i = 0; i < balaArray.length; i++) {
-
     balaArray[i].display();
     if (nivel == 3) {
       balaArray[i].posicaoX -= 5;
@@ -807,7 +790,6 @@ function keyPressed() {
       pause = true;
       background(0);
       loop();
-
     }
   }
   return false; // prevent any default behaviour

@@ -53,6 +53,7 @@ var speed = 5;
 var customFill = 0;
 var pause = true;
 var pauseImage;
+var gameOverImgage;
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -79,6 +80,8 @@ function preload() {
   cloud = loadImage('/assets/img/cloud.png');
   jackAttacks = loadImage('/assets/img/tela1.png');
   pauseImage = loadImage('/assets/img/pause.png');
+  gameOverImgage = loadImage('/assets/img/game_over.png');
+
   minhaFonte = loadFont('assets/fonts/zombie_holocaust.ttf');
 }
 
@@ -97,13 +100,12 @@ function setup() {
 
 function draw() {
   // define o backgroung para imagem carregada no preload
-
   if (telaInicial) {
     background(0);
     image(jackAttacks, 110, 150, 500, 100);
     fill(customFill);
     text('pressione a telca ENTER para iniciar', width / 2, 350);
-    customFill++
+    customFill++;
     if (customFill > 255) {
       customFill = 0;
     }
@@ -112,8 +114,6 @@ function draw() {
     background(bg);
 
     base();
-
-    finalJogo();
 
     nivel1();
 
@@ -125,7 +125,19 @@ function draw() {
 
     nivel5();
 
+    finalJogo();
+
     colisaoPersonagemPlaca();
+
+    colisaoBalaObstaculo();
+
+    colisaoObstaculoPersonagem();
+
+    colisaoPersonagemVida();
+
+    colisaoPersonagemCaixa();
+
+    colisaoPersonagemAmigo();
 
     mostraEstrelas();
 
@@ -139,19 +151,10 @@ function draw() {
 
     indicadoresInformacao();
 
-    colisaoBalaObstaculo();
-
-    colisaoObstaculoPersonagem();
-
-    colisaoPersonagemVida();
-
-    colisaoPersonagemCaixa();
-
-    colisaoPersonagemAmigo();
-
-    if (frameCount % 400 == 0) {
+    if (frameCount % 500 == 0) {
       ativarVida = true;
     }
+
     mostraVida();
   }
 
@@ -162,7 +165,7 @@ function draw() {
     imageMode(CENTER);
     rect(0, 0, width, height);
     image(jackAttacks, 200, 75, 300, 60);
-    image(pauseImage, width/2, height/2, 150, 60);
+    image(pauseImage, width / 2, height / 2, 140, 40);
     pop();
   }
 } // fim draw
@@ -190,6 +193,9 @@ function nivel2() {
     }
 
     if (sofreuHit) {
+      fill(0);
+      noStroke();
+      rect(0, 0, width, height);
       text("G A M E  O V E R\n\tno more chances", width / 2, height * 0.8);
       gameOVer();
     }
@@ -665,9 +671,11 @@ function poderFogo() {
 }
 
 function mostraEstrelas() {
+  push();
   imageMode(CENTER);
   image(stars, xx, yy, 850, 450);
   image(cloud, cloudX, yy + 50, 850, 450);
+  pop();
   cloudX -= 0.4;
   xx -= 0.03;
 }
@@ -694,7 +702,7 @@ function mostraVida() {
       vida.display();
       vida.posicaoY += 1;
       if (vida.posicaoY > 400) {
-        vida.posicaoY = -10;
+        vida.posicaoY = -100;
         ativarVida = false;
       }
     }
@@ -725,7 +733,7 @@ function keyPressed() {
   if (keyCode === ENTER) {
     telaInicial = false;
   } else if (keyCode === 27) {
-    if (pause) {
+    if (pause && !telaInicial) {
       pause = false;
       noLoop();
     } else {

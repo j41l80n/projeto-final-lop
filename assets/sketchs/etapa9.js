@@ -54,6 +54,7 @@ var customFill = 0;
 var pause = true;
 var pauseImage;
 var gameOverImgage;
+var wins;
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -80,6 +81,7 @@ function preload() {
   cloud = loadImage('/assets/img/cloud.png');
   jackAttacks = loadImage('/assets/img/tela1.png');
   pauseImage = loadImage('/assets/img/pause.png');
+  wins = loadImage('/assets/img/wins.png');
   gameOverImgage = loadImage('/assets/img/game_over.png');
 
   minhaFonte = loadFont('assets/fonts/zombie_holocaust.ttf');
@@ -98,8 +100,6 @@ function setup() {
 }
 
 function draw() {
-  console.log(nivel);
-
   // define o backgroung para imagem carregada no preload
   if (telaInicial) {
     background(0);
@@ -111,13 +111,9 @@ function draw() {
       customFill = 0;
     }
   } else {
-
-
-
     background(bg);
 
     base();
-
 
     nivel1();
 
@@ -196,7 +192,7 @@ function nivel2() {
       para = true;
     }
     if (sofreuHit) {
-      telaGameOver(" No more Chances ");
+      telaGameOver();
       gameOVer();
     }
   }
@@ -224,7 +220,7 @@ function nivel3() {
     }
 
     if (contagemHits > 2) {
-      telaGameOver(" No more Chances ");
+      telaGameOver();
       gameOVer();
     }
   }
@@ -247,7 +243,7 @@ function nivel4() {
     }
 
     if (contagemHits > 3) {
-      telaGameOver(" No more Chances ");
+      telaGameOver();
       gameOVer();
     }
   }
@@ -255,7 +251,6 @@ function nivel4() {
 
 function nivel5() {
   if (nivel == 5) {
-    console.log('obstaculoArray[0].vidas ' + obstaculoArray[0].vidas);
     if (!ultimaFase) {
       tempoJogo = 30;
       balas = 11;
@@ -488,10 +483,17 @@ function colisaoBalaObstaculo() {
           for (var k = 0; k < obstaculoArray.length; k++) {
             if (nivel == 5) {
               if (obstaculoArray[0].vidas == 0) {
+                push();
+                fill(0);
+                noStroke();
+                imageMode(CENTER);
+                rect(0, 0, width, height);
+                image(jackAttacks, 200, 75, 300, 60);
+                tint(255, 255);
+                image(boss, 550, 230, 400, 535);
+                image(wins, width / 2, height / 2, 160, 35);
+                pop();
                 fimJogo = true;
-                fill(255, 255, 255);
-                filter(BLUR, 3);
-                text("P  A  R  A  B  E  N  S\n\tE l i m i n a ç ã o   c o m p l e t a   d o s   F a n t a s m a s", (width / 2) + 30, height * 0.8);
                 noLoop();
               }
             }
@@ -615,12 +617,12 @@ function finalJogo() {
   fill(255, 255, 255);
 
   if (vidas == 0) {
-      telaGameOver(" No more Chances ");
+      telaGameOver();
     gameOVer();
   }
 
   if (tempoJogo == 0) {
-      telaGameOver(" seu tempo de vida acabou ");
+      telaGameOver();
     gameOVer();
   }
 }
@@ -725,17 +727,16 @@ function keyPressed() {
   return false; // prevent any default behaviour
 }
 
-function telaGameOver(texto) {
+function telaGameOver() {
   push();
   fill(0);
   noStroke();
   imageMode(CENTER);
   rect(0, 0, width, height);
   image(jackAttacks, 200, 75, 300, 60);
-  image(gameOverImgage, width / 2, height / 2, 160, 35);
-  tint(255, 50);
+  tint(255, 255);
   image(boss, 550, 230, 400, 535);
   fill(255);
-  text(texto, (width / 2)-48, (height / 2)+50);
+  image(gameOverImgage, width / 2, height / 2, 160, 35);
   pop();
 }

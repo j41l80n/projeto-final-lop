@@ -88,7 +88,6 @@ function preload() {
 function setup() {
   // funcao setup eh iniciada apenas uma vez
   personagem = new Personagem();
-  personagem.display(jackRight);
 
   obstaculoArray.push(new Obstaculo(900, 350, ghost));
   obstaculoArray[0].display();
@@ -99,6 +98,8 @@ function setup() {
 }
 
 function draw() {
+  console.log(nivel);
+
   // define o backgroung para imagem carregada no preload
   if (telaInicial) {
     background(0);
@@ -111,13 +112,14 @@ function draw() {
     }
   } else {
 
+
+
     background(bg);
 
     base();
 
-    nivel1();
 
-    nivel2();
+    nivel1();
 
     nivel3();
 
@@ -125,19 +127,7 @@ function draw() {
 
     nivel5();
 
-    finalJogo();
-
     colisaoPersonagemPlaca();
-
-    colisaoBalaObstaculo();
-
-    colisaoObstaculoPersonagem();
-
-    colisaoPersonagemVida();
-
-    colisaoPersonagemCaixa();
-
-    colisaoPersonagemAmigo();
 
     mostraEstrelas();
 
@@ -151,9 +141,21 @@ function draw() {
 
     indicadoresInformacao();
 
+    colisaoBalaObstaculo();
+
+    colisaoObstaculoPersonagem();
+
+    colisaoPersonagemVida();
+
+    colisaoPersonagemCaixa();
+
+    colisaoPersonagemAmigo();
+
     if (frameCount % 500 == 0) {
       ativarVida = true;
     }
+
+    nivel2();
 
     mostraVida();
   }
@@ -168,6 +170,8 @@ function draw() {
     image(pauseImage, width / 2, height / 2, 140, 40);
     pop();
   }
+
+    finalJogo();
 } // fim draw
 
 function nivel1() {
@@ -191,12 +195,8 @@ function nivel2() {
       }
       para = true;
     }
-
     if (sofreuHit) {
-      fill(0);
-      noStroke();
-      rect(0, 0, width, height);
-      text("G A M E  O V E R\n\tno more chances", width / 2, height * 0.8);
+      telaGameOver(" No more Chances ");
       gameOVer();
     }
   }
@@ -208,9 +208,9 @@ function nivel3() {
       push();
       imageMode(CENTER);
       image(crate, 400, 360, 60, 60);
+      personagem.display(jackLeft);
       pop();
     }
-    personagem.display(jackLeft);
   } else {
     personagem.display(jackRight);
   }
@@ -224,7 +224,7 @@ function nivel3() {
     }
 
     if (contagemHits > 2) {
-      text("G A M E  O V E R\n\tsem mais chances", width / 2, height * 0.8);
+      telaGameOver(" No more Chances ");
       gameOVer();
     }
   }
@@ -246,8 +246,8 @@ function nivel4() {
       para = true;
     }
 
-    if (contagemHits) {
-      text("G A M E  O V E R\n\tsem mais chances", width / 2, height * 0.8);
+    if (contagemHits > 3) {
+      telaGameOver(" No more Chances ");
       gameOVer();
     }
   }
@@ -377,7 +377,7 @@ function mousePressed() {
 
 function indicadoresInformacao() {
   fill(255, 255, 255);
-  text('Lifes: ' + vidas, 10, 30);
+  text('LIFes: ' + vidas, 10, 30);
   text('SkULLs: ' + balas, 90, 30);
   text('PoiNts: ' + pontuacao, 170, 30);
   text('LeVel: ' + nivel, 280, 30);
@@ -399,13 +399,10 @@ function contagemRegressiva() {
 function movimentacaoPersonagem() {
   // faz personagem andar para esquerda quando seta do teclado pessionada
   if (keyIsDown(LEFT_ARROW)) {
-    // personagem.display(jackRight);
     personagem.posicaoX -= 4;
   }
-
   // faz personagem andar para direita quando seta do teclado pessionada
   if (keyIsDown(RIGHT_ARROW)) {
-    // personagem.display(jackRight);
     personagem.posicaoX += 4;
   }
 }
@@ -618,12 +615,12 @@ function finalJogo() {
   fill(255, 255, 255);
 
   if (vidas == 0) {
-    text("G A M E  O V E R\n\tsem mais chances", width / 2, height * 0.8);
+      telaGameOver(" No more Chances ");
     gameOVer();
   }
 
   if (tempoJogo == 0) {
-    text("G  A  M  E   O  V  E  R\n\tm o r t e  p o r  t e m p o", (width / 2) + 30, height * 0.8);
+      telaGameOver(" seu tempo de vida acabou ");
     gameOVer();
   }
 }
@@ -671,11 +668,9 @@ function poderFogo() {
 }
 
 function mostraEstrelas() {
-  push();
   imageMode(CENTER);
   image(stars, xx, yy, 850, 450);
   image(cloud, cloudX, yy + 50, 850, 450);
-  pop();
   cloudX -= 0.4;
   xx -= 0.03;
 }
@@ -713,22 +708,6 @@ function geraFantasmas() {
   obstaculoArray.push(new Obstaculo(obstaculoArray[0].posicaoX, obstaculoArray[0].posicaoY, ghost));
 }
 
-function tela1() {
-
-}
-
-function tela2() {
-
-}
-
-function tela3() {
-
-}
-
-function pause() {
-
-}
-
 function keyPressed() {
   if (keyCode === ENTER) {
     telaInicial = false;
@@ -744,4 +723,19 @@ function keyPressed() {
     }
   }
   return false; // prevent any default behaviour
+}
+
+function telaGameOver(texto) {
+  push();
+  fill(0);
+  noStroke();
+  imageMode(CENTER);
+  rect(0, 0, width, height);
+  image(jackAttacks, 200, 75, 300, 60);
+  image(gameOverImgage, width / 2, height / 2, 160, 35);
+  tint(255, 50);
+  image(boss, 550, 230, 400, 535);
+  fill(255);
+  text(texto, (width / 2)-48, (height / 2)+50);
+  pop();
 }

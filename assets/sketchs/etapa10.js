@@ -46,7 +46,7 @@ var ativarVida = false;
 var cloudX = 750;
 var telaInicial = true;
 var jackAttacks;
-var cx = 100;
+var cx = 0;
 var cy = 300;
 var cr = 50;
 var speed = 5;
@@ -55,6 +55,8 @@ var pause = true;
 var pauseImage;
 var gameOverImgage;
 var wins;
+var angle = 0;
+
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -75,7 +77,6 @@ function preload() {
   crate = loadImage('/assets/img/crate.png');
   bruxa = loadImage('/assets/img/bruxa.png');
   friend = loadImage('/assets/img/frankenstein.png');
-  chefao = loadImage('/assets/img/skull.png');
   boss = loadImage('/assets/img/boss.png');
   tombStone = loadImage('/assets/img/tombStone.png');
   cloud = loadImage('/assets/img/cloud.png');
@@ -83,7 +84,6 @@ function preload() {
   pauseImage = loadImage('/assets/img/pause.png');
   wins = loadImage('/assets/img/wins.png');
   gameOverImgage = loadImage('/assets/img/game_over.png');
-
   minhaFonte = loadFont('assets/fonts/zombie_holocaust.ttf');
 }
 
@@ -166,7 +166,6 @@ function draw() {
     image(pauseImage, width / 2, height / 2, 140, 40);
     pop();
   }
-
   finalJogo();
 } // fim draw
 
@@ -319,7 +318,7 @@ function Obstaculo(posicaoX, posicaoY, sprite) {
   }
   this.display = function() {
     push();
-    // /imageMode(CENTER);
+    // imageMode(CENTER);
     tint(255, this.tint);
     image(sprite, this.posicaoX, this.posicaoY, this.tamanhoY, this.tamanhoX);
     pop();
@@ -338,8 +337,12 @@ function Bala(posicaoX, posicaoY) {
 
   this.display = function() {
     push();
+    translate(this.posicaoX, this.posicaoY);
+    rotate(angle);
     imageMode(CENTER);
-    image(bone, this.posicaoX, this.posicaoY, this.tamanhoX, this.tamanhoY);
+    image(bone, 0, 0, this.tamanhoX, this.tamanhoY);
+    angle += 0.06;
+    cx += 2;
     pop();
   }
 };
@@ -381,7 +384,7 @@ function indicadoresInformacao() {
 
 function contagemRegressiva() {
   if (frameCount % 60 == 0 && tempoJogo > 0) {
-    tempoJogo--;
+    //  tempoJogo--;
     tempoJogado++;
   }
 

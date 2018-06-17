@@ -157,6 +157,10 @@ function draw() {
     temp_right++;
     temp_left++;
 
+    if (!movendo) {
+      personagem.display(idle[temp]);
+    }
+
     if (temp >= 10) {
       temp = 1;
     }
@@ -166,6 +170,12 @@ function draw() {
     }
     if (temp_left >= 8) {
       temp_left = 1;
+    }
+
+    if (obstaculoArray.length > 0) {
+      if (nivel == 1 && obstaculoArray[0].posicaoX == 790) {
+        play = true;
+      }
     }
 
     nivel1();
@@ -210,11 +220,9 @@ function draw() {
 
     nivel2();
 
-    mostraVida();
 
-    if (nivel == 1 && obstaculoArray[0].posicaoX == 790) {
-      play = true;
-    }
+
+    mostraVida();
   }
 
   if (!pause && !telaInicial) {
@@ -265,13 +273,11 @@ function nivel3() {
       push();
       imageMode(CENTER);
       image(crate, 400, 360, 60, 60);
-    //  personagem.display(jackLeft);
+      // personagem.display(jackLeft);
       pop();
     }
   } else {
-    if (!movendo) {
-      personagem.display(idle[temp]);
-    }
+
 
     //}
   }

@@ -174,7 +174,7 @@ function nivel1() {
     push();
     imageMode(CENTER);
     if (nivel < 5) {
-      image(sing, 750, 360, 80, 80);
+      image(sing, 750, 360, 90, 80);
     }
     image(bruxa, bruxaX, bruxaY, 80, 80);
     pop();
@@ -543,13 +543,13 @@ function colisaoObstaculoPersonagem() {
     let hit = collideRectRect(
       obstaculoArray[i].posicaoX,
       obstaculoArray[i].posicaoY,
-      obstaculoArray[i].tamanhoX,
+      obstaculoArray[i].tamanhoX -30,
       obstaculoArray[i].tamanhoX,
 
       personagem.posicaoX,
       personagem.posicaoY,
       personagem.tamanhoX - 50,
-      personagem.tamanhoY - 60);
+      personagem.tamanhoY - 10);
     if (hit) {
       if (nivel > 1) {
         sofreuHit = true;
@@ -564,12 +564,12 @@ function colisaoPersonagemPlaca() {
   let hit = collideRectRect(
     personagem.posicaoX,
     personagem.posicaoY,
-    personagem.tamanhoX,
+    personagem.tamanhoX - 30,
     personagem.tamanhoY,
 
     750,
     360,
-    80,
+    60,
     80);
   if (hit && !nivelTres) {
     nivel = 3;

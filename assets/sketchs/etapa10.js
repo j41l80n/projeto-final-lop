@@ -59,6 +59,16 @@ var ghost_movement;
 var ghost_movement2;
 var boss_appears;
 var boss_appear2;
+var halloween_8_bit;
+var play = false;
+var playBoss = false;
+var idle = [];
+let temp = 1;
+let temp_right = 1;
+let temp_left = 1;
+var movendo = false;
+var run_right = [];
+var run_left = [];
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -91,6 +101,19 @@ function preload() {
   ghost_movement2 = loadSound('/assets/sounds/ghost_movement2.wav');
   boss_appears = loadSound('/assets/sounds/boss_appears.wav');
   boss_appears2 = loadSound('/assets/sounds/boss_appears2.mp3');
+  halloween_8_bit = loadSound('/assets/sounds/halloween_8_bit.mp3');
+
+  for (var i = 1; i <= 10; i++) {
+    idle[i] = loadImage('/assets/img/animacao/Idle(' + i + ').png');
+  }
+
+  for (var i = 1; i <= 8; i++) {
+    run_right[i] = loadImage('/assets/img/animacao/Run(' + i + ').png');
+  }
+
+  for (var i = 1; i <= 8; i++) {
+    run_left[i] = loadImage('/assets/img/animacao/run_left_' + i + '.png');
+  }
 }
 
 function setup() {
@@ -103,9 +126,13 @@ function setup() {
   cnv = createCanvas(canvasX, canvasY);
   cnv.parent('sketch-holder');
   vida = new Vida(random(50, 700), random(40, 100));
+
+  halloween_8_bit.setVolume(0.1);
+  halloween_8_bit.play();
 }
 
 function draw() {
+  frameRate(30);
   // define o backgroung para imagem carregada no preload
   if (telaInicial) {
     background(0);
@@ -117,9 +144,29 @@ function draw() {
       customFill = 0;
     }
   } else {
+
+    halloween_8_bit.stop();
+
+    ghostSound(play);
+
     background(bg);
 
     base();
+
+    temp++;
+    temp_right++;
+    temp_left++;
+
+    if (temp >= 10) {
+      temp = 1;
+    }
+
+    if (temp_right >= 8) {
+      temp_right = 1;
+    }
+    if (temp_left >= 8) {
+      temp_left = 1;
+    }
 
     nivel1();
 
@@ -157,9 +204,17 @@ function draw() {
       ativarVida = true;
     }
 
+    if (frameCount % 300 == 0 && nivel == 5) {
+      playBoss = true;
+    }
+
     nivel2();
 
     mostraVida();
+
+    if (nivel == 1 && obstaculoArray[0].posicaoX == 790) {
+      play = true;
+    }
   }
 
   if (!pause && !telaInicial) {
@@ -194,6 +249,7 @@ function nivel2() {
       for (var i = 0; i < 3; i++) {
         obstaculoArray.push(new Obstaculo(random(700, 900), random(100, 350), ghost));
       }
+      play = true;
       para = true;
     }
     if (sofreuHit) {
@@ -209,11 +265,15 @@ function nivel3() {
       push();
       imageMode(CENTER);
       image(crate, 400, 360, 60, 60);
-      personagem.display(jackLeft);
+    //  personagem.display(jackLeft);
       pop();
     }
   } else {
-    personagem.display(jackRight);
+    if (!movendo) {
+      personagem.display(idle[temp]);
+    }
+
+    //}
   }
 
   if (nivel == 3) {
@@ -260,6 +320,7 @@ function nivel5() {
       tempoJogo = 30;
       balas = 11;
       ultimaFase = true;
+      playBoss = true;
     }
     push();
     imageMode(CENTER);
@@ -347,7 +408,7 @@ function Bala(posicaoX, posicaoY) {
     rotate(angle);
     imageMode(CENTER);
     image(bone, 0, 0, this.tamanhoX, this.tamanhoY);
-    angle += 0.2;
+    angle += 0.1;
     cx += 2;
     pop();
   }
@@ -403,12 +464,20 @@ function contagemRegressiva() {
 function movimentacaoPersonagem() {
   // faz personagem andar para esquerda quando seta do teclado pessionada
   if (keyIsDown(LEFT_ARROW)) {
+    movendo = true;
+    personagem.display(run_left[temp_left]);
     personagem.posicaoX -= 4;
   }
   // faz personagem andar para direita quando seta do teclado pessionada
   if (keyIsDown(RIGHT_ARROW)) {
+    movendo = true;
+    personagem.display(run_right[temp_right]);
     personagem.posicaoX += 4;
   }
+}
+
+function keyReleased() {
+  movendo = false;
 }
 
 function movimentacaoObstaculos() {
@@ -487,6 +556,7 @@ function colisaoBalaObstaculo() {
           );
         }
         if (hit) {
+          play = false;
           obstaculoArray[j].vidas--;
           balaArray.splice(i, 1);
           for (var k = 0; k < obstaculoArray.length; k++) {
@@ -549,7 +619,7 @@ function colisaoObstaculoPersonagem() {
     let hit = collideRectRect(
       obstaculoArray[i].posicaoX,
       obstaculoArray[i].posicaoY,
-      obstaculoArray[i].tamanhoX -30,
+      obstaculoArray[i].tamanhoX - 30,
       obstaculoArray[i].tamanhoX,
 
       personagem.posicaoX,
@@ -709,7 +779,7 @@ function mostraVida() {
       vida.display();
       vida.posicaoY += 1;
       if (vida.posicaoY > 400) {
-        vida.posicaoY = -100;
+        vida.posicaoY = -111;
         ativarVida = false;
       }
     }
@@ -749,4 +819,18 @@ function telaGameOver() {
   fill(255);
   image(gameOverImgage, width / 2, height / 2, 160, 35);
   pop();
+}
+
+function ghostSound() {
+  if (play) {
+    ghost_movement.setVolume(0.1);
+    ghost_movement.play();
+    play = false;
+  }
+
+  if (playBoss) {
+    boss_appears.setVolume(0.099);
+    boss_appears.play();
+    playBoss = false;
+  }
 }

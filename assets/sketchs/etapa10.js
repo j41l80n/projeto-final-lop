@@ -29,7 +29,6 @@ var xx = 380;
 var yy = 80;
 var mostraCaixa = true;
 var mostraAmigo = false;
-var minhaFonte;
 var para = false;
 var nivelTres = false;
 var bruxaX = 850;
@@ -56,7 +55,10 @@ var pauseImage;
 var gameOverImgage;
 var wins;
 var angle = 0;
-
+var ghost_movement;
+var ghost_movement2;
+var boss_appears;
+var boss_appear2;
 
 function preload() {
   bg = loadImage('assets/img/bg.png');
@@ -84,7 +86,11 @@ function preload() {
   pauseImage = loadImage('/assets/img/pause.png');
   wins = loadImage('/assets/img/wins.png');
   gameOverImgage = loadImage('/assets/img/game_over.png');
-  minhaFonte = loadFont('assets/fonts/zombie_holocaust.ttf');
+
+  ghost_movement = loadSound('/assets/sounds/ghost_movement.wav');
+  ghost_movement2 = loadSound('/assets/sounds/ghost_movement2.wav');
+  boss_appears = loadSound('/assets/sounds/boss_appears.wav');
+  boss_appears2 = loadSound('/assets/sounds/boss_appears2.mp3');
 }
 
 function setup() {

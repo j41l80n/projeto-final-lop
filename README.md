@@ -20,6 +20,22 @@ Para esse projeto, foi utlizado o editor de texto Atom (1.26.1 x64) com seguinte
 ### Navegador padrão
 Google Chrome 67.0.3396.87.
 
+### Rodando Servidor HTTP Local
+
+Algumas funcionalidades implementadas no projeto, tais como o carregamento de imagens e fontes customizadas, são esperadas a serem carregadas via SSH ou FTP. A Execução de um Servidor local pode reseolver esse problema.
+
+Execute o seguinte comando via terminal dentro da pasta do projeto para criar um servidor HTTP para requisições do navegador.
+
+```sh
+$ sudo python -m SimpleHTTPServer
+```
+
+Para visualizar o projeto, abra seu navegador e acesse o endereço:
+
+    127.0.0.1:8000 ou localhost:8000
+    
+> A não execução do Servidor local na pasta do jogo, poderá ocorrer um erro de origem cruzada. Visite a documentação do oficial em [localServe].
+
 ## ESTRUTURA DO PROJETO
 Após o download do arquivo no repositório, descompacte e entre na pasta descompactada.
 
@@ -33,18 +49,6 @@ Há três seções no arquivo index.
     - são sketchs utilizadas para o estudo da P5.js. Foram trabalhados conceitos básicos como a criação de formas primitivas de círculos e retângulos a trabalho com imagens e funções disponíveis na biblioteca.
 -   **Canvas com a última etapa implementada:**
     - espaço utilizado para o "desenho" do código implementado.
-
-### Rodando Servidor HTTP
-
-Execute o seguinte comando dentro da pasta do projeto para criar um servidor HTTP para requisições do navegador.
-
-```sh
-$ sudo python -m SimpleHTTPServer
-```
-
-Para visualizar o projeto, abra seu navegador e acesse o endereço:
-
-    127.0.0.1:8000
 
 ## SOBRE O JOGO
 ### Nome
@@ -78,3 +82,4 @@ Frankenstein, Ghosts e BigGhost (_Boss_).
 [P5.Play](http://p5play.molleindustria.org/docs/index.html)
 
 [atom]: https://atom.io/
+[P5.js Local Server]: https://github.com/processing/p5.js/wiki/Local-server

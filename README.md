@@ -34,7 +34,7 @@ Para visualizar o projeto, abra seu navegador e acesse o endereço:
 
     127.0.0.1:8000 ou localhost:8000
     
-> A não execução do Servidor local na pasta do jogo, poderá ocorrer um erro de origem cruzada. Visite a documentação do oficial em [localServe].
+> A não execução do Servidor local na pasta do jogo, poderá ocorrer um erro de origem cruzada. Visite a documentação do oficial em [P5.js Local Server].
 
 ## ESTRUTURA DO PROJETO
 Após o download do arquivo no repositório, descompacte e entre na pasta descompactada.

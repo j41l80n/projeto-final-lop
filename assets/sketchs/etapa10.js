@@ -76,8 +76,6 @@ function preload() {
   treeBones = loadImage('/assets/img/tree_bones.png');
   twoBones = loadImage('/assets/img/two_bones.png');
   brain = loadImage('/assets/img/brain.png');
-  jackLeft = loadImage('/assets/img/jack_left.png');
-  jackRight = loadImage('/assets/img/jack_right.png');
   ghost = loadImage('/assets/img/ghost2.png');
   ghost2 = loadImage('/assets/img/ghost2_right.png');
   stars = loadImage('/assets/img/stars.png');
@@ -230,8 +228,9 @@ function draw() {
     image(pauseImage, width / 2, height / 2, 70, 20);
     pop();
   }
+
   finalJogo();
-} // fim draw
+}
 
 function nivel1() {
   if (nivel > 1) {
@@ -268,7 +267,6 @@ function nivel3() {
       push();
       imageMode(CENTER);
       image(crate, 400, 360, 60, 60);
-      // personagem.display(jackLeft);
       pop();
     }
   }
@@ -792,7 +790,7 @@ function keyPressed() {
       loop();
     }
   }
-  return false; // prevent any default behaviour
+  return false;
 }
 
 function telaGameOver() {

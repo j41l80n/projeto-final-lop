@@ -2,6 +2,7 @@
 O objetivo deste trabalho é a implementação de um jogo eletrônico usando elementos gráficos em duas dimensões. Nele os alunos vão desenvolver suas competências no uso de estruturas de repetição, vetores, entrada e saída de dados e programação estruturada como um todo.
 
 ## CONFIGURAÇES DO DESENVOLVIMENTO
+
 ### Sistema operacional
 Ubuntu 18.4 Long Term Support (LTS) (Bionic Beaver).
 
